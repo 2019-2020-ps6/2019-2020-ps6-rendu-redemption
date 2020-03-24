@@ -1,3 +1,10 @@
+# Dependencies
+/node_modules
+
+# Mocks.
+mocks/*
+!mocks/.gitkeep
+
 # IDEs and editors
 /.idea
 .project
