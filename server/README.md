@@ -1,4 +1,4 @@
-# PS6 Redemption
+# PS6 Redemption : Back-End Application
 ## Requirements
 1. Install NodeJS.
 ```bash
