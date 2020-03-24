@@ -10,7 +10,7 @@ describe('workspace-project App', () => {
 
   it('should display welcome message', () => {
     page.navigateTo();
-    expect(page.getTitleText()).toEqual('ps6-redemption app is running!');
+    expect(page.getTitleText()).toEqual('PS6 app is running!');
   });
 
   afterEach(async () => {

@@ -1,0 +1,11 @@
+<div class="card">
+  <h2>
+    Label: {{question.label}}
+  </h2>
+  <p>Nombre de réponses: {{question.answers.length}}</p>
+  <span>
+     <div *ngFor="let answer of question.answers; let i = index">
+      <button [@isAnswerCorrect]="forAnimation[i]" class="button-card" (click)="verifyAnswer(answer)"> {{answer.value}} </button>
+     </div>
+  </span>
+</div>
