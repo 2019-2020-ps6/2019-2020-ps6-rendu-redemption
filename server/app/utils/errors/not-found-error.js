@@ -1,11 +1,9 @@
-const util = require('util')
+const ApplicationError = require('./application-error');
 
-function NotFoundError(message) {
-  Error.captureStackTrace(this, this.constructor)
-  this.name = this.constructor.name
-  this.message = message
+class NotFoundError extends ApplicationError {
+  constructor() {
+    super(404, 'The requested resource was not found.');
+  }
 }
 
-util.inherits(NotFoundError, Error)
-
-module.exports = NotFoundError
+module.exports = NotFoundError;

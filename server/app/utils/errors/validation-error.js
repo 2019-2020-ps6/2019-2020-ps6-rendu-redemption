@@ -1,12 +1,9 @@
-const util = require('util')
+const ApplicationError = require('./application-error');
 
-function ValidationError(message, extra = {}) {
-  Error.captureStackTrace(this, this.constructor)
-  this.name = this.constructor.name
-  this.message = message
-  this.extra = extra
+class ValidationError extends ApplicationError {
+  constructor(message) {
+    super(422, message || 'The request inputs are invalid.');
+  }
 }
 
-util.inherits(ValidationError, Error)
-
-module.exports = ValidationError
+module.exports = ValidationError;
