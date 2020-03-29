@@ -6,7 +6,6 @@ module.exports = {
   },
   rules: {
     'max-len': ['error', 200, { 'ignoreStrings': true }],
-    'no-underscore-dangle': ['error', { 'allow': ['_id'] }],
-    'semi': ['error', 'never'],
+    'comma-dangle': ['error', 'never']
   }
 };
