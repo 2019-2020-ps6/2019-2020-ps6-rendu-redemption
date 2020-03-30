@@ -1,6 +1,5 @@
 const models = require('../../models');
 const NotFoundError = require('../../utils/errors/not-found-error');
-const catchErrors = require('../../utils/handlers/catch-errors');
 
 /**
  * Finds all the quizzes.
@@ -8,22 +7,19 @@ const catchErrors = require('../../utils/handlers/catch-errors');
  * @param res The response object.
  * @param next The callback for the next middleware.
  */
-exports.findAllQuizzes = (req, res, next) => {
+exports.findAll = (req, res, next) => {
+  // Find the quizzes.
   models.Quiz
     .findAll()
     .then((quizzes) => {
       // Success.
       res.status(200);
       res.json({
-        data: {
-          items: quizzes
-        }
+        data: quizzes
       });
     })
-    .catch((err) => {
-      // Errors.
-      catchErrors(err, next);
-    });
+    // Errors.
+    .catch(next);
 };
 
 /**
@@ -32,25 +28,24 @@ exports.findAllQuizzes = (req, res, next) => {
  * @param res The response object.
  * @param next The callback for the next middleware.
  */
-exports.createQuiz = (req, res, next) => {
+exports.create = (req, res, next) => {
   models.Quiz
     .create({
       name: req.body.name
     })
     .then((quiz) => {
-      // Success.
-      res.status(201);
-      res.json({
-        data: {
-          id: quiz.id,
-          message: 'The quiz has been created.'
-        }
-      });
+      // Created.
+      res
+        .status(201)
+        .json({
+          data: {
+            id: quiz.id,
+            message: 'The quiz has been created.'
+          }
+        });
     })
-    .catch((err) => {
-      // Errors.
-      catchErrors(err, next);
-    });
+    // Errors.
+    .catch(next);
 };
 
 /**
@@ -59,66 +54,24 @@ exports.createQuiz = (req, res, next) => {
  * @param res The response object.
  * @param next The callback for the next middleware.
  */
-exports.findQuizById = (req, res, next) => {
+exports.findById = (req, res, next) => {
+  // Find the quiz.
   models.Quiz
-    .findByPk(req.params.quiz_id)
+    .findByPk(req.params.quizId)
     .then((quiz) => {
       if (quiz) {
-        // Success.
+        // Found.
         res.status(200);
         res.json({
           data: quiz
         });
       } else {
-        // Not found error.
+        // Quiz not found.
         next(new NotFoundError());
       }
     })
-    .catch((err) => {
-      // Errors.
-      catchErrors(err, next);
-    });
-};
-
-/**
- * Updates (or creates) a quiz by id.
- * @param req The request object.
- * @param res The response object.
- * @param next The callback for the next middleware.
- */
-exports.upsertQuizById = (req, res, next) => {
-  models.Quiz
-    .upsert(
-      {
-        id: req.params.quiz_id,
-        name: req.body.name
-      }
-    )
-    .then((created) => {
-      if (created) {
-        // Created.
-        res.status(200);
-        res.json({
-          data: {
-            id: req.params.quiz_id,
-            message: 'The quiz has been created.'
-          }
-        });
-      } else {
-        // Updated.
-        res.status(200);
-        res.json({
-          data: {
-            id: req.params.quiz_id,
-            message: 'The quiz has been updated.'
-          }
-        });
-      }
-    })
-    .catch((err) => {
-      // Errors.
-      catchErrors(err, next);
-    });
+    // Errors.
+    .catch(next);
 };
 
 /**
@@ -127,7 +80,7 @@ exports.upsertQuizById = (req, res, next) => {
  * @param res The response object.
  * @param next The callback for the next middleware.
  */
-exports.updateQuizById = (req, res, next) => {
+exports.updateById = (req, res, next) => {
   models.Quiz
     .update(
       {
@@ -135,29 +88,28 @@ exports.updateQuizById = (req, res, next) => {
       },
       {
         where: {
-          id: req.params.quiz_id
+          id: req.params.quizId
         }
       }
     )
     .then((updatedRows) => {
       if (updatedRows > 0) {
         // Updated.
-        res.status(200);
-        res.json({
-          data: {
-            id: req.params.quiz_id,
-            message: 'The quiz has been updated.'
-          }
-        });
+        res
+          .status(200)
+          .json({
+            data: {
+              id: req.params.quizId,
+              message: 'The quiz has been updated.'
+            }
+          });
       } else {
-        // Not found error.
+        // Quiz not found.
         next(new NotFoundError());
       }
     })
-    .catch((err) => {
-      // Errors.
-      catchErrors(err, next);
-    });
+    // Errors.
+    .catch(next);
 };
 
 /**
@@ -166,30 +118,29 @@ exports.updateQuizById = (req, res, next) => {
  * @param res The response object.
  * @param next The callback for the next middleware.
  */
-exports.deleteQuizById = (req, res, next) => {
+exports.deleteById = (req, res, next) => {
   models.Quiz
     .destroy({
       where: {
-        id: req.params.quiz_id
+        id: req.params.quizId
       }
     })
     .then((destroyedRows) => {
       if (destroyedRows > 0) {
-        // Success.
-        res.status(200);
-        res.json({
-          data: {
-            id: req.params.quiz_id,
-            message: 'The quiz has been deleted.'
-          }
-        });
+        // Deleted.
+        res
+          .status(200)
+          .json({
+            data: {
+              id: req.params.quizId,
+              message: 'The quiz has been deleted.'
+            }
+          });
       } else {
         // Not found error.
         next(new NotFoundError());
       }
     })
-    .catch((err) => {
-      // Errors.
-      catchErrors(err, next);
-    });
+    // Errors.
+    .catch(next);
 };
