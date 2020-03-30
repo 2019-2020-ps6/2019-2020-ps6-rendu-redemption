@@ -3,7 +3,7 @@ class ApplicationError extends Error {
     super();
     Error.captureStackTrace(this, this.constructor);
     this.code = code || 500;
-    this.type = this.constructor.name;
+    this.name = this.constructor.name;
     this.message = message || 'Internal Server Error.';
   }
 }
