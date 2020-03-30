@@ -3,13 +3,11 @@ module.exports = (sequelize, DataTypes) => {
   const Quiz = sequelize.define(
     'Quiz',
     {
-      // Identifier of the quiz.
       id: {
         type: DataTypes.INTEGER,
         primaryKey: true,
         autoIncrement: true
       },
-      // Name of the quiz.
       name: {
         type: DataTypes.STRING,
         allowNull: false,
@@ -30,6 +28,19 @@ module.exports = (sequelize, DataTypes) => {
       tableName: 'quizzes'
     }
   );
+
+  // Define the quiz associations.
+  Quiz.associate = (models) => {
+    // A quiz has many questions.
+    Quiz.hasMany(models.Question, {
+      foreignKey: 'quizId'
+    });
+
+    // A quiz has many answers.
+    Quiz.hasMany(models.Answer, {
+      foreignKey: 'quizId'
+    });
+  };
 
   return Quiz;
 };
