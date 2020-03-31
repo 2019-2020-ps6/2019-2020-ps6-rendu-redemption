@@ -26,7 +26,7 @@ import {animate, state, style, transition, trigger} from '@angular/animations';
 
 export class QuestionsComponent implements OnInit {
 
-  @Output() goToNextQuestion = new EventEmitter();
+  @Output() goToNextQuestion : EventEmitter<Answer> = new EventEmitter<Answer>();
   @Input() question: Question;
   forAnimation: String[];
 
@@ -55,7 +55,7 @@ export class QuestionsComponent implements OnInit {
   goToNext(i: number) {
     if(i == -2 || this.forAnimation[i] === "correct") {
       console.log("AAAAAAAAAAAH");
-      this.goToNextQuestion.emit();
+      this.goToNextQuestion.emit(this.question.answers[i]);
     }
   }
 }

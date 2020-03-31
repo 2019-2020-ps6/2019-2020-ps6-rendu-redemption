@@ -1,3 +1,4 @@
-<div class="card">
-  <app-questionToAnswer [question]="getQuestion()" (goToNextQuestion)="getNextQuestion()"></app-questionToAnswer>
+<div [ngSwitch]="isQuestionVisible">
+  <app-questionToAnswer *ngSwitchCase="true" [@makeQuestionDisappear]="isQuestionVisible" [question]="getQuestion()" (goToNextQuestion)="getNextQuestion($event)"></app-questionToAnswer>
+  <div style="opacity: 0" [@makeAnswerAppear]="!isQuestionVisible"> La bonne réponse était {{rightAnswer}}</div>
 </div>
