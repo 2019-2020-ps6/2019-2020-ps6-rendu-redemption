@@ -1,15 +1,17 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
-import {QuizzComponent} from './quizz/quizz.component';
-
+import {QuestionsComponent} from './questions/questions.component';
+import {QuizzesComponent} from './quizzes/quizzes.component';
 
 const routes: Routes = [
-  {path: 'quizz', component: QuizzComponent},
-  {path: '', redirectTo: '/quizz', pathMatch: 'full'},
+  {path: 'quizzes', component: QuizzesComponent},
+  {path: 'questions', component: QuestionsComponent},
+  {path: '', redirectTo: '/questions', pathMatch: 'full'},
 ];
 
 @NgModule({
   imports: [RouterModule.forRoot(routes)],
   exports: [RouterModule]
 })
+
 export class AppRoutingModule { }

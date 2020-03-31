@@ -9,18 +9,13 @@ import {QUESTION_MOCK} from '../mocks/questions.mock';
 })
 export class QuestionService {
   /**
-   * Services Documentation:
-   * https://angular.io/docs/ts/latest/tutorial/toh-pt4.html
-   */
-
-  /**
-   * The list of quiz.
+   * The list of questions.
    * The list is retrieved from the mock.
    */
   private question: Question = QUESTION_MOCK;
 
   /**
-   * Observable which contains the list of the quiz.
+   * Observable which contains the list of the questions.
    * Naming convention: Add '$' at the end of the variable name to highlight it as an Observable.
    */
   public questionBehaviorSubject: BehaviorSubject<Question> = new BehaviorSubject(this.question);
@@ -28,7 +23,7 @@ export class QuestionService {
   constructor() {
   }
 
-  getQuestion() : Question{
+  getQuestion(): Question {
     //TODO récupérer une nouvelle question
     return this.question;
   }
