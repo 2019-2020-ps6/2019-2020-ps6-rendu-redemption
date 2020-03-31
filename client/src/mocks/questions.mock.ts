@@ -10,6 +10,10 @@ export const QUESTION_MOCK: Question = {
     {
       value: 'La grande illusion',
       isCorrect: true,
+    },
+    {
+      value: 'Avengers Endgame',
+      isCorrect: false,
     }
   ]
 };
