@@ -5,5 +5,5 @@ export const QUIZZ_MOCK: Quizz = {
   themeId: 1,
   imageId: 1,
   name: 'Animaux',
-  keywords: 'Nature'
+  keywords: 'nature'
 };

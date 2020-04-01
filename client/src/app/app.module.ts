@@ -8,6 +8,7 @@ import { HeaderComponent } from './header/header.component';
 import { QuestionsComponent } from './questions/questions.component';
 import { QuizzComponent } from './quizz/quizz.component';
 import {QuizzesComponent} from './quizzes/quizzes.component';
+import {ThemesComponent} from "./themes/themes.component";
 
 
 @NgModule({
@@ -16,7 +17,8 @@ import {QuizzesComponent} from './quizzes/quizzes.component';
     HeaderComponent,
     QuestionsComponent,
     QuizzComponent,
-    QuizzesComponent
+    QuizzesComponent,
+    ThemesComponent
   ],
   imports: [
     BrowserModule,
