@@ -19,7 +19,9 @@ exports.findAll = (req, res, next) => {
       if (quiz) {
         // Find the questions.
         quiz
-          .getQuestions()
+          .getQuestions({
+            order: [['orderNb', 'ASC']]
+          })
           .then((questions) => {
             // Success.
             res
@@ -27,7 +29,9 @@ exports.findAll = (req, res, next) => {
               .json({
                 data: questions
               });
-          });
+          })
+          // Errors.
+          .catch(next);
       } else {
         // Quiz not found.
         next(new NotFoundError());
@@ -68,7 +72,9 @@ exports.create = (req, res, next) => {
                   message: 'The question has been created.'
                 }
               });
-          });
+          })
+          // Errors.
+          .catch(next);
       } else {
         // Quiz not found.
         next(new NotFoundError());
@@ -119,6 +125,7 @@ exports.updateById = (req, res, next) => {
   models.Question
     .update(
       {
+        orderNb: req.body.orderNb,
         label: req.body.label
       },
       {

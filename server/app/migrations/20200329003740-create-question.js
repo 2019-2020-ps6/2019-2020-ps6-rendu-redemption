@@ -18,6 +18,10 @@ module.exports = {
         onDelete: 'CASCADE',
         allowNull: false
       },
+      orderNb: {
+        type: Sequelize.INTEGER,
+        allowNull: false
+      },
       label: {
         type: Sequelize.STRING,
         allowNull: false
