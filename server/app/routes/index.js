@@ -1,13 +1,17 @@
 const { Router } = require('express');
-const QuizzesRouter = require('./quizzes');
 const StatusRouter = require('./status');
+const QuizRouter = require('./quizzes');
+const GuestRouter = require('./guests');
 
 const router = new Router();
 
 // Status routes.
 router.use('/status', StatusRouter);
 
-// Quizzes routes.
-router.use('/quizzes', QuizzesRouter);
+// Quiz routes.
+router.use('/quizzes', QuizRouter);
+
+// Guest routes.
+router.use('/guests', GuestRouter);
 
 module.exports = router;
