@@ -30,7 +30,9 @@ exports.findAll = (req, res, next) => {
               .json({
                 data: answers
               });
-          });
+          })
+          // Errors.
+          .catch(next);
       } else {
         // Question not found.
         next(new NotFoundError());
@@ -74,7 +76,9 @@ exports.create = (req, res, next) => {
                   message: 'The answer has been created.'
                 }
               });
-          });
+          })
+          // Errors.
+          .catch(next);
       } else {
         // Question not found.
         next(new NotFoundError());
