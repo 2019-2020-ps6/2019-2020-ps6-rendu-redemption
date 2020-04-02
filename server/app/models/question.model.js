@@ -1,5 +1,3 @@
-const Sequelize = require('sequelize');
-
 module.exports = (sequelize, DataTypes) => {
   // Define the question model.
   const Question = sequelize.define('Question', {

@@ -13,7 +13,7 @@ router.get('/', (req, res, next) => {
         .status(200)
         .json({
           data: {
-            status: "ok"
+            status: 'ok'
           }
         });
     })

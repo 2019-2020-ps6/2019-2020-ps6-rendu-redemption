@@ -48,5 +48,5 @@ module.exports = {
     }
   }),
   // Drop the answers table.
-  down: (queryInterface, Sequelize) => queryInterface.dropTable('answers')
+  down: (queryInterface) => queryInterface.dropTable('answers')
 };

@@ -20,7 +20,7 @@ app.use(jsonParser);
 app.use(urlencodedParser);
 app.use(logger);
 app.use(routes);
-//app.use(notFoundHandler);
+app.use(notFoundHandler);
 app.use(errorHandler);
 
 // Start the application.

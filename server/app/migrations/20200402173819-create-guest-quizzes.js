@@ -33,5 +33,5 @@ module.exports = {
     }
   }),
   // Drop the guest_quizzes table.
-  down: (queryInterface, Sequelize) => queryInterface.dropTable('guest_quizzes')
+  down: (queryInterface) => queryInterface.dropTable('guest_quizzes')
 };
