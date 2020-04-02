@@ -2,38 +2,28 @@ const Sequelize = require('sequelize');
 
 module.exports = (sequelize, DataTypes) => {
   // Define the question model.
-  const Question = sequelize.define(
-    'Question',
-    {
-      id: {
-        type: DataTypes.INTEGER,
-        primaryKey: true,
-        autoIncrement: true
-      },
-      orderNb: {
-        type: DataTypes.INTEGER,
-        allowNull: true
-      },
-      label: {
-        type: DataTypes.STRING,
-        allowNull: false,
-        validate: {
-          notNull: {
-            args: true,
-            msg: 'The \'label\' input cannot be null.'
-          },
-          notEmpty: {
-            args: true,
-            msg: 'The \'label\' input cannot be empty.'
-          }
-        }
-      }
+  const Question = sequelize.define('Question', {
+    id: {
+      type: DataTypes.INTEGER,
+      primaryKey: true,
+      autoIncrement: true
     },
-    {
-      // Set the table name.
-      tableName: 'questions'
+    orderNb: {
+      type: DataTypes.INTEGER,
+      allowNull: true
+    },
+    label: {
+      type: DataTypes.STRING,
+      allowNull: false,
+      validate: {
+        notNull: true,
+        notEmpty: true
+      }
     }
-  );
+  },
+  {
+    tableName: 'questions'
+  });
 
   // Define the question order at creation.
   Question.addHook('beforeCreate', (question) => new Promise((resolve) => {

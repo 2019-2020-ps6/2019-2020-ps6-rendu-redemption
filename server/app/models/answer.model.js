@@ -1,41 +1,31 @@
 module.exports = (sequelize, DataTypes) => {
   // Define the answer model.
-  const Answer = sequelize.define(
-    'Answer',
-    {
-      id: {
-        type: DataTypes.INTEGER,
-        primaryKey: true,
-        autoIncrement: true
-      },
-      orderNb: {
-        type: DataTypes.INTEGER,
-        allowNull: true
-      },
-      value: {
-        type: DataTypes.STRING,
-        allowNull: false,
-        validate: {
-          notNull: {
-            args: true,
-            msg: 'The \'value\' input cannot be null.'
-          },
-          notEmpty: {
-            args: true,
-            msg: 'The \'value\' input cannot be empty.'
-          }
-        }
-      },
-      isCorrect: {
-        type: DataTypes.BOOLEAN,
-        allowNull: false
+  const Answer = sequelize.define('Answer', {
+    id: {
+      type: DataTypes.INTEGER,
+      primaryKey: true,
+      autoIncrement: true
+    },
+    orderNb: {
+      type: DataTypes.INTEGER,
+      allowNull: true
+    },
+    value: {
+      type: DataTypes.STRING,
+      allowNull: false,
+      validate: {
+        notNull: true,
+        notEmpty: true
       }
     },
-    {
-      // Set the table name.
-      tableName: 'answers'
+    isCorrect: {
+      type: DataTypes.BOOLEAN,
+      allowNull: false
     }
-  );
+  },
+  {
+    tableName: 'answers'
+  });
 
   // Define the answer order at creation.
   Answer.addHook('beforeCreate', (answer) => new Promise((resolve) => {

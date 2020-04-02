@@ -1,33 +1,23 @@
 module.exports = (sequelize, DataTypes) => {
   // Define the quiz model.
-  const Quiz = sequelize.define(
-    'Quiz',
-    {
-      id: {
-        type: DataTypes.INTEGER,
-        primaryKey: true,
-        autoIncrement: true
-      },
-      name: {
-        type: DataTypes.STRING,
-        allowNull: false,
-        validate: {
-          notNull: {
-            args: true,
-            msg: 'The \'name\' input cannot be null.'
-          },
-          notEmpty: {
-            args: true,
-            msg: 'The \'name\' input cannot be empty.'
-          }
-        }
-      }
+  const Quiz = sequelize.define('Quiz', {
+    id: {
+      type: DataTypes.INTEGER,
+      primaryKey: true,
+      autoIncrement: true
     },
-    {
-      // Set the table name.
-      tableName: 'quizzes'
+    name: {
+      type: DataTypes.STRING,
+      allowNull: false,
+      validate: {
+        notNull: true,
+        notEmpty: true
+      }
     }
-  );
+  },
+  {
+    tableName: 'quizzes'
+  });
 
   // Define the quiz associations.
   Quiz.associate = (models) => {
