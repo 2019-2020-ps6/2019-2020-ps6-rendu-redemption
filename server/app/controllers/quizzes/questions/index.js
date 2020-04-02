@@ -1,5 +1,6 @@
 const models = require('../../../models');
 const NotFoundError = require('../../../utils/errors/not-found-error');
+const LimitReachedError = require('../../../utils/errors/limit-reached-error');
 
 /**
  * Finds all the questions.
@@ -57,21 +58,33 @@ exports.create = (req, res, next) => {
     })
     .then((quiz) => {
       if (quiz) {
-        // Create the question.
+        // Count the questions.
         quiz
-          .createQuestion({
-            label: req.body.label
-          })
-          .then((question) => {
-            // Created.
-            res
-              .status(201)
-              .json({
-                data: {
-                  id: question.id,
-                  message: 'The question has been created.'
-                }
-              });
+          .countQuestions()
+          .then((number) => {
+            if (number < 20) {
+              // Create the question.
+              quiz
+                .createQuestion({
+                  label: req.body.label
+                })
+                .then((question) => {
+                  // Created.
+                  res
+                    .status(201)
+                    .json({
+                      data: {
+                        id: question.id,
+                        message: 'The question has been created.'
+                      }
+                    });
+                })
+                // Errors.
+                .catch(next);
+            } else {
+              // Too many questions.
+              next(new LimitReachedError());
+            }
           })
           // Errors.
           .catch(next);
