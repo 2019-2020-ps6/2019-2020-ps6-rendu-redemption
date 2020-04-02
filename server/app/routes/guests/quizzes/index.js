@@ -1,5 +1,5 @@
 const { Router } = require('express');
-const GuestQuizzesController = require('../../../controllers/guests/quizzes');
+const GuestQuizzesController = require('../../../controllers/guest-quizzes.controller');
 
 const router = new Router({ mergeParams: true });
 

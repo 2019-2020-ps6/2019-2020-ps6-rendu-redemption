@@ -1,5 +1,5 @@
 const { Router } = require('express');
-const AnswerController = require('../../../../controllers/quizzes/questions/answers');
+const AnswerController = require('../../../../controllers/answer.controller');
 
 const router = new Router({ mergeParams: true });
 

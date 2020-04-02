@@ -1,5 +1,5 @@
-const models = require('../../models');
-const NotFoundError = require('../../utils/errors/not-found-error');
+const models = require('../models');
+const NotFoundError = require('../utils/errors/not-found-error');
 
 /**
  * Finds all the guests.

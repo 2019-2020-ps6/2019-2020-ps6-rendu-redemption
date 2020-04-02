@@ -1,40 +1,40 @@
-const models = require('../../../../models');
-const NotFoundError = require('../../../../utils/errors/not-found-error');
-const LimitReachedError = require('../../../../utils/errors/limit-reached-error');
+const models = require('../models');
+const NotFoundError = require('../utils/errors/not-found-error');
+const LimitReachedError = require('../utils/errors/limit-reached-error');
+
 /**
- * Finds all the answers.
+ * Finds all the questions.
  * @param req The request object.
  * @param res The response object.
  * @param next The callback for the next middleware.
  */
 exports.findAll = (req, res, next) => {
-  // Find the question.
-  models.Question
+  // Find the quiz.
+  models.Quiz
     .findOne({
       where: {
-        id: req.params.questionId,
-        quizId: req.params.quizId
+        id: req.params.quizId
       }
     })
-    .then((question) => {
-      if (question) {
-        // Find the answers.
-        question
-          .getAnswers({
+    .then((quiz) => {
+      if (quiz) {
+        // Find the questions.
+        quiz
+          .getQuestions({
             order: [['orderNb', 'ASC']]
           })
-          .then((answers) => {
+          .then((questions) => {
             // Success.
             res
               .status(200)
               .json({
-                data: answers
+                data: questions
               });
           })
           // Errors.
           .catch(next);
       } else {
-        // Question not found.
+        // Quiz not found.
         next(new NotFoundError());
       }
     })
@@ -43,54 +43,82 @@ exports.findAll = (req, res, next) => {
 };
 
 /**
- * Creates an answer.
+ * Creates a question.
  * @param req The request object.
  * @param res The response object.
  * @param next The callback for the next middleware.
  */
 exports.create = (req, res, next) => {
-  // Find the question.
-  models.Question
+  // Find the quiz.
+  models.Quiz
     .findOne({
       where: {
-        id: req.params.questionId,
-        quizId: req.params.quizId
+        id: req.params.quizId
       }
     })
-    .then((question) => {
-      if (question) {
-        // Count the answers.
-        question
-          .countAnswers()
+    .then((quiz) => {
+      if (quiz) {
+        // Count the questions.
+        quiz
+          .countQuestions()
           .then((number) => {
-            if (number < 4) {
-              // Create the answer.
-              question
-                .createAnswer({
-                  quizId: req.params.quizId,
-                  value: req.body.value,
-                  isCorrect: req.body.isCorrect
+            if (number < 20) {
+              // Create the question.
+              quiz
+                .createQuestion({
+                  label: req.body.label
                 })
-                .then((answer) => {
+                .then((question) => {
                   // Created.
                   res
                     .status(201)
                     .json({
                       data: {
-                        id: answer.id,
-                        message: 'The answer has been created.'
+                        id: question.id,
+                        message: 'The question has been created.'
                       }
                     });
                 })
                 // Errors.
                 .catch(next);
             } else {
-              // Too many answers.
+              // Too many questions.
               next(new LimitReachedError());
             }
           })
           // Errors.
           .catch(next);
+      } else {
+        // Quiz not found.
+        next(new NotFoundError());
+      }
+    })
+    // Errors.
+    .catch(next);
+};
+
+/**
+ * Finds a question by id.
+ * @param req The request object.
+ * @param res The response object.
+ * @param next The callback for the next middleware.
+ */
+exports.findById = (req, res, next) => {
+  // Find the question.
+  models.Question
+    .findOne({
+      where: {
+        id: req.params.questionId,
+        quizId: req.params.quizId
+      }
+    })
+    .then((question) => {
+      if (question) {
+        // Found.
+        res.status(200);
+        res.json({
+          data: question
+        });
       } else {
         // Question not found.
         next(new NotFoundError());
@@ -101,56 +129,22 @@ exports.create = (req, res, next) => {
 };
 
 /**
- * Finds an answer by id.
- * @param req The request object.
- * @param res The response object.
- * @param next The callback for the next middleware.
- */
-exports.findById = (req, res, next) => {
-  // Find the answer.
-  models.Answer
-    .findOne({
-      where: {
-        id: req.params.answerId,
-        quizId: req.params.quizId,
-        questionId: req.params.questionId
-      }
-    })
-    .then((answer) => {
-      if (answer) {
-        // Found.
-        res
-          .status(200)
-          .json({
-            data: answer
-          });
-      } else {
-        // Answer not found.
-        next(new NotFoundError());
-      }
-    })
-    // Errors.
-    .catch(next);
-};
-
-/**
- * Updates an answer by id.
+ * Updates a question by id.
  * @param req The request object.
  * @param res The response object.
  * @param next The callback for the next middleware.
  */
 exports.updateById = (req, res, next) => {
-  models.Answer
+  models.Question
     .update(
       {
-        value: req.body.value,
-        isCorrect: req.body.isCorrect
+        orderNb: req.body.orderNb,
+        label: req.body.label
       },
       {
         where: {
-          id: req.params.answerId,
-          quizId: req.params.quizId,
-          questionId: req.params.questionId
+          id: req.params.questionId,
+          quizId: req.params.quizId
         }
       }
     )
@@ -161,12 +155,12 @@ exports.updateById = (req, res, next) => {
           .status(200)
           .json({
             data: {
-              id: req.params.answerId,
-              message: 'The answer has been updated.'
+              id: req.params.questionId,
+              message: 'The question has been updated.'
             }
           });
       } else {
-        // Answer not found.
+        // Question not found.
         next(new NotFoundError());
       }
     })
@@ -175,32 +169,32 @@ exports.updateById = (req, res, next) => {
 };
 
 /**
- * Deletes an answer by id.
+ * Deletes a question by id.
  * @param req The request object.
  * @param res The response object.
  * @param next The callback for the next middleware.
  */
 exports.deleteById = (req, res, next) => {
-  models.Answer
+  models.Question
     .destroy({
       where: {
-        id: req.params.answerId,
-        quizId: req.params.quizId,
-        questionId: req.params.questionId
+        id: req.params.questionId,
+        quizId: req.params.quizId
       }
     })
     .then((destroyedRows) => {
       if (destroyedRows > 0) {
         // Deleted.
-        res.status(200);
-        res.json({
-          data: {
-            id: req.params.questionId,
-            message: 'The answer has been deleted.'
-          }
-        });
+        res
+          .status(200)
+          .json({
+            data: {
+              id: req.params.questionId,
+              message: 'The question has been deleted.'
+            }
+          });
       } else {
-        // Answer not found.
+        // Question not found.
         next(new NotFoundError());
       }
     })

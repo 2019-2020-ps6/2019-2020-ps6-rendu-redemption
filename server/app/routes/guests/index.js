@@ -1,6 +1,6 @@
 const { Router } = require('express');
 const GuestQuizzesRouter = require('./quizzes');
-const GuestController = require('../../controllers/guests');
+const GuestController = require('../../controllers/guest.controller');
 
 const router = new Router();
 
