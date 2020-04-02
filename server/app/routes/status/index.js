@@ -9,8 +9,13 @@ router.get('/', (req, res, next) => {
     .authenticate()
     .then(() => {
       // Success.
-      res.status(200);
-      res.json('ok');
+      res
+        .status(200)
+        .json({
+          data: {
+            status: "ok"
+          }
+        });
     })
     // Errors.
     .catch(next);
