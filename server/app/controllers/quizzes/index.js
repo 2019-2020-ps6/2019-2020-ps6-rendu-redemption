@@ -139,7 +139,7 @@ exports.deleteById = (req, res, next) => {
             }
           });
       } else {
-        // Not found error.
+        // Quiz not found.
         next(new NotFoundError());
       }
     })
