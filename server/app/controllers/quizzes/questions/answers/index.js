@@ -1,6 +1,6 @@
 const models = require('../../../../models');
 const NotFoundError = require('../../../../utils/errors/not-found-error');
-
+const LimitReachedError = require('../../../../utils/errors/limit-reached-error');
 /**
  * Finds all the answers.
  * @param req The request object.
@@ -59,23 +59,35 @@ exports.create = (req, res, next) => {
     })
     .then((question) => {
       if (question) {
-        // Create the answer.
+        // Count the answers.
         question
-          .createAnswer({
-            quizId: req.params.quizId,
-            value: req.body.value,
-            isCorrect: req.body.isCorrect
-          })
-          .then((answer) => {
-            // Created.
-            res
-              .status(201)
-              .json({
-                data: {
-                  id: answer.id,
-                  message: 'The answer has been created.'
-                }
-              });
+          .countAnswers()
+          .then((number) => {
+            if (number < 4) {
+              // Create the answer.
+              question
+                .createAnswer({
+                  quizId: req.params.quizId,
+                  value: req.body.value,
+                  isCorrect: req.body.isCorrect
+                })
+                .then((answer) => {
+                  // Created.
+                  res
+                    .status(201)
+                    .json({
+                      data: {
+                        id: answer.id,
+                        message: 'The answer has been created.'
+                      }
+                    });
+                })
+                // Errors.
+                .catch(next);
+            } else {
+              // Too many answers.
+              next(new LimitReachedError());
+            }
           })
           // Errors.
           .catch(next);
