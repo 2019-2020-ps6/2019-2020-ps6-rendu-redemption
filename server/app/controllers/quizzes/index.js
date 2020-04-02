@@ -10,7 +10,9 @@ const NotFoundError = require('../../utils/errors/not-found-error');
 exports.findAll = (req, res, next) => {
   // Find the quizzes.
   models.Quiz
-    .findAll()
+    .findAll({
+      order: [['id', 'ASC']]
+    })
     .then((quizzes) => {
       // Success.
       res.status(200);

@@ -20,7 +20,9 @@ exports.findAll = (req, res, next) => {
       if (question) {
         // Find the answers.
         question
-          .getAnswers()
+          .getAnswers({
+            order: [['orderNb', 'ASC']]
+          })
           .then((answers) => {
             // Success.
             res
