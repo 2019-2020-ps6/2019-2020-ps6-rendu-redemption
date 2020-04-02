@@ -23,11 +23,15 @@ sudo systemctl start docker
 ```bash
 sudo docker-compose up
 ```
-4. Run the database migrations.
+4. Undo the previous migrations.
+```bash
+npx sequelize db:migrate:undo:all
+```
+5. Run the database migrations.
 ```bash
 npx sequelize db:migrate
 ```
-5. Run the server.
+6. Run the server.
 ```bash
 npm run dev
 ```
