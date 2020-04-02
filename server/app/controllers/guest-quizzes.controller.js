@@ -1,6 +1,7 @@
 const models = require('../models');
 const NotFoundError = require('../utils/errors/not-found-error');
 const AlreadyExistsError = require('../utils/errors/already-exists-error');
+
 /**
  * Finds all the quizzes of the guest.
  * @param req The request object.

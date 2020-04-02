@@ -1,4 +1,5 @@
 module.exports = {
+  // Create the guests table.
   up: (queryInterface, Sequelize) => queryInterface.createTable('guests', {
     id: {
       type: Sequelize.INTEGER,
@@ -22,6 +23,6 @@ module.exports = {
       allowNull: false
     }
   }),
-  // Drop the answers table.
+  // Drop the guests table.
   down: (queryInterface, Sequelize) => queryInterface.dropTable('guests')
 };
