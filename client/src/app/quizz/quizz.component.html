@@ -1,4 +1,5 @@
-<div [ngSwitch]="isQuestionVisible">
-  <app-questionToAnswer *ngSwitchCase="true" [@makeQuestionDisappear]="isQuestionVisible" [question]="getQuestion()" (goToNextQuestion)="getNextQuestion($event)"></app-questionToAnswer>
-  <div class="rightAnswer" style="opacity: 0" [@makeAnswerAppear]="!isQuestionVisible"> La bonne réponse était : <br> {{rightAnswer}}</div>
-</div>
+<app-questionToAnswer *ngIf="isQuestionVisible" (@makeAnswerAppear.done)="makeAnswerAppear()"
+                      [@makeQuestionDisappear]="isQuestionVisible" [question]="ongoingQuestion"
+                      (goToNextQuestion)="getNextQuestion($event)"></app-questionToAnswer>
+<div class="rightAnswer" style="opacity: 0" *ngIf="isAnswerVisible" [@makeAnswerAppear]="!isQuestionVisible"> La bonne
+  réponse était : <br> {{rightAnswer}}</div>

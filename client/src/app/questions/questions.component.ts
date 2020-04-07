@@ -12,7 +12,8 @@ import {animate, state, style, transition, trigger} from '@angular/animations';
         backgroundColor: "#00FF00"
       })),
       state("incorrect", style({
-        opacity: 0
+        opacity: 0,
+        visibility:"hidden"
       })),
       transition('* => correct', [
         animate('0.25s')
@@ -52,11 +53,11 @@ export class QuestionsComponent implements OnInit {
     }
   }
 
-  goToNext(i: number) {
+  goToNext(i: number, event: AnimationEvent) {
     if(i == -2 || this.forAnimation[i] === "correct") {
-      console.log("AAAAAAAAAAAH");
       this.goToNextQuestion.emit(this.question.answers[i]);
     }
   }
+
 }
 

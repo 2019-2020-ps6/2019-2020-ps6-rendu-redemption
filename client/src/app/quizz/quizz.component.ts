@@ -1,7 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {Question} from '../../models/question.model';
 import {Answer} from '../../models/answer.model';
-import {QuestionService} from '../../services/question.service';
+import {QuizzService} from '../../services/quizz.service';
 import {animate, state, style, transition, trigger} from '@angular/animations';
 @Component({
   selector: 'app-quizzToAnswer',
@@ -9,9 +9,6 @@ import {animate, state, style, transition, trigger} from '@angular/animations';
   styleUrls: ['./quizz.component.scss'],
   animations: [
     trigger("makeQuestionDisappear",[
-      state("true", style({
-        opacity: "1"
-      })),
       transition(':leave', [
         animate('1s',style({opacity: 0}))
       ]),
@@ -23,37 +20,38 @@ import {animate, state, style, transition, trigger} from '@angular/animations';
       state("false", style({
         opacity: "0"
       })),
-      transition('false => true', [
-        animate('1s 1s')
+      transition(':enter', [
+        animate('1s')
       ]),
-      transition('true => false', [
-        animate('1s 1s')
+      transition(':leave', [
+        animate('1s')
       ]),
     ])
   ]
 })
 
 export class QuizzComponent implements OnInit {
-
+  isAnswerVisible: boolean = false;
   isQuestionVisible : boolean = true;
   rightAnswer : String;
-  constructor(public questionsService : QuestionService) {
+  ongoingQuestion: Question;
+  constructor(public quizService : QuizzService) {
   }
 
 
   ngOnInit() {
-  }
-
-  getQuestion() : Question {
-    return this.questionsService.getQuestion();
+    this.ongoingQuestion = this.quizService.getQuestion();
   }
 
   getNextQuestion(answer : Answer) {
-    //TODO mettre l'écran de chargement
     this.rightAnswer = answer.value;
     this.isQuestionVisible = false;
-    let q = this.questionsService.getQuestion();
-    //TODO revenir à la question
+    let q = this.quizService.getNextQuestion();
+
+  }
+
+  makeAnswerAppear(){
+    this.isAnswerVisible = true;
   }
 }
 
