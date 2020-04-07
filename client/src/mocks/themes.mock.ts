@@ -9,7 +9,7 @@ export const THEME_MOCK: Theme[] = [
   },
   {
     id: 2,
-    imageId: 2,
+    imageId: 3,
     name: 'Sport',
     keywords: 'sport'
   }];
