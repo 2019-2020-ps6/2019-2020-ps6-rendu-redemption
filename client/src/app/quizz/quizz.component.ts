@@ -3,6 +3,7 @@ import {Question} from '../../models/question.model';
 import {Answer} from '../../models/answer.model';
 import {QuizzService} from '../../services/quizz.service';
 import {animate, state, style, transition, trigger} from '@angular/animations';
+
 @Component({
   selector: 'app-quizzToAnswer',
   templateUrl: './quizz.component.html',
@@ -35,19 +36,21 @@ export class QuizzComponent implements OnInit {
   isQuestionVisible : boolean = true;
   rightAnswer : String;
   ongoingQuestion: Question;
+
+
   constructor(public quizService : QuizzService) {
   }
-
 
   ngOnInit() {
     this.ongoingQuestion = this.quizService.getQuestion();
   }
 
   getNextQuestion(answer : Answer) {
+    let q = this.ongoingQuestion;
     this.rightAnswer = answer.value;
     this.isQuestionVisible = false;
-    let q = this.quizService.getNextQuestion();
-
+    this.ongoingQuestion = {...this.quizService.getNextQuestion()};
+    console.log("Le père a changé ongoingQuestion", this.ongoingQuestion);
   }
 
   makeAnswerAppear(){
