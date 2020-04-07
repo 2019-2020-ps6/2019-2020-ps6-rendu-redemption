@@ -1,14 +1,10 @@
 <div class="themes">
-    <div class="card" *ngFor="let theme of themes; let i = index" >
-      <h2>
-        {{theme.name}}
-      </h2>
-      <img src="https://i.pinimg.com/236x/bd/19/d6/bd19d6111c31405be7899fc26400cea6--el-hobbit-green-man.jpg" width="152" height="228">
-    </div>
+    <a href="../quizzes">
+        <div class="card" *ngFor="let theme of themes; let i = index" >
+            <h2>
+                {{theme.name}}
+            </h2>
+            <img src="{{this.getImageById(theme.imageId).path}}" width="200" height="300">
+          </div>
+    </a>
 </div>
-
-
-
-
-
-

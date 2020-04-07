@@ -1,6 +1,8 @@
 import {Component, OnInit} from "@angular/core";
 import {ThemeService} from "../../services/theme.service";
+import {ImageService} from "../../services/image.service";
 import {Theme} from "../../models/theme.model";
+import {Image} from "../../models/image.model";
 @Component({
   selector: 'app-themes',
   templateUrl: './themes.component.html',
@@ -10,13 +12,18 @@ import {Theme} from "../../models/theme.model";
 export class ThemesComponent implements OnInit {
 
   themes: Theme[];
+  images: Image[];
 
-  constructor(private themeService: ThemeService) {
+  constructor(private themeService: ThemeService, private imageService: ImageService) {
   }
 
   ngOnInit() {
     this.themes = this.themeService.getThemes();
+    this.images = this.imageService.getImages();
   }
 
+  getImageById(id: number): Image {
+      return this.images.find(image => image.id == id);
+  }
 }
 
