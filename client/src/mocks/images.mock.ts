@@ -9,7 +9,19 @@ export const IMAGE_MOCK: Image[] = [
   },
   {
     id: 2,
-    name: 'Sport',
+    name: 'Cheval',
     path: 'https://contre-galop.com/wp-content/uploads/2017/12/Loulou-380x570.jpg',
     keywords: 'cheval'
+  },
+  {
+    id: 3,
+    name: 'Curling',
+    path: 'http://images.pausecafein.fr/images/cafein/2016/07/sports-ridicules/cinemadegenre-curling-king.jpg',
+    keywords: 'sport'
+  },
+  {
+    id: 4,
+    name: 'Piaf',
+    path: 'https://pbs.twimg.com/media/CsjebjQXEAAqk3K.jpg',
+    keywords: 'oiseau'
   }];
