@@ -1,10 +1,9 @@
-
-
-<div class="card" *ngFor="let quiz of getRelatedQuizzes(); let i = index" >
-    <h2>
-      {{quiz.name}}
-    </h2>
-    <img src="{{this.getImageById(quiz.imageId).path}}" width="200" height="300">
+<div class="quizzes">
+    <div class="card" *ngFor="let quiz of getRelatedQuizzes(); let i = index" (click)="goToRelatedQuizz(quiz.id)">
+        <h2>
+            {{quiz.name}}
+        </h2>
+        <img src="{{this.getImageById(quiz.imageId).path}}" width="200" height="300">
+    </div>
 </div>
-
 

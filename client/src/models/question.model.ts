@@ -1,6 +1,9 @@
 import {Answer} from './answer.model';
 
 export interface Question {
-  label: string;
-  answers: Answer[];
+    id: number;
+    quizId: number;
+    imageId: number;
+    label: string;
+    answers: Answer[];
 }

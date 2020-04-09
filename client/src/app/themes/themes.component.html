@@ -1,8 +1,8 @@
 <div class="themes">
-        <div class="card" *ngFor="let theme of themes; let i = index" (click)="goToRelatedQuizzes(theme.id)" >
-            <h2>
-                {{theme.name}}
-            </h2>
-            <img src="{{this.getImageById(theme.imageId).path}}" width="200" height="300">
-          </div>
+    <div class="card" *ngFor="let theme of themes; let i = index" (click)="goToRelatedQuizzes(theme.id)" >
+        <h2>
+            {{theme.name}}
+        </h2>
+        <img src="{{this.getImageById(theme.imageId).path}}" width="200" height="300">
+    </div>
 </div>

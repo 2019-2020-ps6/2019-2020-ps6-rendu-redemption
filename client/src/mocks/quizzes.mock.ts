@@ -17,5 +17,13 @@ export const QUIZZ_MOCK: Quizz[] = [
     name: 'Oiseaux',
     keywords: 'nature',
     questions: QUESTIONS_MOCK
+  },
+  {
+    id: 3,
+    themeId: 2,
+    imageId: 3,
+    name: 'Curling',
+    keywords: 'sport',
+    questions: QUESTIONS_MOCK
   }
 ];
