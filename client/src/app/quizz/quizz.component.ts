@@ -9,52 +9,59 @@ import {animate, state, style, transition, trigger} from '@angular/animations';
   templateUrl: './quizz.component.html',
   styleUrls: ['./quizz.component.scss'],
   animations: [
-    trigger("makeQuestionDisappear",[
+    trigger('inAndOut', [
+      state('true', style({
+        opacity: '1'
+      })),
+      state('false', style({
+        opacity: '0'
+      })),
       transition(':leave', [
-        animate('1s',style({opacity: 0}))
+        animate('1s', style({opacity: 0}))
+      ]),
+      transition(':enter', [
+        animate('1s', style({opacity: 1}))
       ]),
     ]),
-    trigger("makeAnswerAppear",[
-      state("true", style({
-        opacity: "1"
-      })),
-      state("false", style({
-        opacity: "0"
-      })),
-      transition(':enter', [
-        animate('1s')
-      ]),
-      transition(':leave', [
-        animate('1s')
-      ]),
-    ])
   ]
 })
 
 export class QuizzComponent implements OnInit {
   isAnswerVisible: boolean = false;
-  isQuestionVisible : boolean = true;
-  rightAnswer : String;
+  isQuestionVisible: boolean = true;
+  rightAnswer: String;
   ongoingQuestion: Question;
 
-
-  constructor(public quizService : QuizzService) {
+  constructor(public quizService: QuizzService) {
   }
 
   ngOnInit() {
     this.ongoingQuestion = this.quizService.getQuestion();
   }
 
-  getNextQuestion(answer : Answer) {
-    let q = this.ongoingQuestion;
+  goToNextQuestion(answer: Answer) {
     this.rightAnswer = answer.value;
     this.isQuestionVisible = false;
-    this.ongoingQuestion = {...this.quizService.getNextQuestion()};
-    console.log("Le père a changé ongoingQuestion", this.ongoingQuestion);
+    //triggers "makeAnswerAppear()"
   }
 
-  makeAnswerAppear(){
-    this.isAnswerVisible = true;
+  async makeAnswerAppear() {
+    if (!this.isQuestionVisible) {
+      this.isAnswerVisible = true;
+      this.ongoingQuestion = await this.quizService.getNextQuestion();
+      console.log('Le père a changé ongoingQuestion', this.ongoingQuestion);
+      await this.delay(2000);
+      this.isAnswerVisible = false;
+      //triggers makeQuestionAppear
+    }
+  }
+
+  makeQuestionAppear() {
+    if(!this.isAnswerVisible)
+      this.isQuestionVisible = true;
+  }
+  async delay(ms: number) {
+    return new Promise(resolve => setTimeout(resolve, ms));
   }
 }
 

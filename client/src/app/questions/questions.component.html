@@ -5,7 +5,7 @@
     <p>Nombre de réponses: {{question.answers.length}}</p>
     <span>
         <div class="answers" *ngFor="let answer of question.answers; let i = index" >
-            <button [@isAnswerCorrect]="forAnimation[i]" (@isAnswerCorrect.done)="goToNext(i, $event)" class="button-card" (click)="verifyAnswer(answer)"> {{answer.value}} </button>
+            <button style="visibility: hidden;opacity: 0;" [@isAnswerCorrect]="forAnimation[i]" (@isAnswerCorrect.done)="goToNext(i, $event)" class="button-card" (click)="verifyAnswer(answer)"> {{answer.value}} </button>
         </div>
     </span>
 </div>

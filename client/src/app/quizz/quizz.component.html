@@ -1,5 +1,11 @@
-<app-questionToAnswer *ngIf="isQuestionVisible" (@makeAnswerAppear.done)="makeAnswerAppear()"
-                      [@makeQuestionDisappear]="isQuestionVisible" [question]="ongoingQuestion"
-                      (goToNextQuestion)="getNextQuestion($event)"></app-questionToAnswer>
-<div class="rightAnswer" style="opacity: 0" *ngIf="isAnswerVisible" [@makeAnswerAppear]="!isQuestionVisible"> La bonne
-  réponse était : <br> {{rightAnswer}}</div>
+<app-questionToAnswer style="opacity: 0" *ngIf="isQuestionVisible"
+                      (@inAndOut.done)="makeAnswerAppear()"
+                      [@inAndOut]="isQuestionVisible"
+                      [question]="ongoingQuestion"
+                      (goToNextQuestion)="goToNextQuestion($event)">
+</app-questionToAnswer>
+<div class="rightAnswer" style="opacity: 0" *ngIf="isAnswerVisible"
+     (@inAndOut.done)="makeQuestionAppear()"
+     [@inAndOut]="isAnswerVisible">
+  La bonne réponse était : <br> {{rightAnswer}}
+</div>

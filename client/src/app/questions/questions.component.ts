@@ -2,7 +2,6 @@ import {Component, DoCheck, EventEmitter, Input, OnChanges, OnInit, Output, Simp
 import {Question} from '../../models/question.model';
 import {Answer} from '../../models/answer.model';
 import {animate, state, style, transition, trigger} from '@angular/animations';
-import {interval, Subscription} from 'rxjs';
 
 @Component({
   selector: 'app-questionToAnswer',
@@ -10,12 +9,16 @@ import {interval, Subscription} from 'rxjs';
   styleUrls: ['./questions.component.scss'],
   animations: [
     trigger('isAnswerCorrect', [
+      state('null', style({
+        opacity: 1,
+        visibility: 'visible',
+      })),
       state('correct', style({
         backgroundColor: '#00FF00'
       })),
       state('incorrect', style({
         opacity: 0,
-        visibility: 'hidden'
+        visibility: 'hidden',
       })),
       transition('* => correct', [
         animate('0.25s')
@@ -32,7 +35,6 @@ export class QuestionsComponent implements OnInit, OnChanges {
   @Output() goToNextQuestion: EventEmitter<Answer> = new EventEmitter<Answer>();
   @Input() question: Question;
   forAnimation: String[];
-  sub: Subscription;
 
   constructor() {
   }
@@ -43,13 +45,6 @@ export class QuestionsComponent implements OnInit, OnChanges {
     for (let i = 0; i < this.question.answers.length; i++) {
       this.forAnimation[i] = null;
     }
-
-    const source = interval(10000);
-    this.sub = source.subscribe(val => this.oui());
-  }
-
-  oui(): void {
-    console.log(this.question);
   }
 
   verifyAnswer(answer: Answer) {
@@ -68,7 +63,10 @@ export class QuestionsComponent implements OnInit, OnChanges {
   }
 
   ngOnChanges(changes: SimpleChanges): void {
-    console.log('On a changé l\'input');
+    this.forAnimation = [];
+    for (let i = 0; i < this.question.answers.length; i++) {
+      this.forAnimation[i] = null;
+    }
   }
 
 }
