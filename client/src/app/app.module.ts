@@ -9,6 +9,9 @@ import { QuestionsComponent } from './questions/questions.component';
 import { QuizzComponent } from './quizz/quizz.component';
 import {QuizzesComponent} from './quizzes/quizzes.component';
 import {ThemesComponent} from "./themes/themes.component";
+import {MainComponent} from './main/main.component';
+import {GuestSelectionComponent} from './guest-selection/guest-selection.component';
+import {Ng2SearchPipeModule} from 'ng2-search-filter';
 
 
 @NgModule({
@@ -18,12 +21,15 @@ import {ThemesComponent} from "./themes/themes.component";
     QuestionsComponent,
     QuizzComponent,
     QuizzesComponent,
-    ThemesComponent
+    ThemesComponent,
+    MainComponent,
+    GuestSelectionComponent,
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
-    BrowserAnimationsModule
+    BrowserAnimationsModule,
+    Ng2SearchPipeModule
   ],
   providers: [],
   bootstrap: [AppComponent]

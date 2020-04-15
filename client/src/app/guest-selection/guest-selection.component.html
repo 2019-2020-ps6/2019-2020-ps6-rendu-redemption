@@ -1,0 +1,5 @@
+<input type="text" #nom placeholder="Recherche">
+<button (click)="modifyFilter(nom.value)">Rechercher</button>
+<div *ngFor="let guest of guestList | filter:searchElement">
+  <div class="row">{{guest.firstName}} {{guest.lastName}}</div>
+</div>
