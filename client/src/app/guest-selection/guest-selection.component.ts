@@ -12,6 +12,7 @@ import {Guest} from '../../models/guest.model';
 export class GuestSelectionComponent implements OnInit{
   guestList: Guest[];
   searchElement: string;
+  pageCount: number = 1;
 
   constructor(private guestService: GuestService, private router: Router) {
   }

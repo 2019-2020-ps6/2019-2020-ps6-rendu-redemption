@@ -12,6 +12,7 @@ import {ThemesComponent} from "./themes/themes.component";
 import {MainComponent} from './main/main.component';
 import {GuestSelectionComponent} from './guest-selection/guest-selection.component';
 import {Ng2SearchPipeModule} from 'ng2-search-filter';
+import {NgxPaginationModule} from 'ngx-pagination';
 
 
 @NgModule({
@@ -29,7 +30,8 @@ import {Ng2SearchPipeModule} from 'ng2-search-filter';
     BrowserModule,
     AppRoutingModule,
     BrowserAnimationsModule,
-    Ng2SearchPipeModule
+    Ng2SearchPipeModule,
+    NgxPaginationModule
   ],
   providers: [],
   bootstrap: [AppComponent]
