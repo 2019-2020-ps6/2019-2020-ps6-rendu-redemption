@@ -13,6 +13,8 @@ import {MainComponent} from './main/main.component';
 import {GuestSelectionComponent} from './play/guest-selection/guest-selection.component';
 import {Ng2SearchPipeModule} from 'ng2-search-filter';
 import {NgxPaginationModule} from 'ngx-pagination';
+import {GuestListComponent} from './management/guests/guest-list/guest-list.component';
+import {FontAwesomeModule} from '@fortawesome/angular-fontawesome';
 
 
 @NgModule({
@@ -25,13 +27,15 @@ import {NgxPaginationModule} from 'ngx-pagination';
     ThemesSelectionComponent,
     MainComponent,
     GuestSelectionComponent,
+    GuestListComponent,
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     BrowserAnimationsModule,
     Ng2SearchPipeModule,
-    NgxPaginationModule
+    NgxPaginationModule,
+    FontAwesomeModule,
   ],
   providers: [],
   bootstrap: [AppComponent]

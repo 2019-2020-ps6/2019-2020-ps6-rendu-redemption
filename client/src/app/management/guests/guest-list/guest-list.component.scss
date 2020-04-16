@@ -1,0 +1,39 @@
+@import '../../../../styles/variables';
+
+.invisibleRow {
+  position: relative;
+}
+
+.row {
+  font-size: xx-large;
+  background: $white;
+  border-radius: 2px;
+  position: relative;
+  box-shadow: 0 6px 10px rgba(0, 0, 0, 0.08), 0 0 6px rgba(0, 0, 0, 0.05);
+  padding-bottom: 2%;
+  padding-top: 2%;
+  margin-bottom: 2%;
+  margin-top: 2%;
+}
+
+.page {
+  padding: 2%;
+  position: relative;
+}
+
+//TODO en mobile ça marche pas bien
+.left {
+  display: inline;
+  position: absolute;
+  left: 10px;
+}
+
+.right {
+  display: inline;
+  position: absolute;
+  right: 10px;
+}
+
+.my-paginator {
+  //TODO
+}

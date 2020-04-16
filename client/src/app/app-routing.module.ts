@@ -5,13 +5,15 @@ import {PlayQuizComponent} from './play/play-quiz/play-quiz.component';
 import {ThemesSelectionComponent} from './play/themes-selection/themes-selection.component';
 import {MainComponent} from './main/main.component';
 import {GuestSelectionComponent} from './play/guest-selection/guest-selection.component';
+import {GuestListComponent} from './management/guests/guest-list/guest-list.component';
 
 const routes: Routes = [
   {path: '', component: MainComponent},
-  {path: 'guestSelection', component: GuestSelectionComponent},
+  {path: 'guest-selection', component: GuestSelectionComponent},
   {path: 'themes-selection', component: ThemesSelectionComponent},
   {path: 'quiz-selection', component: QuizSelectionComponent},
   {path: 'play-quiz', component: PlayQuizComponent},
+  {path: 'manage-guests', component: GuestListComponent}
 
 ];
 

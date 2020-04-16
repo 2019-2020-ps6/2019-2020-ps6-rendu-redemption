@@ -1,0 +1,31 @@
+<div class="page">
+  <div class="invisibleRow">
+    <div class="left">
+      <input type="text" #nom placeholder="Recherche">
+      <button>
+        <fa-icon [icon]="addIcon"></fa-icon>
+        Ajouter un accueilli
+      </button>
+    </div>
+    <div style="display: inline; visibility: hidden;">a</div>
+    <button class="right" (click)="modifyFilter(nom.value)">Rechercher</button>
+  </div>
+
+  <div *ngFor="let guest of guestList | paginate: { itemsPerPage: 4, currentPage: pageCount } | filter:searchElement">
+    <div class="row" (click)="putGuestInSessionAndSelectTheme(guest)">
+      <div class="left">{{guest.firstName}} {{guest.lastName}}</div>
+      <div style="display: inline; visibility: hidden">a</div>
+      <div class="right">
+        <fa-icon [icon]="modifyIcon"></fa-icon>
+        Modifier
+        <fa-icon [icon]="deleteIcon"></fa-icon>
+        Supprimer
+      </div>
+    </div>
+  </div>
+  <pagination-controls class="my-paginator" previousLabel="Précédent" nextLabel="Suivant" autoHide="true"
+                       responsive="true"
+                       (pageChange)="pageCount = $event">
+
+  </pagination-controls>
+</div>

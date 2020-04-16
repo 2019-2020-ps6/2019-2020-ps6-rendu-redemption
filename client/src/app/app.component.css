@@ -1,5 +1,6 @@
 .main-content {
   text-align: center;
   font-family: "Helvetica";
-  font-size: 300%;
+  /*font-size: 300%;*/
+/* TODO modifier ça parce que ça fait bugger la sélection des accueillis */
 }
