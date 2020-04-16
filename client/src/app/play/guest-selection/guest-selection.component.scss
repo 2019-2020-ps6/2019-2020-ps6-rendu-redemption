@@ -1,4 +1,4 @@
-@import '../../styles/variables.scss';
+@import '../../../styles/variables';
 
 .row{
   background: $white;
@@ -8,4 +8,8 @@
   position: relative;
   box-shadow: 0 6px 10px rgba(0, 0, 0, 0.08), 0 0 6px rgba(0, 0, 0, 0.05);
   padding: 2%;
+}
+
+.my-paginator{
+  //TODO
 }

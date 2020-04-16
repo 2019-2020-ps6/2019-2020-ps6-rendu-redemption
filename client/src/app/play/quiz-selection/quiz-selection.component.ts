@@ -1,16 +1,16 @@
 import {Component, OnInit} from "@angular/core";
-import {Quizz} from "../../models/quizz.model";
-import {QuizzService} from "../../services/quizz.service";
+import {Quizz} from "../../../models/quizz.model";
+import {QuizzService} from "../../../services/quizz.service";
 import {ActivatedRoute, Router} from "@angular/router";
-import {Image} from "../../models/image.model";
-import {ImageService} from "../../services/image.service";
+import {Image} from "../../../models/image.model";
+import {ImageService} from "../../../services/image.service";
 @Component({
-  selector: 'app-quizzes',
-  templateUrl: './quizzes.component.html',
-  styleUrls: ['./quizzes.component.scss'],
+  selector: 'app-quiz-selection',
+  templateUrl: './quiz-selection.component.html',
+  styleUrls: ['./quiz-selection.component.scss'],
 })
 
-export class QuizzesComponent implements OnInit {
+export class QuizSelectionComponent implements OnInit {
 
     quizzes: Quizz[];
     images: Image[];
@@ -42,7 +42,7 @@ export class QuizzesComponent implements OnInit {
     }
 
     goToRelatedQuizz(quizz: number) {
-        this.router.navigate(['../quizz'], {queryParams: {quizz: quizz}})
+        this.router.navigate(['../play-quiz'], {queryParams: {quizz: quizz}})
     }
 }
 

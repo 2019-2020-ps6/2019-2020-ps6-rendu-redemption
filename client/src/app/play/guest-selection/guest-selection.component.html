@@ -1,0 +1,9 @@
+<input type="text" #nom placeholder="Recherche">
+<button (click)="modifyFilter(nom.value)">Rechercher</button>
+<div *ngFor="let guest of guestList | paginate: { itemsPerPage: 4, currentPage: pageCount } | filter:searchElement">
+  <div class="row" (click)="putGuestInSessionAndSelectTheme(guest)">{{guest.firstName}} {{guest.lastName}}</div>
+</div>
+<pagination-controls class="my-paginator" previousLabel="Précédent" nextLabel="Suivant" autoHide="true" responsive="true"
+                     (pageChange)="pageCount = $event">
+
+</pagination-controls>

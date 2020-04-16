@@ -1,6 +1,0 @@
-<input type="text" #nom placeholder="Recherche">
-<button (click)="modifyFilter(nom.value)">Rechercher</button>
-<div *ngFor="let guest of guestList | paginate: { itemsPerPage: 4, currentPage: pageCount } | filter:searchElement">
-  <div class="row">{{guest.firstName}} {{guest.lastName}}</div>
-</div>
-<pagination-controls (pageChange)="pageCount = $event"></pagination-controls>

@@ -1,16 +1,16 @@
 import {Component, OnInit} from "@angular/core";
-import {ThemeService} from "../../services/theme.service";
-import {ImageService} from "../../services/image.service";
-import {Theme} from "../../models/theme.model";
-import {Image} from "../../models/image.model";
+import {ThemeService} from "../../../services/theme.service";
+import {ImageService} from "../../../services/image.service";
+import {Theme} from "../../../models/theme.model";
+import {Image} from "../../../models/image.model";
 import {Router} from "@angular/router";
 @Component({
-  selector: 'app-themes',
-  templateUrl: './themes.component.html',
-  styleUrls: ['./themes.component.scss'],
+  selector: 'app-themes-selection',
+  templateUrl: './themes-selection.component.html',
+  styleUrls: ['./themes-selection.component.scss'],
 })
 
-export class ThemesComponent implements OnInit {
+export class ThemesSelectionComponent implements OnInit {
 
     themes: Theme[];
     images: Image[];
@@ -28,7 +28,7 @@ export class ThemesComponent implements OnInit {
     }
 
     goToRelatedQuizzes(theme: number) {
-        this.router.navigate(['../quizzes'], {queryParams: {theme: theme}})
+        this.router.navigate(['../quiz-selection'], {queryParams: {theme: theme}})
     }
 }
 

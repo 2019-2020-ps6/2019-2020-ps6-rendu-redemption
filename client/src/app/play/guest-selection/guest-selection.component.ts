@@ -1,7 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {Router} from '@angular/router';
-import {GuestService} from '../../services/guest.service';
-import {Guest} from '../../models/guest.model';
+import {GuestService} from '../../../services/guest.service';
+import {Guest} from '../../../models/guest.model';
 
 @Component({
     selector: 'app-guestSelection',
@@ -23,5 +23,10 @@ export class GuestSelectionComponent implements OnInit{
 
   modifyFilter(value: string) {
     this.searchElement = value;
+  }
+
+  putGuestInSessionAndSelectTheme(guest: Guest) {
+    //TODO toute la partie session hihi
+    this.router.navigate(['../themes-selection']);
   }
 }

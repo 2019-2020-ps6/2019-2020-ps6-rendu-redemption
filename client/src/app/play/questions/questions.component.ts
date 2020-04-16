@@ -1,6 +1,6 @@
 import {Component, DoCheck, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges} from '@angular/core';
-import {Question} from '../../models/question.model';
-import {Answer} from '../../models/answer.model';
+import {Question} from '../../../models/question.model';
+import {Answer} from '../../../models/answer.model';
 import {animate, state, style, transition, trigger} from '@angular/animations';
 
 @Component({
