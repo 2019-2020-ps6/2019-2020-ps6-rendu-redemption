@@ -3,23 +3,27 @@
     <div class="left">
       <input type="text" #nom placeholder="Recherche">
       <button>
-        <fa-icon [icon]="addIcon"></fa-icon>
+        <fa-icon [icon]="addIcon" (click)="goToGuestEdit(null)"></fa-icon>
         Ajouter un accueilli
       </button>
     </div>
-    <div style="display: inline; visibility: hidden;">a</div>
+    <div class="cheat">a</div>
     <button class="right" (click)="modifyFilter(nom.value)">Rechercher</button>
   </div>
 
   <div *ngFor="let guest of guestList | paginate: { itemsPerPage: 4, currentPage: pageCount } | filter:searchElement">
-    <div class="row" (click)="putGuestInSessionAndSelectTheme(guest)">
+    <div class="row">
       <div class="left">{{guest.firstName}} {{guest.lastName}}</div>
-      <div style="display: inline; visibility: hidden">a</div>
+      <div class="cheat">a</div>
       <div class="right">
-        <fa-icon [icon]="modifyIcon"></fa-icon>
-        Modifier
-        <fa-icon [icon]="deleteIcon"></fa-icon>
-        Supprimer
+        <div style="display: inline" (click)="goToGuestEdit(guest)">
+          <fa-icon [icon]="modifyIcon"></fa-icon>
+          Modifier
+        </div>
+        <div style="display: inline" (click)="deleteGuest(guest)">
+          <fa-icon [icon]="deleteIcon"></fa-icon>
+          Supprimer
+        </div>
       </div>
     </div>
   </div>

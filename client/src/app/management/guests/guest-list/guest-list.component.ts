@@ -3,6 +3,8 @@ import {Router} from '@angular/router';
 import {GuestService} from '../../../../services/guest.service';
 import {Guest} from '../../../../models/guest.model';
 import { faUserEdit, faUserMinus, faUserPlus } from '@fortawesome/free-solid-svg-icons';
+import {NgbModal} from '@ng-bootstrap/ng-bootstrap';
+import {ModalConfirmDeletion} from './modal-confirm-deletion';
 
 @Component({
   selector: 'app-guestList',
@@ -18,7 +20,7 @@ export class GuestListComponent implements OnInit{
   modifyIcon = faUserEdit;
   deleteIcon = faUserMinus;
 
-  constructor(private guestService: GuestService, private router: Router) {
+  constructor(private guestService: GuestService, private router: Router, private _modalService: NgbModal) {
   }
 
   ngOnInit(): void {
@@ -29,7 +31,22 @@ export class GuestListComponent implements OnInit{
     this.searchElement = value;
   }
 
-  putGuestInSessionAndSelectTheme(guest: Guest) {
-    //TODO
+  deleteGuest(guest: Guest) {
+    let modal = this._modalService.open(ModalConfirmDeletion);
+    modal.componentInstance.guest = guest;
+    modal.result.then((result) => {
+      if(`${result}` === "Le click de la suppression") {
+        console.log("Bye bye les gars");
+        //TODO suppression
+      }
+    });
+  }
+
+  goToGuestEdit(guest: Guest) {
+    if(guest == null){
+      //TODO création
+    }else{
+      //TODO modification
+    }
   }
 }

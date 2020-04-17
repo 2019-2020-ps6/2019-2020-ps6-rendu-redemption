@@ -15,6 +15,8 @@ import {Ng2SearchPipeModule} from 'ng2-search-filter';
 import {NgxPaginationModule} from 'ngx-pagination';
 import {GuestListComponent} from './management/guests/guest-list/guest-list.component';
 import {FontAwesomeModule} from '@fortawesome/angular-fontawesome';
+import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
+import {ModalConfirmDeletion} from './management/guests/guest-list/modal-confirm-deletion';
 
 
 @NgModule({
@@ -28,6 +30,7 @@ import {FontAwesomeModule} from '@fortawesome/angular-fontawesome';
     MainComponent,
     GuestSelectionComponent,
     GuestListComponent,
+    ModalConfirmDeletion,
   ],
   imports: [
     BrowserModule,
@@ -36,6 +39,7 @@ import {FontAwesomeModule} from '@fortawesome/angular-fontawesome';
     Ng2SearchPipeModule,
     NgxPaginationModule,
     FontAwesomeModule,
+    NgbModule,
   ],
   providers: [],
   bootstrap: [AppComponent]
