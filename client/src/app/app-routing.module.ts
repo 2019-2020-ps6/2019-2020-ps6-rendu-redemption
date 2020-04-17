@@ -6,6 +6,7 @@ import {ThemesSelectionComponent} from './play/themes-selection/themes-selection
 import {MainComponent} from './main/main.component';
 import {GuestSelectionComponent} from './play/guest-selection/guest-selection.component';
 import {GuestListComponent} from './management/guests/guest-list/guest-list.component';
+import {GuestEditComponent} from './management/guests/guest-edit/guest-edit.component';
 
 const routes: Routes = [
   {path: '', component: MainComponent},
@@ -13,7 +14,8 @@ const routes: Routes = [
   {path: 'themes-selection', component: ThemesSelectionComponent},
   {path: 'quiz-selection', component: QuizSelectionComponent},
   {path: 'play-quiz', component: PlayQuizComponent},
-  {path: 'manage-guests', component: GuestListComponent}
+  {path: 'manage-guests', component: GuestListComponent},
+  {path: 'manage-guests/modify-guest', component: GuestEditComponent},
 
 ];
 

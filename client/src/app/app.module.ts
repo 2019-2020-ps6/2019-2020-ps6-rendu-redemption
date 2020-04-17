@@ -17,6 +17,8 @@ import {GuestListComponent} from './management/guests/guest-list/guest-list.comp
 import {FontAwesomeModule} from '@fortawesome/angular-fontawesome';
 import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
 import {ModalConfirmDeletion} from './management/guests/guest-list/modal-confirm-deletion';
+import {GuestEditComponent} from './management/guests/guest-edit/guest-edit.component';
+import {ReactiveFormsModule} from '@angular/forms';
 
 
 @NgModule({
@@ -31,6 +33,7 @@ import {ModalConfirmDeletion} from './management/guests/guest-list/modal-confirm
     GuestSelectionComponent,
     GuestListComponent,
     ModalConfirmDeletion,
+    GuestEditComponent,
   ],
   imports: [
     BrowserModule,
@@ -40,6 +43,7 @@ import {ModalConfirmDeletion} from './management/guests/guest-list/modal-confirm
     NgxPaginationModule,
     FontAwesomeModule,
     NgbModule,
+    ReactiveFormsModule,
   ],
   providers: [],
   bootstrap: [AppComponent]
