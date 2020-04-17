@@ -1,1 +1,14 @@
 @import '../../styles/card.scss';
+
+.card {
+  font-size: 300%;
+  display: inline-flex;
+  padding-top: 2%;
+}
+
+img {
+  max-width: 30%;
+  height: auto;
+}
+
+
