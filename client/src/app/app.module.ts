@@ -19,6 +19,8 @@ import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
 import {ModalConfirmDeletion} from './management/guests/guest-list/modal-confirm-deletion';
 import {GuestEditComponent} from './management/guests/guest-edit/guest-edit.component';
 import {ReactiveFormsModule} from '@angular/forms';
+import {ThemesListComponent} from './management/quizzes/themes/themes-list/themes-list.component';
+import {ThemesCreationComponent} from './management/quizzes/themes/themes-creation/themes-creation.component';
 
 
 @NgModule({
@@ -34,6 +36,9 @@ import {ReactiveFormsModule} from '@angular/forms';
     GuestListComponent,
     ModalConfirmDeletion,
     GuestEditComponent,
+    ThemesListComponent,
+    ThemesCreationComponent,
+
   ],
   imports: [
     BrowserModule,

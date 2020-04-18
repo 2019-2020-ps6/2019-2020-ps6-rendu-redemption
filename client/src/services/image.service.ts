@@ -18,4 +18,8 @@ export class ImageService {
   getImages(): Image[] {
     return this.images;
   }
+
+  getImageById(id: number) {
+    return this.images.find(image => image.id == id);
+  }
 }

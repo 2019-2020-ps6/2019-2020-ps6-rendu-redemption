@@ -40,7 +40,7 @@ export class GuestEditComponent implements OnInit {
 
   createModifyGuest() {
     let guestToCreate: Guest = {
-      id: 0,
+      id: -1,
       firstName: this.firstNameInput.nativeElement.value,
       lastName: this.lastNameInput.nativeElement.value,
       accessibility: this.accessibilityInput.nativeElement.value
@@ -48,6 +48,7 @@ export class GuestEditComponent implements OnInit {
     if (this.guestToEdit == null) {
       this.guestService.createGuest(guestToCreate);
     } else {
+      guestToCreate.id = this.guestToEdit.id;
       this.guestService.updateGuest(guestToCreate);
     }
   }

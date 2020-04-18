@@ -25,4 +25,8 @@ export class ThemeService {
   getThemes(): Theme[] {
     return this.themes;
   }
+
+  createTheme(themeToCreate: Theme) {
+    console.log("créer theme dans le theme service", themeToCreate);
+  }
 }
