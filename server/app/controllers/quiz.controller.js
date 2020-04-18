@@ -15,8 +15,9 @@ exports.findAll = (req, res, next) => {
     })
     .then((quizzes) => {
       // Success.
-      res.status(200);
-      res.json(quizzes);
+      res
+        .status(200)
+        .json(quizzes);
     })
     // Errors.
     .catch(next);
@@ -59,8 +60,9 @@ exports.findById = (req, res, next) => {
     .then((quiz) => {
       if (quiz) {
         // Found.
-        res.status(200);
-        res.json(quiz);
+        res
+          .status(200)
+          .json(quiz);
       } else {
         // Quiz not found.
         next(new NotFoundError());
