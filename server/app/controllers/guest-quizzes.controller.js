@@ -21,9 +21,7 @@ exports.findAll = (req, res, next) => {
             // Success.
             res
               .status(200)
-              .json({
-                data: quizzes
-              });
+              .json(quizzes);
           })
           // Errors.
           .catch(next);
@@ -63,11 +61,9 @@ exports.add = (req, res, next) => {
                   res
                     .status(201)
                     .json({
-                      data: {
-                        guestId,
-                        quizId,
-                        message: 'The quiz has been added from the guest.'
-                      }
+                      guestId,
+                      quizId,
+                      message: 'The quiz has been added from the guest.'
                     });
                 })
                 // Errors.
@@ -115,11 +111,9 @@ exports.remove = (req, res, next) => {
                   res
                     .status(200)
                     .json({
-                      data: {
-                        guestId,
-                        quizId,
-                        message: 'The quiz has been removed from the guest.'
-                      }
+                      guestId,
+                      quizId,
+                      message: 'The quiz has been removed from the guest.'
                     });
                 })
                 // Errors.

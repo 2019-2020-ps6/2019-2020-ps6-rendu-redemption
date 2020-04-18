@@ -28,9 +28,7 @@ exports.findAll = (req, res, next) => {
             // Success.
             res
               .status(200)
-              .json({
-                data: answers
-              });
+              .json(answers);
           })
           // Errors.
           .catch(next);
@@ -77,10 +75,8 @@ exports.create = (req, res, next) => {
                   res
                     .status(201)
                     .json({
-                      data: {
-                        id: answer.id,
-                        message: 'The answer has been created.'
-                      }
+                      id: answer.id,
+                      message: 'The answer has been created.'
                     });
                 })
                 // Errors.
@@ -122,9 +118,7 @@ exports.findById = (req, res, next) => {
         // Found.
         res
           .status(200)
-          .json({
-            data: answer
-          });
+          .json(answer);
       } else {
         // Answer not found.
         next(new NotFoundError());
@@ -161,10 +155,8 @@ exports.updateById = (req, res, next) => {
         res
           .status(200)
           .json({
-            data: {
-              id: req.params.answerId,
-              message: 'The answer has been updated.'
-            }
+            id: req.params.answerId,
+            message: 'The answer has been updated.'
           });
       } else {
         // Answer not found.
@@ -193,13 +185,12 @@ exports.deleteById = (req, res, next) => {
     .then((destroyedRows) => {
       if (destroyedRows > 0) {
         // Deleted.
-        res.status(200);
-        res.json({
-          data: {
+        res
+          .status(200)
+          .json({
             id: req.params.questionId,
             message: 'The answer has been deleted.'
-          }
-        });
+          });
       } else {
         // Answer not found.
         next(new NotFoundError());

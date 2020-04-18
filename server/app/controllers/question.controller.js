@@ -27,9 +27,7 @@ exports.findAll = (req, res, next) => {
             // Success.
             res
               .status(200)
-              .json({
-                data: questions
-              });
+              .json(questions);
           })
           // Errors.
           .catch(next);
@@ -73,10 +71,8 @@ exports.create = (req, res, next) => {
                   res
                     .status(201)
                     .json({
-                      data: {
-                        id: question.id,
-                        message: 'The question has been created.'
-                      }
+                      id: question.id,
+                      message: 'The question has been created.'
                     });
                 })
                 // Errors.
@@ -115,10 +111,9 @@ exports.findById = (req, res, next) => {
     .then((question) => {
       if (question) {
         // Found.
-        res.status(200);
-        res.json({
-          data: question
-        });
+        res
+          .status(200)
+          .json(question);
       } else {
         // Question not found.
         next(new NotFoundError());
@@ -154,10 +149,8 @@ exports.updateById = (req, res, next) => {
         res
           .status(200)
           .json({
-            data: {
-              id: req.params.questionId,
-              message: 'The question has been updated.'
-            }
+            id: req.params.questionId,
+            message: 'The question has been updated.'
           });
       } else {
         // Question not found.
@@ -188,10 +181,8 @@ exports.deleteById = (req, res, next) => {
         res
           .status(200)
           .json({
-            data: {
-              id: req.params.questionId,
-              message: 'The question has been deleted.'
-            }
+            id: req.params.questionId,
+            message: 'The question has been deleted.'
           });
       } else {
         // Question not found.

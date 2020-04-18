@@ -16,9 +16,7 @@ exports.findAll = (req, res, next) => {
     .then((quizzes) => {
       // Success.
       res.status(200);
-      res.json({
-        data: quizzes
-      });
+      res.json(quizzes);
     })
     // Errors.
     .catch(next);
@@ -40,10 +38,8 @@ exports.create = (req, res, next) => {
       res
         .status(201)
         .json({
-          data: {
-            id: quiz.id,
-            message: 'The quiz has been created.'
-          }
+          id: quiz.id,
+          message: 'The quiz has been created.'
         });
     })
     // Errors.
@@ -64,9 +60,7 @@ exports.findById = (req, res, next) => {
       if (quiz) {
         // Found.
         res.status(200);
-        res.json({
-          data: quiz
-        });
+        res.json(quiz);
       } else {
         // Quiz not found.
         next(new NotFoundError());
@@ -100,10 +94,8 @@ exports.updateById = (req, res, next) => {
         res
           .status(200)
           .json({
-            data: {
-              id: req.params.quizId,
-              message: 'The quiz has been updated.'
-            }
+            id: req.params.quizId,
+            message: 'The quiz has been updated.'
           });
       } else {
         // Quiz not found.
@@ -133,10 +125,8 @@ exports.deleteById = (req, res, next) => {
         res
           .status(200)
           .json({
-            data: {
-              id: req.params.quizId,
-              message: 'The quiz has been deleted.'
-            }
+            id: req.params.quizId,
+            message: 'The quiz has been deleted.'
           });
       } else {
         // Quiz not found.

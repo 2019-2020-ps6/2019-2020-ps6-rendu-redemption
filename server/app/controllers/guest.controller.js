@@ -15,10 +15,9 @@ exports.findAll = (req, res, next) => {
     })
     .then((guests) => {
       // Success.
-      res.status(200);
-      res.json({
-        data: guests
-      });
+      res
+        .status(200)
+        .json(guests);
     })
     // Errors.
     .catch(next);
@@ -41,10 +40,8 @@ exports.create = (req, res, next) => {
       res
         .status(201)
         .json({
-          data: {
-            id: guest.id,
-            message: 'The guest has been created.'
-          }
+          id: guest.id,
+          message: 'The guest has been created.'
         });
     })
     // Errors.
@@ -64,10 +61,9 @@ exports.findById = (req, res, next) => {
     .then((guest) => {
       if (guest) {
         // Found.
-        res.status(200);
-        res.json({
-          data: guest
-        });
+        res
+          .status(200)
+          .json(guest);
       } else {
         // Guest not found.
         next(new NotFoundError());
@@ -102,10 +98,8 @@ exports.updateById = (req, res, next) => {
         res
           .status(200)
           .json({
-            data: {
-              id: req.params.guestId,
-              message: 'The guest has been updated.'
-            }
+            id: req.params.guestId,
+            message: 'The guest has been updated.'
           });
       } else {
         // Guest not found.
@@ -135,10 +129,8 @@ exports.deleteById = (req, res, next) => {
         res
           .status(200)
           .json({
-            data: {
-              id: req.params.questId,
-              message: 'The guest has been deleted.'
-            }
+            id: req.params.questId,
+            message: 'The guest has been deleted.'
           });
       } else {
         // Guest not found.
