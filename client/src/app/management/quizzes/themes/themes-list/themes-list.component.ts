@@ -20,20 +20,26 @@ export class ThemesListComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.themeList = this.themeService.getThemes();
+    this.themeList = [...this.themeService.getThemes()];
+    this.themeList[this.themeList.length] = {
+      id: 0,
+      imageId: 0,
+      name: 'Ajouter un thème',
+      keywords: []
+    };
     this.totalTheme = [];
     for (let i = 0; i < Math.trunc(this.themeList.length / 3); i++) {
       this.totalTheme[i] = [];
-      for(let j = 0; j < 3; j++){
-        this.totalTheme[i][j] = i+j;
+      for (let j = 0; j < 3; j++) {
+        this.totalTheme[i][j] = i + j;
       }
     }
-    if(!Number.isInteger(this.themeList.length / 3)) {
+    if (!Number.isInteger(this.themeList.length / 3)) {
       let firstIndex = Math.trunc(this.themeList.length / 3);
       let x = (this.themeList.length / 3) - firstIndex;
       this.totalTheme[firstIndex] = [];
-      for(let i = 0; i< Math.round(x*3); i++){
-        this.totalTheme[firstIndex][i] = firstIndex+i;
+      for (let i = 0; i < Math.round(x * 3); i++) {
+        this.totalTheme[firstIndex][i] = firstIndex + i;
       }
     }
   }
@@ -45,5 +51,14 @@ export class ThemesListComponent implements OnInit {
   getTheme(y: number): Theme {
     console.log('y : ' + y);
     return this.themeList[y];
+  }
+
+  navigate(theme: Theme) {
+    if (theme.id == 0) {
+      this.router.navigate(['./../create-theme'], {relativeTo: this.route});
+    } else {
+      this.router.navigate(['../quiz-list'], {relativeTo: this.route});
+    }
+
   }
 }

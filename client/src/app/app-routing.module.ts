@@ -9,6 +9,7 @@ import {GuestListComponent} from './management/guests/guest-list/guest-list.comp
 import {GuestEditComponent} from './management/guests/guest-edit/guest-edit.component';
 import {ThemesListComponent} from './management/quizzes/themes/themes-list/themes-list.component';
 import {ThemesCreationComponent} from './management/quizzes/themes/themes-creation/themes-creation.component';
+import {QuizzesListComponent} from './management/quizzes/quiz/quizzes-list/quizzes-list.component';
 
 const routes: Routes = [
   {path: '', component: MainComponent},
@@ -16,10 +17,11 @@ const routes: Routes = [
   {path: 'themes-selection', component: ThemesSelectionComponent},
   {path: 'quiz-selection', component: QuizSelectionComponent},
   {path: 'play-quiz', component: PlayQuizComponent},
-  {path: 'manage-guests', component: GuestListComponent},
+  {path: 'manage-guests/guests-list', component: GuestListComponent},
   {path: 'manage-guests/modify-guest', component: GuestEditComponent},
-  {path: 'manage-quizzes', component: ThemesListComponent},
-  {path: 'create-theme', component: ThemesCreationComponent},
+  {path: 'manage-quizzes/themes-list', component: ThemesListComponent},
+  {path: 'manage-quizzes/create-theme', component: ThemesCreationComponent},
+  {path: 'manage-quizzes/quiz-list', component: QuizzesListComponent}
 
 ];
 

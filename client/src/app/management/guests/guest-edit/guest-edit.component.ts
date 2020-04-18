@@ -13,6 +13,7 @@ import {FormBuilder, FormGroup} from '@angular/forms';
 
 export class GuestEditComponent implements OnInit {
   guestToEdit: Guest;
+  //TODO modifier ça
   accessibilities: String[] = ['none', 'TBD'];
   icon = faUserPlus;
   buttonText: String;

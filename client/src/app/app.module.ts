@@ -21,6 +21,7 @@ import {GuestEditComponent} from './management/guests/guest-edit/guest-edit.comp
 import {ReactiveFormsModule} from '@angular/forms';
 import {ThemesListComponent} from './management/quizzes/themes/themes-list/themes-list.component';
 import {ThemesCreationComponent} from './management/quizzes/themes/themes-creation/themes-creation.component';
+import {QuizzesListComponent} from './management/quizzes/quiz/quizzes-list/quizzes-list.component';
 
 
 @NgModule({
@@ -38,7 +39,7 @@ import {ThemesCreationComponent} from './management/quizzes/themes/themes-creati
     GuestEditComponent,
     ThemesListComponent,
     ThemesCreationComponent,
-
+    QuizzesListComponent,
   ],
   imports: [
     BrowserModule,
