@@ -23,7 +23,6 @@ export class GuestEditComponent implements OnInit {
   constructor(private guestService: GuestService, private router: Router, private route: ActivatedRoute) {
   }
 
-
   ngOnInit(): void {
     this.guestToEdit = this.guestService.getGuestToModify();
     if (this.guestToEdit === undefined) {
