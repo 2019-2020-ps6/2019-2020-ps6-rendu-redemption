@@ -22,6 +22,9 @@ import {ReactiveFormsModule} from '@angular/forms';
 import {ThemesListComponent} from './management/quizzes/themes/themes-list/themes-list.component';
 import {ThemesCreationComponent} from './management/quizzes/themes/themes-creation/themes-creation.component';
 import {QuizzesListComponent} from './management/quizzes/quiz/quizzes-list/quizzes-list.component';
+import {QuizCreationComponent} from './management/quizzes/quiz/quiz-creation/quiz-creation.component';
+import {QuestionsListComponent} from './management/quizzes/quiz/questions/questions-list/questions-list.component';
+import {ModalConfirmQuestionDeletion} from './management/quizzes/quiz/questions/questions-list/modal-confirm-question-deletion';
 
 
 @NgModule({
@@ -40,6 +43,9 @@ import {QuizzesListComponent} from './management/quizzes/quiz/quizzes-list/quizz
     ThemesListComponent,
     ThemesCreationComponent,
     QuizzesListComponent,
+    QuizCreationComponent,
+    QuestionsListComponent,
+    ModalConfirmQuestionDeletion,
   ],
   imports: [
     BrowserModule,

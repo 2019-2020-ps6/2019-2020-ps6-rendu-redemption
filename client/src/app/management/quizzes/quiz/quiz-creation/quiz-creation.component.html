@@ -1,0 +1,21 @@
+<div class="page">
+  <div class="line">
+    <label for="nom">Nom du quiz</label>
+    <br>
+    <input class="long" id="nom" type="text" placeholder="Nom du quiz" #name>
+  </div>
+  <div class="line">
+    <label for="keywords">Mots-clés associés au quiz</label>
+    <br>
+    <input class="long" id="keywords" type="text" placeholder="Mots-clés associés au quiz" #keywords>
+  </div>
+  <div class="line">
+    <label for="image">Image associée au quiz</label>
+    <br>
+    <input class="long" id="image" type="text" placeholder="Image associée au quiz" #imageId>
+    <!--  TODO le bouton pour chercher l'image  -->
+  </div>
+  <button (click)="createQuiz()">
+    Valider
+  </button>
+</div>

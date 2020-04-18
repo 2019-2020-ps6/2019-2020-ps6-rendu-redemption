@@ -1,13 +1,13 @@
-import {Quizz} from '../models/quizz.model';
+import {Quiz} from '../models/quiz.model';
 import {QUESTIONS_MOCK} from './questions.mock';
 
-export const QUIZZ_MOCK: Quizz[] = [
+export const QUIZZ_MOCK: Quiz[] = [
   {
     id: 1,
     themeId: 1,
     imageId: 2,
     name: 'Animaux',
-    keywords: 'nature',
+    keywords: ['nature'],
     questions: QUESTIONS_MOCK
   },
   {
@@ -15,7 +15,7 @@ export const QUIZZ_MOCK: Quizz[] = [
     themeId: 1,
     imageId: 4,
     name: 'Oiseaux',
-    keywords: 'nature',
+    keywords: ['nature'],
     questions: QUESTIONS_MOCK
   },
   {
@@ -23,7 +23,7 @@ export const QUIZZ_MOCK: Quizz[] = [
     themeId: 2,
     imageId: 3,
     name: 'Curling',
-    keywords: 'sport',
+    keywords: ['sport'],
     questions: QUESTIONS_MOCK
   }
 ];

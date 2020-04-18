@@ -7,16 +7,9 @@ import {THEME_MOCK} from "../mocks/themes.mock";
   providedIn: 'root'
 })
 export class ThemeService {
-  /**
-   * The list of quiz.
-   * The list is retrieved from the mock.
-   */
+  private currentTheme = undefined;
   private themes: Theme[] = THEME_MOCK;
 
-  /**
-   * Observable which contains the list of the quiz.
-   * Naming convention: Add '$' at the end of the variable name to highlight it as an Observable.
-   */
   public quizBehaviorSubject: BehaviorSubject<Theme[]> = new BehaviorSubject(this.themes);
 
   constructor() {
@@ -28,5 +21,13 @@ export class ThemeService {
 
   createTheme(themeToCreate: Theme) {
     console.log("créer theme dans le theme service", themeToCreate);
+  }
+
+  setCurrentTheme(theme: Theme) {
+    this.currentTheme = theme;
+  }
+
+  getCurrentTheme() : Theme{
+    return this.currentTheme;
   }
 }

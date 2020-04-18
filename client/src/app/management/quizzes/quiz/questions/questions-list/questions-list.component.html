@@ -1,0 +1,15 @@
+<h1>
+  {{currentQuiz.name}}
+</h1>
+<div class="ligne" *ngFor="let question of currentQuiz.questions">
+  <div class="left">{{question.label}} </div>
+  <div class="cheat">a</div>
+  <div class="right">
+    <button style="display: inline" (click)="modifyQuestion(question)">
+      Modifier
+    </button>
+    <button style="display: inline" (click)="deleteQuestion(question)">
+      Supprimer
+    </button>
+  </div>
+</div>

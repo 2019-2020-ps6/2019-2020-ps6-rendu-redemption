@@ -1,6 +1,6 @@
 import {Component, OnInit} from "@angular/core";
-import {Quizz} from "../../../models/quizz.model";
-import {QuizzService} from "../../../services/quizz.service";
+import {Quiz} from '../../../models/quiz.model';
+import {QuizService} from "../../../services/quizz.service";
 import {ActivatedRoute, Router} from "@angular/router";
 import {Image} from "../../../models/image.model";
 import {ImageService} from "../../../services/image.service";
@@ -12,18 +12,18 @@ import {ImageService} from "../../../services/image.service";
 
 export class QuizSelectionComponent implements OnInit {
 
-    quizzes: Quizz[];
+    quizzes: Quiz[];
     images: Image[];
 
-    constructor(private quizzService: QuizzService, private imageService: ImageService, private router: Router, private route: ActivatedRoute) {
+    constructor(private quizService: QuizService, private imageService: ImageService, private router: Router, private route: ActivatedRoute) {
     }
 
     ngOnInit() {
-      this.quizzes = this.quizzService.getQuizzes();
+      this.quizzes = this.quizService.getQuizzes();
       this.images = this.imageService.getImages();
     }
 
-    getRelatedQuizzes(): Quizz[] {
+    getRelatedQuizzes(): Quiz[] {
         let theme = this.route.snapshot.queryParams["theme"];
         if (theme != null) {
             return this.getQuizzesByThemeID(theme);
@@ -33,7 +33,7 @@ export class QuizSelectionComponent implements OnInit {
         }
     }
 
-    getQuizzesByThemeID(theme: number): Quizz[] {
+    getQuizzesByThemeID(theme: number): Quiz[] {
       return this.quizzes.filter(quiz => quiz.themeId == theme);
     }
 

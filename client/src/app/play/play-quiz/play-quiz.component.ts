@@ -1,7 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {Question} from '../../../models/question.model';
 import {Answer} from '../../../models/answer.model';
-import {QuizzService} from '../../../services/quizz.service';
+import {QuizService} from '../../../services/quizz.service';
 import {animate, state, style, transition, trigger} from '@angular/animations';
 
 @Component({
@@ -32,7 +32,7 @@ export class PlayQuizComponent implements OnInit {
   rightAnswer: String;
   ongoingQuestion: Question;
 
-  constructor(public quizService: QuizzService) {
+  constructor(public quizService: QuizService) {
   }
 
   ngOnInit() {

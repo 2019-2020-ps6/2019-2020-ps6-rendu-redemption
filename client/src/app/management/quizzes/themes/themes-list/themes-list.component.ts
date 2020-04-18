@@ -57,6 +57,7 @@ export class ThemesListComponent implements OnInit {
     if (theme.id == 0) {
       this.router.navigate(['./../create-theme'], {relativeTo: this.route});
     } else {
+      this.themeService.setCurrentTheme(theme);
       this.router.navigate(['../quiz-list'], {relativeTo: this.route});
     }
 
