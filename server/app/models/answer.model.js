@@ -66,6 +66,11 @@ module.exports = (sequelize, DataTypes) => {
       onUpdate: 'CASCADE',
       onDelete: 'CASCADE'
     });
+
+    // A question has one image.
+    Answer.hasOne(models.Image, {
+      foreignKey: 'imageId'
+    });
   };
 
   return Answer;
