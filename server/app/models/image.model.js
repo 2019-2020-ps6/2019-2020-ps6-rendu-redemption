@@ -31,35 +31,39 @@ module.exports = (sequelize, DataTypes) => {
     }
   },
   {
-    tableName: 'image'
+    tableName: 'images'
   });
 
-  // Define the image associations.
-  Image.associate = (models) => {
-    // An image belongs to a theme.
-    Image.belongsTo(models.Theme, {
-      onUpdate: 'CASCADE',
-      onDelete: 'CASCADE'
-    });
-
-    // An image belongs to a quiz.
-    Image.belongsTo(models.Quiz, {
-      onUpdate: 'CASCADE',
-      onDelete: 'CASCADE'
-    });
-
-    // An image belongs to a question.
-    Image.belongsTo(models.Question, {
-      onUpdate: 'CASCADE',
-      onDelete: 'CASCADE'
-    });
-
-    // An image belongs to a answer.
-    Image.belongsTo(models.Answer, {
-      onUpdate: 'CASCADE',
-      onDelete: 'CASCADE'
-    });
-  };
+  // // Define the image associations.
+  // Image.associate = (models) => {
+  //   // An image belongs to a theme.
+  //   Image.belongsTo(models.Theme, {
+  //     foreignKey: 'imageId',
+  //     onUpdate: 'CASCADE',
+  //     onDelete: 'CASCADE'
+  //   });
+  //
+  //   // An image belongs to a quiz.
+  //   Image.belongsTo(models.Quiz, {
+  //     foreignKey: 'imageId',
+  //     onUpdate: 'CASCADE',
+  //     onDelete: 'CASCADE'
+  //   });
+  //
+  //   // An image belongs to a question.
+  //   Image.belongsTo(models.Question, {
+  //     foreignKey: 'imageId',
+  //     onUpdate: 'CASCADE',
+  //     onDelete: 'CASCADE'
+  //   });
+  //
+  //   // An image belongs to a answer.
+  //   Image.belongsTo(models.Answer, {
+  //     foreignKey: 'imageId',
+  //     onUpdate: 'CASCADE',
+  //     onDelete: 'CASCADE'
+  //   });
+  // };
 
   return Image;
 };

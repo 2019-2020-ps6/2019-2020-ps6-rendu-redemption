@@ -16,13 +16,13 @@ module.exports = (sequelize, DataTypes) => {
     }
   },
   {
-    tableName: 'quizzes'
+    tableName: 'themes'
   });
 
   // Define the theme associations.
   Theme.associate = (models) => {
-    // A theme has one image.
-    Theme.hasOne(models.Image, {
+    // A quiz has one image.
+    Theme.belongsTo(models.Image, {
       foreignKey: 'imageId'
     });
   };

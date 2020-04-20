@@ -2,22 +2,22 @@ const models = require('../models');
 const NotFoundError = require('../utils/errors/not-found-error');
 
 /**
- * Finds all the quizzes.
+ * Finds all the Theme.
  * @param req The request object.
  * @param res The response object.
  * @param next The callback for the next middleware.
  */
 exports.findAll = (req, res, next) => {
   // Find the quizzes.
-  models.Quiz
+  models.Theme
     .findAll({
       order: [['id', 'ASC']]
     })
-    .then((quizzes) => {
+    .then((themes) => {
       // Success.
       res.status(200);
       res.json({
-        data: quizzes
+        data: themes
       });
     })
     // Errors.
@@ -25,26 +25,26 @@ exports.findAll = (req, res, next) => {
 };
 
 /**
- * Creates a quiz.
+ * Creates a theme.
  * @param req The request object.
  * @param res The response object.
  * @param next The callback for the next middleware.
  */
 exports.create = (req, res, next) => {
-  models.Quiz
+  models.Theme
     .create({
       name: req.body.name,
       themeId: req.body.themeId,
       imageId: req.body.imageId
     })
-    .then((quiz) => {
+    .then((theme) => {
       // Created.
       res
         .status(201)
         .json({
           data: {
-            id: quiz.id,
-            message: 'The quiz has been created.'
+            id: theme.id,
+            message: 'The theme has been created.'
           }
         });
     })
@@ -53,21 +53,21 @@ exports.create = (req, res, next) => {
 };
 
 /**
- * Finds a quiz by id.
+ * Finds a theme by id.
  * @param req The request object.
  * @param res The response object.
  * @param next The callback for the next middleware.
  */
 exports.findById = (req, res, next) => {
   // Find the quiz.
-  models.Quiz
+  models.Theme
     .findByPk(req.params.quizId)
-    .then((quiz) => {
-      if (quiz) {
+    .then((theme) => {
+      if (theme) {
         // Found.
         res.status(200);
         res.json({
-          data: quiz
+          data: theme
         });
       } else {
         // Quiz not found.
@@ -79,20 +79,20 @@ exports.findById = (req, res, next) => {
 };
 
 /**
- * Updates a quiz by id.
+ * Updates a theme by id.
  * @param req The request object.
  * @param res The response object.
  * @param next The callback for the next middleware.
  */
 exports.updateById = (req, res, next) => {
-  models.Quiz
+  models.Theme
     .update(
       {
         name: req.body.name
       },
       {
         where: {
-          id: req.params.quizId
+          id: req.params.themeId
         }
       }
     )
@@ -103,8 +103,8 @@ exports.updateById = (req, res, next) => {
           .status(200)
           .json({
             data: {
-              id: req.params.quizId,
-              message: 'The quiz has been updated.'
+              id: req.params.themeId,
+              message: 'The theme has been updated.'
             }
           });
       } else {
@@ -117,16 +117,16 @@ exports.updateById = (req, res, next) => {
 };
 
 /**
- * Deletes a quiz by id.
+ * Deletes a theme by id.
  * @param req The request object.
  * @param res The response object.
  * @param next The callback for the next middleware.
  */
 exports.deleteById = (req, res, next) => {
-  models.Quiz
+  models.Theme
     .destroy({
       where: {
-        id: req.params.quizId
+        id: req.params.themeId
       }
     })
     .then((destroyedRows) => {
@@ -136,8 +136,8 @@ exports.deleteById = (req, res, next) => {
           .status(200)
           .json({
             data: {
-              id: req.params.quizId,
-              message: 'The quiz has been deleted.'
+              id: req.params.themeId,
+              message: 'The theme has been deleted.'
             }
           });
       } else {

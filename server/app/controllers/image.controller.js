@@ -2,22 +2,22 @@ const models = require('../models');
 const NotFoundError = require('../utils/errors/not-found-error');
 
 /**
- * Finds all the quizzes.
+ * Finds all the images.
  * @param req The request object.
  * @param res The response object.
  * @param next The callback for the next middleware.
  */
 exports.findAll = (req, res, next) => {
   // Find the quizzes.
-  models.Quiz
+  models.Image
     .findAll({
       order: [['id', 'ASC']]
     })
-    .then((quizzes) => {
+    .then((images) => {
       // Success.
       res.status(200);
       res.json({
-        data: quizzes
+        data: images
       });
     })
     // Errors.
@@ -25,26 +25,25 @@ exports.findAll = (req, res, next) => {
 };
 
 /**
- * Creates a quiz.
+ * Creates a images.
  * @param req The request object.
  * @param res The response object.
  * @param next The callback for the next middleware.
  */
 exports.create = (req, res, next) => {
-  models.Quiz
+  models.Image
     .create({
       name: req.body.name,
-      themeId: req.body.themeId,
-      imageId: req.body.imageId
+      path: req.body.path
     })
-    .then((quiz) => {
+    .then((image) => {
       // Created.
       res
         .status(201)
         .json({
           data: {
-            id: quiz.id,
-            message: 'The quiz has been created.'
+            id: image.id,
+            message: 'The image has been created.'
           }
         });
     })
@@ -53,21 +52,21 @@ exports.create = (req, res, next) => {
 };
 
 /**
- * Finds a quiz by id.
+ * Finds a image by id.
  * @param req The request object.
  * @param res The response object.
  * @param next The callback for the next middleware.
  */
 exports.findById = (req, res, next) => {
-  // Find the quiz.
-  models.Quiz
-    .findByPk(req.params.quizId)
-    .then((quiz) => {
-      if (quiz) {
+  // Find the image.
+  models.Image
+    .findByPk(req.params.imageId)
+    .then((image) => {
+      if (image) {
         // Found.
         res.status(200);
         res.json({
-          data: quiz
+          data: image
         });
       } else {
         // Quiz not found.
@@ -79,20 +78,21 @@ exports.findById = (req, res, next) => {
 };
 
 /**
- * Updates a quiz by id.
+ * Updates a image by id.
  * @param req The request object.
  * @param res The response object.
  * @param next The callback for the next middleware.
  */
 exports.updateById = (req, res, next) => {
-  models.Quiz
+  models.Image
     .update(
       {
-        name: req.body.name
+        name: req.body.name,
+        path: req.body.path
       },
       {
         where: {
-          id: req.params.quizId
+          id: req.params.imageId
         }
       }
     )
@@ -103,12 +103,12 @@ exports.updateById = (req, res, next) => {
           .status(200)
           .json({
             data: {
-              id: req.params.quizId,
-              message: 'The quiz has been updated.'
+              id: req.params.imageId,
+              message: 'The image has been updated.'
             }
           });
       } else {
-        // Quiz not found.
+        // Image not found.
         next(new NotFoundError());
       }
     })
@@ -117,16 +117,16 @@ exports.updateById = (req, res, next) => {
 };
 
 /**
- * Deletes a quiz by id.
+ * Deletes a image by id.
  * @param req The request object.
  * @param res The response object.
  * @param next The callback for the next middleware.
  */
 exports.deleteById = (req, res, next) => {
-  models.Quiz
+  models.Image
     .destroy({
       where: {
-        id: req.params.quizId
+        id: req.params.imageId
       }
     })
     .then((destroyedRows) => {
@@ -136,12 +136,12 @@ exports.deleteById = (req, res, next) => {
           .status(200)
           .json({
             data: {
-              id: req.params.quizId,
-              message: 'The quiz has been deleted.'
+              id: req.params.imageId,
+              message: 'The image has been deleted.'
             }
           });
       } else {
-        // Quiz not found.
+        // Image not found.
         next(new NotFoundError());
       }
     })

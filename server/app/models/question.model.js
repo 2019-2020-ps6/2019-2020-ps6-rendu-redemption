@@ -59,7 +59,7 @@ module.exports = (sequelize, DataTypes) => {
     });
 
     // A question has one image.
-    Question.hasOne(models.Image, {
+    Question.belongsTo(models.Image, {
       foreignKey: 'imageId'
     });
   };
