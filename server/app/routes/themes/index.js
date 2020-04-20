@@ -11,13 +11,13 @@ router.get('/', ThemeController.findAll);
 router.post('/', ThemeController.create);
 
 // Find a theme by id.
-router.get('/:quizId([0-9]+)', ThemeController.findById);
+router.get('/:themeId([0-9]+)', ThemeController.findById);
 
 // Update (or create) a theme by id.
-router.put('/:quizId([0-9]+)', ThemeController.updateById);
+router.put('/:themeId([0-9]+)', ThemeController.updateById);
 
 // Delete a theme by id.
-router.delete('/:quizId([0-9]+)', ThemeController.deleteById);
+router.delete('/:themeId([0-9]+)', ThemeController.deleteById);
 
 // Questions routes.
 // router.use('/:quizId([0-9]+)/questions', QuestionRouter);

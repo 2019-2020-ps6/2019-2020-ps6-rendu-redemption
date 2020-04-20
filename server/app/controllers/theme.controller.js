@@ -61,7 +61,7 @@ exports.create = (req, res, next) => {
 exports.findById = (req, res, next) => {
   // Find the quiz.
   models.Theme
-    .findByPk(req.params.quizId)
+    .findByPk(req.params.themeId)
     .then((theme) => {
       if (theme) {
         // Found.
