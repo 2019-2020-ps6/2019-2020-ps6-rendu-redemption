@@ -3,5 +3,6 @@ export interface Answer {
   questionId: number;
   quizId: number;
   value: string;
+  imageId: number;
   isCorrect: boolean;
 }

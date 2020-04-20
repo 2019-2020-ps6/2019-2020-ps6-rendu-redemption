@@ -1,0 +1,40 @@
+@import '../../../../styles/variables';
+
+.invisibleRow {
+  position: relative;
+}
+
+.card {
+  font-size: xx-large;
+  background: $white;
+  position: relative;
+  box-shadow: 0 6px 10px rgba(0, 0, 0, 0.08), 0 0 6px rgba(0, 0, 0, 0.05);
+  margin: 2%;
+}
+
+.page {
+  padding: 2%;
+  position: relative;
+}
+
+//TODO en mobile ça marche pas bien
+.left {
+  display: inline;
+  position: absolute;
+  left: 10px;
+}
+
+.right {
+  display: inline;
+  position: absolute;
+  right: 10px;
+}
+
+.my-paginator {
+  //TODO
+}
+
+.cheat {
+  display: inline;
+  visibility: hidden;
+}

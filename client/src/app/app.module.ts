@@ -60,6 +60,11 @@ import { ModalConfirmQuestionDeletion } from './management/quizzes/quiz/question
     QuizCreationComponent,
     QuestionsListComponent,
     ModalConfirmQuestionDeletion,
+    QuestionEditComponent,
+    ModalConfirmAnswerDeletion,
+    AnswerEditComponent,
+    ImageListComponent,
+    ImageEditComponent
   ],
   bootstrap: [ AppComponent ]
 })
