@@ -57,6 +57,11 @@ module.exports = (sequelize, DataTypes) => {
     Question.hasMany(models.Answer, {
       foreignKey: 'questionId'
     });
+
+    // // A quiz has one image.
+    // Question.belongsTo(models.Image, {
+    //   foreignKey: 'imageId'
+    // });
   };
 
   return Question;

@@ -36,7 +36,21 @@ module.exports = (sequelize, DataTypes) => {
       foreignKey: 'quizId',
       through: 'guest_quizzes'
     });
-  };
 
+    // A quiz belongs to a theme
+    Quiz.belongsTo(models.Theme, {
+      foreignKey: {
+        name: 'themeId',
+        allowNull: true
+      },
+      onUpdate: 'CASCADE',
+      onDelete: 'CASCADE'
+    });
+
+    // // A quiz has one image.
+    // Quiz.belongsTo(models.Image, {
+    //   foreignKey: 'imageId'
+    // });
+  };
   return Quiz;
 };

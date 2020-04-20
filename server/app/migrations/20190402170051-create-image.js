@@ -1,27 +1,17 @@
 module.exports = {
   // Create the guests table.
-  up: (queryInterface, Sequelize) => queryInterface.createTable('guests', {
+  up: (queryInterface, Sequelize) => queryInterface.createTable('images', {
     id: {
       type: Sequelize.INTEGER,
       primaryKey: true,
       autoIncrement: true
     },
-    firstName: {
+    name: {
       type: Sequelize.STRING,
       allowNull: false
     },
-    lastName: {
+    path: {
       type: Sequelize.STRING,
-      allowNull: false
-    },
-    imageId: {
-      type: Sequelize.INTEGER,
-      references: {
-        model: 'images',
-        key: 'id'
-      },
-      onUpdate: 'CASCADE',
-      onDelete: 'CASCADE',
       allowNull: false
     },
     createdAt: {
@@ -34,5 +24,5 @@ module.exports = {
     }
   }),
   // Drop the guests table.
-  down: (queryInterface) => queryInterface.dropTable('guests')
+  down: (queryInterface) => queryInterface.dropTable('images')
 };

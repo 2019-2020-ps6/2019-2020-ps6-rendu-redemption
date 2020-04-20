@@ -64,7 +64,9 @@ exports.create = (req, res, next) => {
               // Create the question.
               quiz
                 .createQuestion({
-                  label: req.body.label
+                  label: req.body.label,
+                  imageId: req.body.imageId
+
                 })
                 .then((question) => {
                   // Created.

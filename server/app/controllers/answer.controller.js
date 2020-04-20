@@ -68,7 +68,8 @@ exports.create = (req, res, next) => {
                 .createAnswer({
                   quizId: req.params.quizId,
                   value: req.body.value,
-                  isCorrect: req.body.isCorrect
+                  isCorrect: req.body.isCorrect,
+                  imageId: req.body.imageId
                 })
                 .then((answer) => {
                   // Created.

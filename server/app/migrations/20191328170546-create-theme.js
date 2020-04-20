@@ -1,6 +1,6 @@
 module.exports = {
   // Create the quizzes table.
-  up: (queryInterface, Sequelize) => queryInterface.createTable('quizzes', {
+  up: (queryInterface, Sequelize) => queryInterface.createTable('themes', {
     id: {
       type: Sequelize.INTEGER,
       primaryKey: true,
@@ -8,16 +8,6 @@ module.exports = {
     },
     name: {
       type: Sequelize.STRING,
-      allowNull: false
-    },
-    themeId: {
-      type: Sequelize.INTEGER,
-      references: {
-        model: 'themes',
-        key: 'id'
-      },
-      onUpdate: 'CASCADE',
-      onDelete: 'CASCADE',
       allowNull: false
     },
     imageId: {
@@ -40,5 +30,5 @@ module.exports = {
     }
   }),
   // Drop the quizzes table.
-  down: (queryInterface) => queryInterface.dropTable('quizzes')
+  down: (queryInterface) => queryInterface.dropTable('themes')
 };
