@@ -21,9 +21,14 @@ module.exports = (sequelize, DataTypes) => {
 
   // Define the theme associations.
   Theme.associate = (models) => {
-    // A quiz has one image.
+    // A theme belongs to an image.
     Theme.belongsTo(models.Image, {
-      foreignKey: 'imageId'
+      foreignKey: {
+        name: 'imageId',
+        allowNull: true
+      },
+      onUpdate: 'CASCADE',
+      onDelete: 'SET NULL'
     });
   };
 

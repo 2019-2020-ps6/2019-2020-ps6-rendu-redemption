@@ -21,7 +21,7 @@ exports.findAll = (req, res, next) => {
         // Find the questions.
         quiz
           .getQuestions({
-            order: [['orderNb', 'ASC']]
+            order: [['id', 'ASC']]
           })
           .then((questions) => {
             // Success.
@@ -66,7 +66,6 @@ exports.create = (req, res, next) => {
                 .createQuestion({
                   label: req.body.label,
                   imageId: req.body.imageId
-
                 })
                 .then((question) => {
                   // Created.
@@ -135,8 +134,8 @@ exports.updateById = (req, res, next) => {
   models.Question
     .update(
       {
-        orderNb: req.body.orderNb,
-        label: req.body.label
+        label: req.body.label,
+        imageId: req.body.imageId
       },
       {
         where: {

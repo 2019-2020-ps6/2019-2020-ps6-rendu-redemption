@@ -41,16 +41,22 @@ module.exports = (sequelize, DataTypes) => {
     Quiz.belongsTo(models.Theme, {
       foreignKey: {
         name: 'themeId',
-        allowNull: true
+        allowNull: false
       },
       onUpdate: 'CASCADE',
       onDelete: 'CASCADE'
     });
 
-    // // A quiz has one image.
-    // Quiz.belongsTo(models.Image, {
-    //   foreignKey: 'imageId'
-    // });
+    // A quiz belongs to an image.
+    Quiz.belongsTo(models.Image, {
+      foreignKey: {
+        name: 'imageId',
+        allowNull: true
+      },
+      onUpdate: 'CASCADE',
+      onDelete: 'SET NULL'
+    });
   };
+
   return Quiz;
 };

@@ -84,7 +84,9 @@ exports.updateById = (req, res, next) => {
   models.Quiz
     .update(
       {
-        name: req.body.name
+        name: req.body.name,
+        themeId: req.body.themeId,
+        imageId: req.body.imageId
       },
       {
         where: {

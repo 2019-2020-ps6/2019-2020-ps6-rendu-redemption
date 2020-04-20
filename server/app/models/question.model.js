@@ -6,10 +6,6 @@ module.exports = (sequelize, DataTypes) => {
       primaryKey: true,
       autoIncrement: true
     },
-    orderNb: {
-      type: DataTypes.INTEGER,
-      allowNull: true
-    },
     label: {
       type: DataTypes.STRING,
       allowNull: false,
@@ -22,24 +18,6 @@ module.exports = (sequelize, DataTypes) => {
   {
     tableName: 'questions'
   });
-
-  // Define the question order at creation.
-  Question.addHook('beforeCreate', (question) => new Promise((resolve) => {
-    // Set the default order.
-    let orderNb = 1;
-    Question
-      .max('orderNb', {
-        where: {
-          quizId: question.quizId
-        }
-      })
-      .then((max) => {
-        // Update the order.
-        if (max) orderNb = max + 1;
-        question.setDataValue('orderNb', orderNb);
-        resolve(question);
-      });
-  }));
 
   // Define the question associations.
   Question.associate = (models) => {
@@ -58,10 +36,15 @@ module.exports = (sequelize, DataTypes) => {
       foreignKey: 'questionId'
     });
 
-    // // A quiz has one image.
-    // Question.belongsTo(models.Image, {
-    //   foreignKey: 'imageId'
-    // });
+    // A question belongs to an image.
+    Question.belongsTo(models.Image, {
+      foreignKey: {
+        name: 'imageId',
+        allowNull: true
+      },
+      onUpdate: 'CASCADE',
+      onDelete: 'SET NULL'
+    });
   };
 
   return Question;

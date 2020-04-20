@@ -8,24 +8,23 @@ const NotFoundError = require('../utils/errors/not-found-error');
  * @param next The callback for the next middleware.
  */
 exports.findAll = (req, res, next) => {
-  // Find the quizzes.
+  // Find the images.
   models.Image
     .findAll({
       order: [['id', 'ASC']]
     })
     .then((images) => {
       // Success.
-      res.status(200);
-      res.json({
-        data: images
-      });
+      res
+        .status(200)
+        .json(images);
     })
     // Errors.
     .catch(next);
 };
 
 /**
- * Creates a images.
+ * Creates an image.
  * @param req The request object.
  * @param res The response object.
  * @param next The callback for the next middleware.
@@ -41,10 +40,8 @@ exports.create = (req, res, next) => {
       res
         .status(201)
         .json({
-          data: {
-            id: image.id,
-            message: 'The image has been created.'
-          }
+          id: image.id,
+          message: 'The image has been created.'
         });
     })
     // Errors.
@@ -64,12 +61,11 @@ exports.findById = (req, res, next) => {
     .then((image) => {
       if (image) {
         // Found.
-        res.status(200);
-        res.json({
-          data: image
-        });
+        res
+          .status(200)
+          .json(image);
       } else {
-        // Quiz not found.
+        // Image not found.
         next(new NotFoundError());
       }
     })
@@ -102,10 +98,8 @@ exports.updateById = (req, res, next) => {
         res
           .status(200)
           .json({
-            data: {
-              id: req.params.imageId,
-              message: 'The image has been updated.'
-            }
+            id: req.params.imageId,
+            message: 'The image has been updated.'
           });
       } else {
         // Image not found.
@@ -135,10 +129,8 @@ exports.deleteById = (req, res, next) => {
         res
           .status(200)
           .json({
-            data: {
-              id: req.params.imageId,
-              message: 'The image has been deleted.'
-            }
+            id: req.params.imageId,
+            message: 'The image has been deleted.'
           });
       } else {
         // Image not found.

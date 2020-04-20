@@ -2,23 +2,22 @@ const models = require('../models');
 const NotFoundError = require('../utils/errors/not-found-error');
 
 /**
- * Finds all the Theme.
+ * Finds all the themes.
  * @param req The request object.
  * @param res The response object.
  * @param next The callback for the next middleware.
  */
 exports.findAll = (req, res, next) => {
-  // Find the quizzes.
+  // Find the themes.
   models.Theme
     .findAll({
       order: [['id', 'ASC']]
     })
     .then((themes) => {
       // Success.
-      res.status(200);
-      res.json({
-        data: themes
-      });
+      res
+        .status(200)
+        .json(themes);
     })
     // Errors.
     .catch(next);
@@ -34,7 +33,6 @@ exports.create = (req, res, next) => {
   models.Theme
     .create({
       name: req.body.name,
-      themeId: req.body.themeId,
       imageId: req.body.imageId
     })
     .then((theme) => {
@@ -42,10 +40,8 @@ exports.create = (req, res, next) => {
       res
         .status(201)
         .json({
-          data: {
-            id: theme.id,
-            message: 'The theme has been created.'
-          }
+          id: theme.id,
+          message: 'The theme has been created.'
         });
     })
     // Errors.
@@ -65,12 +61,11 @@ exports.findById = (req, res, next) => {
     .then((theme) => {
       if (theme) {
         // Found.
-        res.status(200);
-        res.json({
-          data: theme
-        });
+        res
+          .status(200)
+          .json(theme);
       } else {
-        // Quiz not found.
+        // Theme not found.
         next(new NotFoundError());
       }
     })
@@ -88,7 +83,8 @@ exports.updateById = (req, res, next) => {
   models.Theme
     .update(
       {
-        name: req.body.name
+        name: req.body.name,
+        imageId: req.body.imageId
       },
       {
         where: {
@@ -102,13 +98,11 @@ exports.updateById = (req, res, next) => {
         res
           .status(200)
           .json({
-            data: {
-              id: req.params.themeId,
-              message: 'The theme has been updated.'
-            }
+            id: req.params.themeId,
+            message: 'The theme has been updated.'
           });
       } else {
-        // Quiz not found.
+        // Theme not found.
         next(new NotFoundError());
       }
     })
@@ -135,13 +129,11 @@ exports.deleteById = (req, res, next) => {
         res
           .status(200)
           .json({
-            data: {
-              id: req.params.themeId,
-              message: 'The theme has been deleted.'
-            }
+            id: req.params.themeId,
+            message: 'The theme has been deleted.'
           });
       } else {
-        // Quiz not found.
+        // Theme not found.
         next(new NotFoundError());
       }
     })

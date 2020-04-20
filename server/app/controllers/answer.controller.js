@@ -22,7 +22,7 @@ exports.findAll = (req, res, next) => {
         // Find the answers.
         question
           .getAnswers({
-            order: [['orderNb', 'ASC']]
+            order: [['id', 'ASC']]
           })
           .then((answers) => {
             // Success.
@@ -140,7 +140,8 @@ exports.updateById = (req, res, next) => {
     .update(
       {
         value: req.body.value,
-        isCorrect: req.body.isCorrect
+        isCorrect: req.body.isCorrect,
+        imageId: req.body.imageId
       },
       {
         where: {

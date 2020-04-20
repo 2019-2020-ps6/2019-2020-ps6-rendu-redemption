@@ -16,10 +16,6 @@ module.exports = {
       onDelete: 'CASCADE',
       allowNull: false
     },
-    orderNb: {
-      type: Sequelize.INTEGER,
-      allowNull: false
-    },
     label: {
       type: Sequelize.STRING,
       allowNull: false
@@ -31,7 +27,7 @@ module.exports = {
         key: 'id'
       },
       onUpdate: 'CASCADE',
-      onDelete: 'CASCADE',
+      onDelete: 'SET NULL',
       allowNull: true
     },
     createdAt: {

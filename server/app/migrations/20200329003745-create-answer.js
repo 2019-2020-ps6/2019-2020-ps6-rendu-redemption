@@ -26,9 +26,15 @@ module.exports = {
       onDelete: 'CASCADE',
       allowNull: false
     },
-    orderNb: {
+    imageId: {
       type: Sequelize.INTEGER,
-      allowNull: false
+      references: {
+        model: 'images',
+        key: 'id'
+      },
+      onUpdate: 'CASCADE',
+      onDelete: 'SET NULL',
+      allowNull: true
     },
     value: {
       type: Sequelize.STRING,
@@ -37,16 +43,6 @@ module.exports = {
     isCorrect: {
       type: Sequelize.BOOLEAN,
       allowNull: false
-    },
-    imageId: {
-      type: Sequelize.INTEGER,
-      references: {
-        model: 'images',
-        key: 'id'
-      },
-      onUpdate: 'CASCADE',
-      onDelete: 'CASCADE',
-      allowNull: true
     },
     createdAt: {
       type: Sequelize.DATE,
