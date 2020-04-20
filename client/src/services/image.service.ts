@@ -22,4 +22,20 @@ export class ImageService {
   getImageById(id: number) {
     return this.images.find(image => image.id == id);
   }
+
+  setImageToModify(image: Image) {
+
+  }
+
+  getImageToModify() {
+    return undefined;
+  }
+
+  createImage(imageToCreate: Image) {
+
+  }
+
+  updateImage(imageToCreate: Image) {
+
+  }
 }
