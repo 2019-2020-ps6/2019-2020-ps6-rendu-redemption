@@ -1,33 +1,110 @@
+// App.
 import { Injectable } from '@angular/core';
-import { BehaviorSubject } from 'rxjs';
-import {Theme} from "../models/theme.model";
-import {THEME_MOCK} from "../mocks/themes.mock";
+import { environment } from '../environments/environment';
+
+// Models.
+import { Theme } from '../models/theme.model';
+
+// Communication.
+import { HttpClient, HttpErrorResponse } from '@angular/common/http';
+import { Observable, throwError} from 'rxjs';
+import { catchError } from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root'
 })
 export class ThemeService {
-  private currentTheme = undefined;
-  private themes: Theme[] = THEME_MOCK;
+  /**
+   * The server URL.
+   */
+  private serverURL: string;
 
-  public quizBehaviorSubject: BehaviorSubject<Theme[]> = new BehaviorSubject(this.themes);
+  /**
+   * The server options.
+   * These options are used for JSON requests.
+   */
+  private serverOptions: object;
 
-  constructor() {
+  /**
+   * Constructs the quiz service.
+   * @param http The http client.
+   */
+  constructor(private http: HttpClient) {
+    // Initialize the service.
+    this.serverURL = environment.serverURL;
+    this.serverOptions = environment.serverOptions;
   }
 
-  getThemes(): Theme[] {
-    return this.themes;
+  /**
+   * Returns all the themes.
+   */
+  getThemes(): Observable<Theme[]> {
+    // GET request.
+    return this.http
+      .get<Theme[]>(`${this.serverURL}/themes`)
+      .pipe(catchError(this.handleError));
   }
 
-  createTheme(themeToCreate: Theme) {
-    console.log("créer theme dans le theme service", themeToCreate);
+  /**
+   * Returns a theme.
+   * @param themeId The identifier of the theme.
+   */
+  getTheme(themeId: number): Observable<Theme> {
+    // GET request.
+    return this.http
+      .get<Theme>(`${this.serverURL}/themes/${themeId}`)
+      .pipe(catchError(this.handleError));
   }
 
-  setCurrentTheme(theme: Theme) {
-    this.currentTheme = theme;
+  /**
+   * Adds a theme.
+   * @param theme The theme to be added.
+   */
+  addTheme(theme: Theme): Observable<any> {
+    // POST request.
+    return this.http
+      .post(`${this.serverURL}/themes`, theme, this.serverOptions)
+      .pipe(catchError(this.handleError));
   }
 
-  getCurrentTheme() : Theme{
-    return this.currentTheme;
+  /**
+   * Updates a theme.
+   * @param theme The theme to be updated.
+   */
+  updateTheme(theme: Theme): Observable<any> {
+    // PUT request.
+    return this.http
+      .put(`${this.serverURL}/themes/${theme.id}`, theme, this.serverOptions)
+      .pipe(catchError(this.handleError));
+  }
+
+  /**
+   * Deletes a theme.
+   * @param themeId The identifier of the theme to be deleted.
+   */
+  deleteTheme(themeId: number): Observable<any> {
+    // DELETE request.
+    return this.http
+      .delete(`${this.serverURL}/themes/${themeId}`)
+      .pipe(catchError(this.handleError));
+  }
+
+  /**
+   * Handles an error response.
+   * @param response The error response.
+   */
+  private handleError(response: HttpErrorResponse) {
+    if (response.error instanceof ErrorEvent) {
+      // A client-side or network error occurred.
+      console.error('An error occurred:', response.error.message);
+    } else {
+      // The backend returned an unsuccessful response code.
+      // The response body may contain clues as to what went wrong.
+      console.error(
+        `Backend returned code ${response.status}, ` +
+        `body was: ${response.error}`);
+    }
+    // Return an observable with a user-facing error message.
+    return throwError('Something bad happened! Please try again later.');
   }
 }

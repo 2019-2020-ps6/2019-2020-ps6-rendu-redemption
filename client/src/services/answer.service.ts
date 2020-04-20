@@ -13,7 +13,7 @@ import { catchError } from 'rxjs/operators';
 @Injectable({
   providedIn: 'root'
 })
-export class QuizService {
+export class AnswerService {
   /**
    * The server URL.
    */
