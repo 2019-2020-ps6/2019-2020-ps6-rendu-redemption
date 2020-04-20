@@ -67,10 +67,10 @@ module.exports = (sequelize, DataTypes) => {
       onDelete: 'CASCADE'
     });
 
-    // A question has one image.
-    Answer.belongsTo(models.Image, {
-      foreignKey: 'imageId'
-    });
+    // // A question has one image.
+    // Answer.belongsTo(models.Image, {
+    //   foreignKey: 'imageId'
+    // });
   };
 
   return Answer;

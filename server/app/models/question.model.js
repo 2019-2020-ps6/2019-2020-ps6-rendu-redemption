@@ -58,10 +58,10 @@ module.exports = (sequelize, DataTypes) => {
       foreignKey: 'questionId'
     });
 
-    // A quiz has one image.
-    Question.belongsTo(models.Image, {
-      foreignKey: 'imageId'
-    });
+    // // A quiz has one image.
+    // Question.belongsTo(models.Image, {
+    //   foreignKey: 'imageId'
+    // });
   };
 
   return Question;
