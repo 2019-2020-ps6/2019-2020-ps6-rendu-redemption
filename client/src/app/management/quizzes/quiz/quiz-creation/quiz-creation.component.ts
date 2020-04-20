@@ -33,7 +33,7 @@ export class QuizCreationComponent implements OnInit {
       keywords: sentence.split(' '),
       questions: []
     };
-    this.quizService.createTheme(quizToCreate);
+    this.quizService.createQuiz(quizToCreate);
   }
 
 }

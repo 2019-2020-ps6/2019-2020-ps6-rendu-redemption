@@ -1,0 +1,27 @@
+<div class="page">
+  <div class="line">
+    <label for="value">Réponse</label>
+    <br>
+    <input class="long" id="value" type="text" placeholder="Reponse" #value
+           [value]="answerToEdit ? answerToEdit.value : null">
+  </div>
+  <div class="line">
+    <label for="image">Image associée au quiz</label>
+    <br>
+    <input class="long" id="image" type="text" placeholder="Image associée à la réponse" #image
+           [value]="answerToEdit ? answerToEdit.imageId : null">
+  </div>
+  <div class="line">
+    <label for="correct">La réponse est-elle juste?</label>
+    <br>
+    <div id="correct">
+      <input type="radio" [value]="true" [checked]="answerToEdit ? answerToEdit.isCorrect : false"> Oui
+      <input type="radio" [value]="false" [checked]="answerToEdit ? !answerToEdit.isCorrect : true"> Non
+    </div>
+
+  </div>
+  <button (click)="createModifyAnswer()">
+    Valider
+  </button>
+
+</div>

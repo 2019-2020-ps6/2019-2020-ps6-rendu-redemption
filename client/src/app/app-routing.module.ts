@@ -12,6 +12,8 @@ import {ThemesCreationComponent} from './management/quizzes/themes/themes-creati
 import {QuizzesListComponent} from './management/quizzes/quiz/quizzes-list/quizzes-list.component';
 import {QuizCreationComponent} from './management/quizzes/quiz/quiz-creation/quiz-creation.component';
 import {QuestionsListComponent} from './management/quizzes/quiz/questions/questions-list/questions-list.component';
+import {QuestionEditComponent} from './management/quizzes/quiz/questions/question-edit/question-edit.component';
+import {AnswerEditComponent} from './management/quizzes/quiz/questions/answers-edit/answer-edit.component';
 
 const routes: Routes = [
   {path: '', component: MainComponent},
@@ -25,7 +27,9 @@ const routes: Routes = [
   {path: 'manage-quizzes/create-theme', component: ThemesCreationComponent},
   {path: 'manage-quizzes/quiz-list', component: QuizzesListComponent},
   {path: 'manage-quizzes/create-quiz', component: QuizCreationComponent},
-  {path: 'manage-quizzes/questions-list', component:QuestionsListComponent}
+  {path: 'manage-quizzes/questions-list', component:QuestionsListComponent},
+  {path: 'manage-quizzes/question-edit', component: QuestionEditComponent},
+  {path: 'manage-quizzes/answer-edit', component:AnswerEditComponent}
 
 ];
 

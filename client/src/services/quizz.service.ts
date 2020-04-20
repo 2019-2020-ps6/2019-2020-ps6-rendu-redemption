@@ -2,13 +2,13 @@ import {Injectable} from '@angular/core';
 import {Quiz} from '../models/quiz.model';
 import {QUIZZ_MOCK} from '../mocks/quizzes.mock';
 import {Question} from '../models/question.model';
+import {Answer} from '../models/answer.model';
 
 @Injectable({
   providedIn: 'root'
 })
 export class QuizService {
   private currentQuiz: Quiz = undefined;
-  private questionToModify: Question = undefined;
   private compt: number = 0;
 
   /**
@@ -32,7 +32,7 @@ export class QuizService {
     return this.quizzes[0].questions[++this.compt];
   }
 
-  createTheme(quizToCreate: Quiz) {
+  createQuiz(quizToCreate: Quiz) {
     console.log('On veut créer un quiz', quizToCreate);
   }
 
@@ -48,11 +48,7 @@ export class QuizService {
     console.log("On supprime la question", question, "du quiz", quiz);
   }
 
-  setQuestionToModify(question: Question) {
-    this.questionToModify = question;
-  }
-
-  getQuestionToModify(): Question {
-    return this.questionToModify;
+  deleteAnswer(currentQuiz: Quiz, questionToEdit: Question, reponse: Answer) {
+    console.log("On supprime la réponse", reponse," de la question ", questionToEdit, "du quiz", currentQuiz);
   }
 }

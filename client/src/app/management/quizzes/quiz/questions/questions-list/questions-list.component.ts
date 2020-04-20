@@ -5,6 +5,8 @@ import {Quiz} from '../../../../../../models/quiz.model';
 import {Question} from '../../../../../../models/question.model';
 import {NgbModal} from '@ng-bootstrap/ng-bootstrap';
 import {ModalConfirmQuestionDeletion} from './modal-confirm-question-deletion';
+import {faPlusCircle} from '@fortawesome/free-solid-svg-icons';
+import {QuestionService} from '../../../../../../services/question.service';
 
 @Component({
   selector: 'app-questionsList',
@@ -14,8 +16,10 @@ import {ModalConfirmQuestionDeletion} from './modal-confirm-question-deletion';
 
 export class QuestionsListComponent implements OnInit {
   currentQuiz: Quiz;
+  plusIcon = faPlusCircle;
 
-  constructor(private quizService: QuizService, private router: Router, private route: ActivatedRoute, private _modalService: NgbModal) {
+  constructor(private quizService: QuizService, private questionService: QuestionService,
+              private router: Router, private route: ActivatedRoute, private _modalService: NgbModal) {
   }
 
   ngOnInit(): void {
@@ -36,7 +40,7 @@ export class QuestionsListComponent implements OnInit {
   }
 
   modifyQuestion(question: Question) {
-    this.quizService.setQuestionToModify(question);
-    this.router.navigate(['../modify-question'], {relativeTo: this.route});
+    this.questionService.setQuestionToModify(question);
+    this.router.navigate(['../question-edit'], {relativeTo: this.route});
   }
 }

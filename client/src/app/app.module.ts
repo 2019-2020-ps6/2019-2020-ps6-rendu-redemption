@@ -18,13 +18,16 @@ import {FontAwesomeModule} from '@fortawesome/angular-fontawesome';
 import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
 import {ModalConfirmDeletion} from './management/guests/guest-list/modal-confirm-deletion';
 import {GuestEditComponent} from './management/guests/guest-edit/guest-edit.component';
-import {ReactiveFormsModule} from '@angular/forms';
+import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {ThemesListComponent} from './management/quizzes/themes/themes-list/themes-list.component';
 import {ThemesCreationComponent} from './management/quizzes/themes/themes-creation/themes-creation.component';
 import {QuizzesListComponent} from './management/quizzes/quiz/quizzes-list/quizzes-list.component';
 import {QuizCreationComponent} from './management/quizzes/quiz/quiz-creation/quiz-creation.component';
 import {QuestionsListComponent} from './management/quizzes/quiz/questions/questions-list/questions-list.component';
 import {ModalConfirmQuestionDeletion} from './management/quizzes/quiz/questions/questions-list/modal-confirm-question-deletion';
+import {QuestionEditComponent} from './management/quizzes/quiz/questions/question-edit/question-edit.component';
+import {ModalConfirmAnswerDeletion} from './management/quizzes/quiz/questions/question-edit/modal-confirm-answer-deletion';
+import {AnswerEditComponent} from './management/quizzes/quiz/questions/answers-edit/answer-edit.component';
 
 
 @NgModule({
@@ -46,6 +49,9 @@ import {ModalConfirmQuestionDeletion} from './management/quizzes/quiz/questions/
     QuizCreationComponent,
     QuestionsListComponent,
     ModalConfirmQuestionDeletion,
+    QuestionEditComponent,
+    ModalConfirmAnswerDeletion,
+    AnswerEditComponent,
   ],
   imports: [
     BrowserModule,
@@ -56,6 +62,7 @@ import {ModalConfirmQuestionDeletion} from './management/quizzes/quiz/questions/
     FontAwesomeModule,
     NgbModule,
     ReactiveFormsModule,
+    FormsModule,
   ],
   providers: [],
   bootstrap: [AppComponent]
