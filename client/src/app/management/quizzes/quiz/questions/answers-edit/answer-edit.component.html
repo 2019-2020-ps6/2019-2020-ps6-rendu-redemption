@@ -15,8 +15,8 @@
     <label for="correct">La réponse est-elle juste?</label>
     <br>
     <div id="correct">
-      <input type="radio" [value]="true" [checked]="answerToEdit ? answerToEdit.isCorrect : false"> Oui
-      <input type="radio" [value]="false" [checked]="answerToEdit ? !answerToEdit.isCorrect : true"> Non
+      <input type="radio" name="correct" [checked]="isCorrect" [value]="true" (change)="isCorrect = true"/> Oui
+      <input type="radio" name="correct" [checked]="!isCorrect" [value]="false" (change)="isCorrect = false"> Non
     </div>
 
   </div>

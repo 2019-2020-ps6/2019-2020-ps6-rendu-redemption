@@ -58,7 +58,6 @@ export class QuizzesListComponent implements OnInit {
   }
 
   getQuiz(y: number): Quiz {
-    console.log('y : ' + y);
     return this.quizzesList[y];
   }
 

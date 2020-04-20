@@ -8,8 +8,10 @@ import {Answer} from '../models/answer.model';
   providedIn: 'root'
 })
 export class QuizService {
-  private currentQuiz: Quiz = undefined;
   private compt: number = 0;
+  private currentQuiz: Quiz = undefined;
+  private questionToModify: Question = undefined;
+  private answerIndexToModify: number = undefined;
 
   /**
    * The list of quiz.
@@ -20,6 +22,9 @@ export class QuizService {
   constructor() {
   }
 
+  /*
+   * PLAY
+   */
   getQuizzes(): Quiz[] {
     return this.quizzes;
   }
@@ -32,9 +37,9 @@ export class QuizService {
     return this.quizzes[0].questions[++this.compt];
   }
 
-  createQuiz(quizToCreate: Quiz) {
-    console.log('On veut créer un quiz', quizToCreate);
-  }
+  /*
+   * PASS ELEMENTS BETWEEN PAGES
+   */
 
   setCurrentQuiz(quiz: Quiz) {
     this.currentQuiz = quiz;
@@ -44,11 +49,59 @@ export class QuizService {
     return this.currentQuiz;
   }
 
-  deleteQuestion(quiz: Quiz, question: Question) {
-    console.log("On supprime la question", question, "du quiz", quiz);
+  setQuestionToModify(question: Question) {
+    this.questionToModify = question;
   }
 
-  deleteAnswer(currentQuiz: Quiz, questionToEdit: Question, reponse: Answer) {
-    console.log("On supprime la réponse", reponse," de la question ", questionToEdit, "du quiz", currentQuiz);
+  getQuestionToModify(): Question {
+    return this.questionToModify;
+  }
+
+  setAnswerIndexToModify(i: number) {
+    this.answerIndexToModify = i;
+  }
+
+  getAnswerToModify(): Answer {
+    if(this.answerIndexToModify === undefined)
+      return undefined;
+    let answer = this.questionToModify.answers[this.answerIndexToModify];
+    if(answer === undefined)
+      return null;
+    return answer;
+  }
+
+  /*
+   * DATA TO BACK
+   */
+
+  createQuiz(quizToCreate: Quiz) {
+    console.log('On veut créer le quiz', quizToCreate);
+  }
+
+  createQuestion(questionToCreate: Question) {
+    console.log("On veut créer la question", questionToCreate, "dans le quiz", this.currentQuiz);
+  }
+
+  updateQuestion(questionToCreate: Question) {
+    console.log("On veut update la question", questionToCreate, "du quiz", this.currentQuiz);
+  }
+
+  deleteQuestion(question: Question) {
+    console.log("On veut supprimer la question", question, "du quiz", this.currentQuiz);
+  }
+
+  createAnswer(answerToCreate: Answer) {
+    console.log("On veut créer la réponse",answerToCreate,"dans la question",this.questionToModify,"du quiz",this.currentQuiz);
+    //TODO
+  }
+
+  updateAnswer(answerToCreate: Answer) {
+    console.log("On veut modifier la réponse",answerToCreate,"dans la question",this.questionToModify,"du quiz",this.currentQuiz);
+    //TODO
+  }
+
+  deleteAnswer(questionToEdit: Question, reponse: Answer) {
+    console.log("On veut supprimer la réponse", reponse," de la question ", questionToEdit, "du quiz", this.currentQuiz);
+    //TODO
   }
 }

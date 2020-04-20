@@ -49,7 +49,6 @@ export class ThemesListComponent implements OnInit {
   }
 
   getTheme(y: number): Theme {
-    console.log('y : ' + y);
     return this.themeList[y];
   }
 
