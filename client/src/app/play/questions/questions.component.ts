@@ -32,19 +32,27 @@ import {animate, state, style, transition, trigger} from '@angular/animations';
 
 export class QuestionsComponent implements OnInit, OnChanges {
 
-  @Output() goToNextQuestion: EventEmitter<Answer> = new EventEmitter<Answer>();
+  @Output() goToNextQuestion: EventEmitter<answerFirstTry> = new EventEmitter<answerFirstTry>();
   @Input() question: Question;
   forAnimation: String[];
+  numberOfErrors: number;
+  skiped: boolean;
+  enableSkip: boolean;
 
   constructor() {
   }
 
 
-  ngOnInit() {
+  async ngOnInit() {
+    this.enableSkip = false;
+    this.numberOfErrors = 0;
+    this.skiped = false;
     this.forAnimation = [];
     for (let i = 0; i < this.question.answers.length; i++) {
       this.forAnimation[i] = null;
     }
+    await this.delay(10000);
+    this.enableSkip = true;
   }
 
   verifyAnswer(answer: Answer) {
@@ -52,13 +60,18 @@ export class QuestionsComponent implements OnInit, OnChanges {
       this.forAnimation[this.question.answers.indexOf(answer)] = 'correct';
     } else {
       this.forAnimation[this.question.answers.indexOf(answer)] = 'incorrect';
-      //TODO est-ce qu'on disable le button
+      this.numberOfErrors++;
     }
   }
 
   goToNext(i: number, event: AnimationEvent) {
     if (i == -2 || this.forAnimation[i] === 'correct') {
-      this.goToNextQuestion.emit(this.question.answers[i]);
+      let res : answerFirstTry = {
+        answer: this.question.answers[i],
+        numberOfErrors: this.numberOfErrors,
+        skiped: this.skiped
+      }
+      this.goToNextQuestion.emit(res);
     }
   }
 
@@ -69,5 +82,14 @@ export class QuestionsComponent implements OnInit, OnChanges {
     }
   }
 
+  async delay(ms: number) {
+    return new Promise(resolve => setTimeout(resolve, ms));
+  }
+
+}
+export interface answerFirstTry {
+  answer: Answer;
+  numberOfErrors: number;
+  skiped: boolean;
 }
 

@@ -34,7 +34,10 @@ export class QuizService {
   }
 
   getNextQuestion(): Question {
-    return this.quizzes[0].questions[++this.compt];
+    let q = this.quizzes[0].questions[++this.compt];
+    if(q === undefined)
+      return null;
+    return q;
   }
 
   /*

@@ -1,4 +1,4 @@
-<app-questionToAnswer style="opacity: 0" *ngIf="isQuestionVisible"
+<app-questionToAnswer class="question" *ngIf="isQuestionVisible"
                       (@inAndOut.done)="makeAnswerAppear()"
                       [@inAndOut]="isQuestionVisible"
                       [question]="ongoingQuestion"
@@ -8,4 +8,10 @@
      (@inAndOut.done)="makeQuestionAppear()"
      [@inAndOut]="isAnswerVisible">
   La bonne réponse était : <br> {{rightAnswer}}
+</div>
+
+<div *ngIf="hasEnded">
+  Bravo {{numberOfCorrectAnswers}}
+  <br>
+  Le quiz est désormais terminé!
 </div>
