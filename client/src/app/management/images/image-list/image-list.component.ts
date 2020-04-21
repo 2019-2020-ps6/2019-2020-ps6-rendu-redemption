@@ -1,6 +1,5 @@
 import {Component, OnInit} from '@angular/core';
 import {ActivatedRoute, Router} from '@angular/router';
-import {faUserEdit, faUserMinus, faUserPlus} from '@fortawesome/free-solid-svg-icons';
 import {Image} from "../../../../models/image.model";
 import {ImageService} from "../../../../services/image.service";
 
@@ -14,9 +13,6 @@ export class ImageListComponent implements OnInit {
   imageList: Image[];
   searchElement: string;
   pageCount: number = 1;
-  addIcon = faUserPlus;
-  modifyIcon = faUserEdit;
-  deleteIcon = faUserMinus;
 
   constructor(private imageService: ImageService, private router: Router, private route: ActivatedRoute) {
   }
@@ -32,5 +28,9 @@ export class ImageListComponent implements OnInit {
   goToImageEdit(image: Image) {
     this.imageService.setImageToModify(image);
     this.router.navigate(['./modify-image'], {relativeTo: this.route});
+  }
+
+  goToImageAdd() {
+    this.router.navigate(['./add-image'], {relativeTo: this.route});
   }
 }

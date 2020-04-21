@@ -30,6 +30,7 @@ import {ModalConfirmAnswerDeletion} from './management/quizzes/quiz/questions/qu
 import {AnswerEditComponent} from './management/quizzes/quiz/questions/answers-edit/answer-edit.component';
 import {ImageListComponent} from "./management/images/image-list/image-list.component";
 import {ImageEditComponent} from "./management/images/image-edit/image-edit.component";
+import {ImageAddComponent} from "./management/images/image-add/image-add.component";
 
 
 @NgModule({
@@ -55,7 +56,8 @@ import {ImageEditComponent} from "./management/images/image-edit/image-edit.comp
     ModalConfirmAnswerDeletion,
     AnswerEditComponent,
     ImageListComponent,
-    ImageEditComponent
+    ImageEditComponent,
+    ImageAddComponent
   ],
   imports: [
     BrowserModule,
