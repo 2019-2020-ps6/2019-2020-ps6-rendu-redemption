@@ -1,6 +1,5 @@
 import {Component, OnInit} from '@angular/core';
 import {Question} from '../../../models/question.model';
-import {Answer} from '../../../models/answer.model';
 import {QuizService} from '../../../services/quizz.service';
 import {animate, state, style, transition, trigger} from '@angular/animations';
 import {ActivatedRoute, Router} from '@angular/router';
@@ -34,19 +33,21 @@ export class PlayQuizComponent implements OnInit {
   hasEnded: boolean = false;
   rightAnswer: String;
   ongoingQuestion: Question;
-  numberOfCorrectAnswers: number = 0;
+  guestName: String;
 
   constructor(public quizService: QuizService, private router: Router, private route: ActivatedRoute) {
   }
 
   ngOnInit() {
+    this.guestName = sessionStorage.getItem("selectedGuest");
+    console.log("ahhh",this.guestName);
+    if(this.guestName == undefined || this.guestName == null)
+      this.router.navigate(['/']);
     this.ongoingQuestion = this.quizService.getQuestion();
   }
 
   goToNextQuestion(answerFT: answerFirstTry) {
     this.rightAnswer = answerFT.answer.value;
-    if(answerFT.numberOfErrors == 0)
-      this.numberOfCorrectAnswers++;
     this.isQuestionVisible = false;
     //triggers "makeAnswerAppear()"
   }
@@ -75,6 +76,10 @@ export class PlayQuizComponent implements OnInit {
 
   async delay(ms: number) {
     return new Promise(resolve => setTimeout(resolve, ms));
+  }
+
+  backToTheme() {
+    this.router.navigate(['/themes-selection'])
   }
 }
 
