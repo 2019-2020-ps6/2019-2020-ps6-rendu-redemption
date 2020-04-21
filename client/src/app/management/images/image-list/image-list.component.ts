@@ -27,10 +27,10 @@ export class ImageListComponent implements OnInit {
 
   goToImageEdit(image: Image) {
     this.imageService.setImageToModify(image);
-    this.router.navigate(['./modify-image'], {relativeTo: this.route});
+    this.router.navigate(['../modify-image'], {relativeTo: this.route});
   }
 
   goToImageAdd() {
-    this.router.navigate(['./add-image'], {relativeTo: this.route});
+    this.router.navigate(['../add-image'], {relativeTo: this.route});
   }
 }

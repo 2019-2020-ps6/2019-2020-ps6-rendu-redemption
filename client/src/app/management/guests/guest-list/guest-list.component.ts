@@ -43,6 +43,6 @@ export class GuestListComponent implements OnInit {
 
   goToGuestEdit(guest: Guest) {
     this.guestService.setGuestToModify(guest);
-    this.router.navigate(['./modify-guest'], {relativeTo: this.route});
+    this.router.navigate(['../modify-guest'], {relativeTo: this.route});
   }
 }
