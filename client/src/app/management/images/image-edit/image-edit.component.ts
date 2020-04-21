@@ -13,7 +13,6 @@ import {ImageService} from "../../../../services/image.service";
 export class ImageEditComponent implements OnInit {
 
   imageToEdit: Image;
-  accessibilities: String[] = ['none', 'TBD'];
   icon = faUserPlus;
   buttonText: String;
   @ViewChild('name') nameInput: ElementRef;
@@ -25,16 +24,7 @@ export class ImageEditComponent implements OnInit {
 
   ngOnInit(): void {
     this.imageToEdit = this.imageService.getImageToModify();
-    if (this.imageToEdit === undefined) {
-      this.router.navigate(['../'], {relativeTo: this.route});
-    } else {
-      if (this.imageToEdit == null) {
-        this.buttonText = 'Ajouter';
-      } else {
-        this.icon = faUserEdit;
-        this.buttonText = 'Modifier';
-      }
-    }
+
   }
 
   createModifyImage() {

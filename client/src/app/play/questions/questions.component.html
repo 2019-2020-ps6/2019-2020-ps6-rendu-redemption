@@ -1,11 +1,15 @@
 <div class="card">
+  <div class="question">
     <h2>
-        Label: {{question.label}}
+      Label: {{question.label}}
     </h2>
-    <p>Nombre de réponses: {{question.answers.length}}</p>
-    <span>
-        <div class="answers" *ngFor="let answer of question.answers; let i = index" >
-            <button style="visibility: hidden;opacity: 0;" [@isAnswerCorrect]="forAnimation[i]" (@isAnswerCorrect.done)="goToNext(i, $event)" class="button-card" (click)="verifyAnswer(answer)"> {{answer.value}} </button>
-        </div>
-    </span>
+    <div class="answers" *ngFor="let answer of question.answers; let i = index">
+      <button style="visibility: hidden;opacity: 0;" [@isAnswerCorrect]="forAnimation[i]"
+              (@isAnswerCorrect.done)="goToNext(i, $event)" class="button-card"
+              (click)="verifyAnswer(answer)"> {{answer.value}} </button>
+    </div>
+    <button (click)="skiped = true" *ngIf="enableSkip" class="bottom">
+      Passer à la question suivante
+    </button>
+  </div>
 </div>

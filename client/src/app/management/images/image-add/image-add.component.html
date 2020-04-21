@@ -1,0 +1,23 @@
+<div class="page">
+  <div class="line">
+    <label for="nom">Nom de l'image :</label>
+    <br>
+    <input class="long" id="nom" type="text" required="required" placeholder="Nom de l'image" #name>
+  </div>
+
+  <div class="line">
+    <label for="image">Chemin de l'image :</label>
+    <br>
+    <input class="long" id="image" type="text" required="required" placeholder="Chemin de l'image" #path>
+  </div>
+
+  <div class="line">
+    <label for="keywords">Mots-clés associés à l'image :</label>
+    <br>
+    <input class="long" id="keywords" type="text" required="required" placeholder="Mots-clés associés à l'image" #keywords>
+  </div>
+
+  <button (click)="createImage()">
+    Valider
+  </button>
+</div>

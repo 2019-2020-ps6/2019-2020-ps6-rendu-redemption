@@ -16,6 +16,7 @@ import {QuestionEditComponent} from './management/quizzes/quiz/questions/questio
 import {AnswerEditComponent} from './management/quizzes/quiz/questions/answers-edit/answer-edit.component';
 import {ImageListComponent} from "./management/images/image-list/image-list.component";
 import {ImageEditComponent} from "./management/images/image-edit/image-edit.component";
+import {ImageAddComponent} from "./management/images/image-add/image-add.component";
 
 const routes: Routes = [
   {path: '', component: MainComponent},
@@ -34,7 +35,8 @@ const routes: Routes = [
   {path: 'manage-quizzes/answer-edit', component:AnswerEditComponent},
   {path: 'manage-quizzes/questions-list', component:QuestionsListComponent},
   {path: 'manage-images/images-list', component:ImageListComponent},
-  {path: 'manage-images/modify-image', component: ImageEditComponent}
+  {path: 'manage-images/modify-image', component: ImageEditComponent},
+  {path: 'manage-images/add-image', component: ImageAddComponent}
 ];
 
 @NgModule({

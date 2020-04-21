@@ -1,8 +1,9 @@
 import {Component, OnInit} from '@angular/core';
 import {Question} from '../../../models/question.model';
-import {Answer} from '../../../models/answer.model';
 import {QuizService} from '../../../services/quizz.service';
 import {animate, state, style, transition, trigger} from '@angular/animations';
+import {ActivatedRoute, Router} from '@angular/router';
+import {answerFirstTry} from '../questions/questions.component';
 
 @Component({
   selector: 'app-quizToAnswer',
@@ -29,18 +30,24 @@ import {animate, state, style, transition, trigger} from '@angular/animations';
 export class PlayQuizComponent implements OnInit {
   isAnswerVisible: boolean = false;
   isQuestionVisible: boolean = true;
+  hasEnded: boolean = false;
   rightAnswer: String;
   ongoingQuestion: Question;
+  guestName: String;
 
-  constructor(public quizService: QuizService) {
+  constructor(public quizService: QuizService, private router: Router, private route: ActivatedRoute) {
   }
 
   ngOnInit() {
+    this.guestName = sessionStorage.getItem("selectedGuest");
+    console.log("ahhh",this.guestName);
+    if(this.guestName == undefined || this.guestName == null)
+      this.router.navigate(['/']);
     this.ongoingQuestion = this.quizService.getQuestion();
   }
 
-  goToNextQuestion(answer: Answer) {
-    this.rightAnswer = answer.value;
+  goToNextQuestion(answerFT: answerFirstTry) {
+    this.rightAnswer = answerFT.answer.value;
     this.isQuestionVisible = false;
     //triggers "makeAnswerAppear()"
   }
@@ -48,20 +55,31 @@ export class PlayQuizComponent implements OnInit {
   async makeAnswerAppear() {
     if (!this.isQuestionVisible) {
       this.isAnswerVisible = true;
-      this.ongoingQuestion = await this.quizService.getNextQuestion();
-      console.log('Le père a changé ongoingQuestion', this.ongoingQuestion);
-      await this.delay(2000);
+      let q = await this.quizService.getNextQuestion();
+      if(q == null) {
+        this.hasEnded = true;
+      }
+      else{
+        this.ongoingQuestion = q;
+        console.log('Le père a changé ongoingQuestion', this.ongoingQuestion);
+        await this.delay(2000);
+      }
       this.isAnswerVisible = false;
       //triggers makeQuestionAppear
     }
   }
 
   makeQuestionAppear() {
-    if(!this.isAnswerVisible)
+    if(!this.isAnswerVisible && !this.hasEnded)
       this.isQuestionVisible = true;
   }
+
   async delay(ms: number) {
     return new Promise(resolve => setTimeout(resolve, ms));
+  }
+
+  backToTheme() {
+    this.router.navigate(['/themes-selection'])
   }
 }
 

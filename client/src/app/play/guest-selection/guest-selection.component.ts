@@ -26,7 +26,7 @@ export class GuestSelectionComponent implements OnInit{
   }
 
   putGuestInSessionAndSelectTheme(guest: Guest) {
-    //TODO toute la partie session hihi
+    sessionStorage.setItem("selectedGuest", guest.firstName);
     this.router.navigate(['../themes-selection']);
   }
 }
