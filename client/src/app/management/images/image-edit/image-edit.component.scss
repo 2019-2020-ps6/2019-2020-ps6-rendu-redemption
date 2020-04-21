@@ -1,28 +1,17 @@
 @import '../../../../styles/variables';
 
-.invisibleRow {
-  position: relative;
-}
-
 .page {
-  padding: 2%;
-  position: relative;
+  font-size: 300%;
 }
 
-//TODO en mobile ça marche pas bien
-.left {
-  display: inline;
-  position: absolute;
-  left: 10px;
+.line {
+  padding: 1%;
 }
 
-.right {
-  display: inline;
-  position: absolute;
-  right: 10px;
+input {
+  width: 60%;
 }
 
-.cheat {
-  display: inline;
-  visibility: hidden;
+button {
+  margin: 2%;
 }
