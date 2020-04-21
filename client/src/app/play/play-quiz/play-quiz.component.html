@@ -4,6 +4,7 @@
                       [question]="ongoingQuestion"
                       (goToNextQuestion)="goToNextQuestion($event)">
 </app-questionToAnswer>
+
 <div class="rightAnswer" style="opacity: 0" *ngIf="isAnswerVisible"
      (@inAndOut.done)="makeQuestionAppear()"
      [@inAndOut]="isAnswerVisible">

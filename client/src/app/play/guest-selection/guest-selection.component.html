@@ -1,5 +1,8 @@
-<input type="text" #nom placeholder="Recherche">
-<button (click)="modifyFilter(nom.value)">Rechercher</button>
+<div class="recherche">
+  <input type="text" #nom placeholder="Recherche">
+  <button (click)="modifyFilter(nom.value)">Rechercher</button>
+</div>
+
 <div *ngFor="let guest of guestList | paginate: { itemsPerPage: 4, currentPage: pageCount } | filter:searchElement">
   <div class="row" (click)="putGuestInSessionAndSelectTheme(guest)">{{guest.firstName}} {{guest.lastName}}</div>
 </div>
