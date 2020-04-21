@@ -1,6 +1,11 @@
 @import '../../../styles/variables';
 
-.row{
+.recherche {
+  font-size: 150%;
+}
+
+.row {
+  font-size: 200%;
   background: $white;
   width: 90%;
   border-radius: 2px;
@@ -10,6 +15,6 @@
   padding: 2%;
 }
 
-.my-paginator{
-  //TODO
+.my-paginator {
+  font-size: 150%;
 }

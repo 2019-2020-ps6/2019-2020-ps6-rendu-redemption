@@ -1,13 +1,18 @@
 .page {
-  font-size: 150%;
+  font-size: 300%;
   text-align: left;
-  padding-left: 2em;
+  margin-left: 7%;
 }
 
 .line {
-  padding-bottom: 2em;
+  padding: 1%;
 }
 
-.long {
-  width: 95%;
+input {
+  width: 60%;
+}
+
+button {
+  margin-top: 2%;
+  margin-left: 1%;
 }
