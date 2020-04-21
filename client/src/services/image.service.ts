@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import {IMAGE_MOCK} from "../mocks/images.mock";
 import {Image} from "../models/image.model";
+import {Guest} from "../models/guest.model";
 
 @Injectable({
   providedIn: 'root'
@@ -11,6 +12,7 @@ export class ImageService {
    * The list is retrieved from the mock.
    */
   private images: Image[] = IMAGE_MOCK;
+  private imageToModify: Image = undefined;
 
   constructor() {
   }
@@ -24,11 +26,11 @@ export class ImageService {
   }
 
   setImageToModify(image: Image) {
-
+    this.imageToModify = image;
   }
 
   getImageToModify() {
-    return undefined;
+    return this.imageToModify;
   }
 
   createImage(imageToCreate: Image) {

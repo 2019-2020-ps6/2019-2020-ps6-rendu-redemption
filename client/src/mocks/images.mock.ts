@@ -11,7 +11,7 @@ export const IMAGE_MOCK: Image[] = [
     id: 1,
     name: 'Ent',
     path: 'https://i.pinimg.com/236x/bd/19/d6/bd19d6111c31405be7899fc26400cea6--el-hobbit-green-man.jpg',
-    keywords: 'arbre'
+    keywords: 'arbre, vert'
   },
   {
     id: 2,
