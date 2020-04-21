@@ -22,7 +22,14 @@ exports.findAll = (req, res, next) => {
         // Find the answers.
         question
           .getAnswers({
-            order: [['id', 'ASC']]
+            attributes: ['id', 'value', 'isCorrect', 'createdAt', 'updatedAt'],
+            order: [['id', 'ASC']],
+            // Include image.
+            include: [{
+              model: models.Image,
+              as: 'image',
+              attributes: ['id', 'name', 'path', 'createdAt', 'updatedAt']
+            }]
           })
           .then((answers) => {
             // Success.
@@ -108,6 +115,13 @@ exports.findById = (req, res, next) => {
   // Find the answer.
   models.Answer
     .findOne({
+      attributes: ['id', 'value', 'isCorrect', 'createdAt', 'updatedAt'],
+      // Include image.
+      include: [{
+        model: models.Image,
+        as: 'image',
+        attributes: ['id', 'name', 'path', 'createdAt', 'updatedAt']
+      }],
       where: {
         id: req.params.answerId,
         quizId: req.params.quizId,

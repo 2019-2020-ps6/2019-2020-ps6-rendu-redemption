@@ -23,6 +23,7 @@ module.exports = (sequelize, DataTypes) => {
   Theme.associate = (models) => {
     // A theme belongs to an image.
     Theme.belongsTo(models.Image, {
+      as: 'image',
       foreignKey: {
         name: 'imageId',
         allowNull: true

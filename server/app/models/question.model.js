@@ -31,19 +31,21 @@ module.exports = (sequelize, DataTypes) => {
       onDelete: 'CASCADE'
     });
 
-    // A question has many answers.
-    Question.hasMany(models.Answer, {
-      foreignKey: 'questionId'
-    });
-
     // A question belongs to an image.
     Question.belongsTo(models.Image, {
+      as: 'image',
       foreignKey: {
         name: 'imageId',
         allowNull: true
       },
       onUpdate: 'CASCADE',
       onDelete: 'SET NULL'
+    });
+
+    // A question has many answers.
+    Question.hasMany(models.Answer, {
+      as: 'answers',
+      foreignKey: 'questionId'
     });
   };
 

@@ -11,7 +11,60 @@ exports.findAll = (req, res, next) => {
   // Find the quizzes.
   models.Quiz
     .findAll({
-      order: [['id', 'ASC']]
+      // Attributes of the quizzes.
+      attributes: ['id', 'name', 'createdAt', 'updatedAt'],
+      include: [
+        // Include image.
+        {
+          model: models.Image,
+          as: 'image',
+          attributes: ['id', 'name', 'path', 'createdAt', 'updatedAt']
+        },
+        // Include theme.
+        {
+          model: models.Theme,
+          as: 'theme',
+          attributes: ['id', 'name', 'createdAt', 'updatedAt'],
+          // Include image of the theme.
+          include: [{
+            model: models.Image,
+            as: 'image',
+            attributes: ['id', 'name', 'path', 'createdAt', 'updatedAt']
+          }]
+        },
+        // Include questions.
+        {
+          model: models.Question,
+          as: 'questions',
+          attributes: ['id', 'label', 'createdAt', 'updatedAt'],
+          include: [
+            // Include image of questions.
+            {
+              model: models.Image,
+              as: 'image',
+              attributes: ['id', 'name', 'path', 'createdAt', 'updatedAt']
+            },
+            // Include answers of questions.
+            {
+              model: models.Answer,
+              as: 'answers',
+              attributes: ['id', 'value', 'isCorrect', 'createdAt', 'updatedAt'],
+              // Include image of answers.
+              include: [{
+                model: models.Image,
+                as: 'image',
+                attributes: ['id', 'name', 'path', 'createdAt', 'updatedAt']
+              }]
+            }
+          ]
+        }
+      ],
+      order: [
+        // Order the quizzes.
+        ['id', 'ASC'],
+        // Order the questions and the answers.
+        [{ model: models.Question, as: 'questions' }, { model: models.Answer, as: 'answers' }, 'id', 'ASC']
+      ]
     })
     .then((quizzes) => {
       // Success.
@@ -58,7 +111,63 @@ exports.create = (req, res, next) => {
 exports.findById = (req, res, next) => {
   // Find the quiz.
   models.Quiz
-    .findByPk(req.params.quizId)
+    .findOne({
+      // Attributes of the quizzes.
+      attributes: ['id', 'name', 'createdAt', 'updatedAt'],
+      include: [
+        // Include image.
+        {
+          model: models.Image,
+          as: 'image',
+          attributes: ['id', 'name', 'path', 'createdAt', 'updatedAt']
+        },
+        // Include theme.
+        {
+          model: models.Theme,
+          as: 'theme',
+          attributes: ['id', 'name', 'createdAt', 'updatedAt'],
+          // Include image of the theme.
+          include: [{
+            model: models.Image,
+            as: 'image',
+            attributes: ['id', 'name', 'path', 'createdAt', 'updatedAt']
+          }]
+        },
+        // Include questions.
+        {
+          model: models.Question,
+          as: 'questions',
+          attributes: ['id', 'label', 'createdAt', 'updatedAt'],
+          include: [
+            // Include image of questions.
+            {
+              model: models.Image,
+              as: 'image',
+              attributes: ['id', 'name', 'path', 'createdAt', 'updatedAt']
+            },
+            // Include answers of questions.
+            {
+              model: models.Answer,
+              as: 'answers',
+              attributes: ['id', 'value', 'isCorrect', 'createdAt', 'updatedAt'],
+              // Include image of answers.
+              include: [{
+                model: models.Image,
+                as: 'image',
+                attributes: ['id', 'name', 'path', 'createdAt', 'updatedAt']
+              }]
+            }
+          ]
+        }
+      ],
+      order: [
+        // Order the questions and the answers.
+        [{ model: models.Question, as: 'questions' }, { model: models.Answer, as: 'answers' }, 'id', 'ASC']
+      ],
+      where: {
+        id: req.params.quizId
+      }
+    })
     .then((quiz) => {
       if (quiz) {
         // Found.

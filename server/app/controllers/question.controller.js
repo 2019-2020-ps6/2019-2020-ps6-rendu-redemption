@@ -21,7 +21,35 @@ exports.findAll = (req, res, next) => {
         // Find the questions.
         quiz
           .getQuestions({
-            order: [['id', 'ASC']]
+            // Attributes of the questions.
+            attributes: ['id', 'label', 'createdAt', 'updatedAt'],
+            include: [
+              // Include image.
+              {
+                model: models.Image,
+                as: 'image',
+                attributes: ['id', 'name', 'path', 'createdAt', 'updatedAt']
+              },
+              // Include answers.
+              {
+                model: models.Answer,
+                as: 'answers',
+                attributes: ['id', 'value', 'isCorrect', 'createdAt', 'updatedAt'],
+                // Include image of answers.
+                include: [{
+                  model: models.Image,
+                  as: 'image',
+                  attributes: ['id', 'name', 'path', 'createdAt', 'updatedAt']
+                }]
+              }
+            ],
+            order: [
+              // Order the questions.
+              ['id', 'ASC'],
+
+              // Order the answers.
+              [{ model: models.Answer, as: 'answers' }, 'id', 'ASC']
+            ]
           })
           .then((questions) => {
             // Success.
@@ -104,6 +132,32 @@ exports.findById = (req, res, next) => {
   // Find the question.
   models.Question
     .findOne({
+      // Attributes of the question.
+      attributes: ['id', 'label', 'createdAt', 'updatedAt'],
+      include: [
+        // Include image.
+        {
+          model: models.Image,
+          as: 'image',
+          attributes: ['id', 'name', 'path', 'createdAt', 'updatedAt']
+        },
+        // Include answers.
+        {
+          model: models.Answer,
+          as: 'answers',
+          attributes: ['id', 'value', 'isCorrect', 'createdAt', 'updatedAt'],
+          // Nested include image of answers.
+          include: [{
+            model: models.Image,
+            as: 'image',
+            attributes: ['id', 'name', 'path', 'createdAt', 'updatedAt']
+          }]
+        }
+      ],
+      order: [
+        // Order the answers.
+        [{ model: models.Answer, as: 'answers' }, 'id', 'ASC']
+      ],
       where: {
         id: req.params.questionId,
         quizId: req.params.quizId

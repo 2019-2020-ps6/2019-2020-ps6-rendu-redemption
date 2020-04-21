@@ -25,16 +25,6 @@ module.exports = (sequelize, DataTypes) => {
 
   // Define the answer associations.
   Answer.associate = (models) => {
-    // An answer belongs to a question.
-    Answer.belongsTo(models.Question, {
-      foreignKey: {
-        name: 'questionId',
-        allowNull: false
-      },
-      onUpdate: 'CASCADE',
-      onDelete: 'CASCADE'
-    });
-
     // An answer belongs to a quiz.
     Answer.belongsTo(models.Quiz, {
       foreignKey: {
@@ -45,8 +35,19 @@ module.exports = (sequelize, DataTypes) => {
       onDelete: 'CASCADE'
     });
 
+    // An answer belongs to a question.
+    Answer.belongsTo(models.Question, {
+      foreignKey: {
+        name: 'questionId',
+        allowNull: false
+      },
+      onUpdate: 'CASCADE',
+      onDelete: 'CASCADE'
+    });
+
     // An answer belongs to an image.
     Answer.belongsTo(models.Image, {
+      as: 'image',
       foreignKey: {
         name: 'imageId',
         allowNull: true

@@ -21,8 +21,31 @@ module.exports = (sequelize, DataTypes) => {
 
   // Define the quiz associations.
   Quiz.associate = (models) => {
+    // A quiz belongs to a theme
+    Quiz.belongsTo(models.Theme, {
+      as: 'theme',
+      foreignKey: {
+        name: 'themeId',
+        allowNull: false
+      },
+      onUpdate: 'CASCADE',
+      onDelete: 'CASCADE'
+    });
+
+    // A quiz belongs to an image.
+    Quiz.belongsTo(models.Image, {
+      as: 'image',
+      foreignKey: {
+        name: 'imageId',
+        allowNull: true
+      },
+      onUpdate: 'CASCADE',
+      onDelete: 'SET NULL'
+    });
+
     // A quiz has many questions.
     Quiz.hasMany(models.Question, {
+      as: 'questions',
       foreignKey: 'quizId'
     });
 
@@ -35,26 +58,6 @@ module.exports = (sequelize, DataTypes) => {
     Quiz.belongsToMany(models.Guest, {
       foreignKey: 'quizId',
       through: 'guest_quizzes'
-    });
-
-    // A quiz belongs to a theme
-    Quiz.belongsTo(models.Theme, {
-      foreignKey: {
-        name: 'themeId',
-        allowNull: false
-      },
-      onUpdate: 'CASCADE',
-      onDelete: 'CASCADE'
-    });
-
-    // A quiz belongs to an image.
-    Quiz.belongsTo(models.Image, {
-      foreignKey: {
-        name: 'imageId',
-        allowNull: true
-      },
-      onUpdate: 'CASCADE',
-      onDelete: 'SET NULL'
     });
   };
 
