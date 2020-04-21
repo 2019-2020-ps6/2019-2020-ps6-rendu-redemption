@@ -14,15 +14,9 @@ module.exports = {
       type: Sequelize.STRING,
       allowNull: false
     },
-    imageId: {
-      type: Sequelize.INTEGER,
-      references: {
-        model: 'images',
-        key: 'id'
-      },
-      onUpdate: 'CASCADE',
-      onDelete: 'CASCADE',
-      allowNull: false
+    accessibility: {
+      type: Sequelize.STRING,
+      allowNull: true
     },
     createdAt: {
       type: Sequelize.DATE,
