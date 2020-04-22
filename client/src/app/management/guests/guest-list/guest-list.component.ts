@@ -24,7 +24,11 @@ export class GuestListComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.guestList = this.guestService.getGuests();
+    this.guestService
+      .getGuests()
+      .subscribe((guests) => {
+        this.guestList = guests;
+      });
   }
 
   modifyFilter(value: string) {

@@ -12,13 +12,17 @@ import {Guest} from '../../../models/guest.model';
 export class GuestSelectionComponent implements OnInit{
   guestList: Guest[];
   searchElement: string;
-  pageCount: number = 1;
+  pageCount = 1;
 
   constructor(private guestService: GuestService, private router: Router) {
   }
 
   ngOnInit(): void {
-    this.guestList = this.guestService.getGuests();
+    this.guestService
+      .getGuests()
+      .subscribe((guests: Guest[]) => {
+        this.guestList = guests;
+      });
   }
 
   modifyFilter(value: string) {

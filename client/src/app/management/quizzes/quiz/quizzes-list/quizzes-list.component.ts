@@ -26,34 +26,39 @@ export class QuizzesListComponent implements OnInit {
     if (this.themeService.getCurrentTheme() === undefined) {
       this.router.navigate(['../themes-list'], {relativeTo: this.route});
     } else {
-      this.quizzesList = [...this.quizService.getQuizzes()];
-      this.quizzesList[this.quizzesList.length] = {
-        id: 0,
-        theme: null,
-        image: null,
-        name: 'Ajouter un quiz',
-        questions: []
-      };
-      this.totalQuiz = [];
-      for (let i = 0; i < Math.trunc(this.quizzesList.length / 3); i++) {
-        this.totalQuiz[i] = [];
-        for (let j = 0; j < 3; j++) {
-          this.totalQuiz[i][j] = i + j;
-        }
-      }
-      if (!Number.isInteger(this.quizzesList.length / 3)) {
-        const firstIndex = Math.trunc(this.quizzesList.length / 3);
-        const x = (this.quizzesList.length / 3) - firstIndex;
-        this.totalQuiz[firstIndex] = [];
-        for (let i = 0; i < Math.round(x * 3); i++) {
-          this.totalQuiz[firstIndex][i] = firstIndex * 3 + i;
-        }
-      }
-    }
-  }
+      this.quizService
+        .getQuizzes()
+        .subscribe((quizzes: Quiz[]) => {
+          // Get the quizzes.
+          this.quizzesList = quizzes.slice();
 
-  getImageById(id: number): Image {
-    return this.imageService.getImageById(id);
+          // Add the button.
+          this.quizzesList.push({
+            id: 0,
+            theme: null,
+            image: null,
+            name: 'Ajouter un quiz',
+            questions: []
+          });
+
+          // Compute the layout.
+          this.totalQuiz = [];
+          for (let i = 0; i < Math.trunc(this.quizzesList.length / 3); i++) {
+            this.totalQuiz[i] = [];
+            for (let j = 0; j < 3; j++) {
+              this.totalQuiz[i][j] = i + j;
+            }
+          }
+          if (!Number.isInteger(this.quizzesList.length / 3)) {
+            const firstIndex = Math.trunc(this.quizzesList.length / 3);
+            const x = (this.quizzesList.length / 3) - firstIndex;
+            this.totalQuiz[firstIndex] = [];
+            for (let i = 0; i < Math.round(x * 3); i++) {
+              this.totalQuiz[firstIndex][i] = firstIndex * 3 + i;
+            }
+          }
+        });
+    }
   }
 
   getQuiz(y: number): Quiz {

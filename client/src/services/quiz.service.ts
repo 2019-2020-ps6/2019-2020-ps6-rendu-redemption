@@ -1,32 +1,75 @@
-import {Injectable} from '@angular/core';
-import {Quiz} from '../models/quiz.model';
-import {Question} from '../models/question.model';
-import {Answer} from '../models/answer.model';
+// App.
+import { Injectable } from '@angular/core';
+import { environment } from '../environments/environment';
+
+// Models.
+import { Quiz } from '../models/quiz.model';
+import { Question } from '../models/question.model';
+import { Answer } from '../models/answer.model';
+
+// Communication.
+import { HttpClient } from '@angular/common/http';
+import { BehaviorSubject, Observable } from 'rxjs';
+import {Image} from "../models/image.model";
 
 @Injectable({
   providedIn: 'root'
 })
 export class QuizService {
+  /**
+   * The server URL.
+   */
+  private serverURL: string;
+
+  /**
+   * The server options.
+   * These options are used for JSON requests.
+   */
+  private serverOptions: object;
+
+  /**
+   * The list of quizzes.
+   */
+  private quizzes: Quiz[];
+
+  /**
+   * The observable list of quizzes.
+   */
+  private quizzes$: BehaviorSubject<Quiz[]>;
+
+  // TODO: Use route params or user session.
   private compt = 0;
   private currentQuiz: Quiz = undefined;
   private questionToModify: Question = undefined;
   private answerIndexToModify: number = undefined;
 
   /**
-   * The list of quiz.
-   * The list is retrieved from the mock.
+   * Constructs the image service.
+   * @param http The HTTP client.
    */
-  private quizzes: Quiz[];
+  constructor(private http: HttpClient) {
+    // Initialize the service.
+    this.serverURL = environment.serverURL;
+    this.serverOptions = environment.serverOptions;
 
-  constructor() {
+    // Initialize the images.
+    this.quizzes = [];
+    this.quizzes$ = new BehaviorSubject<Quiz[]>(this.quizzes);
+    this.findAllQuizzes();
   }
 
   /*
    * PLAY
    */
-  getQuizzes(): Quiz[] {
-    return this.quizzes;
+
+  /**
+   * Returns the observable list of quizzes.
+   */
+  getQuizzes(): Observable<Quiz[]> {
+    return this.quizzes$.asObservable();
   }
+
+
 
   getQuestion(): Question {
     return this.quizzes[0].questions[this.compt];
@@ -79,34 +122,139 @@ export class QuizService {
    * DATA TO BACK
    */
 
-  createQuiz(quizToCreate: Quiz) {
-    console.log('On veut créer le quiz', quizToCreate);
+  /**
+   * Finds all the quizzes.
+   */
+  findAllQuizzes() {
+    this.http
+      .get<Quiz[]>(`${this.serverURL}/quizzes`)
+      .subscribe((quizzes: Quiz[]) => {
+        this.quizzes = quizzes;
+        this.quizzes$.next(this.quizzes);
+      });
   }
 
-  createQuestion(questionToCreate: Question) {
-    console.log('On veut créer la question', questionToCreate, 'dans le quiz', this.currentQuiz);
+  /**
+   * Finds a quiz by id.
+   * @param quizId The id of the quiz.
+   */
+  findQuiz(quizId: number): Quiz {
+    return this.quizzes.find((quiz: Quiz) => quiz.id === quizId);
   }
 
-  updateQuestion(questionToCreate: Question) {
-    console.log('On veut update la question', questionToCreate, 'du quiz', this.currentQuiz);
+  /**
+   * Finds a quiz by theme id.
+   * @param themeId The theme id to be found.
+   */
+  findQuizByTheme(themeId: number): Quiz {
+    return this.quizzes.find((quiz: Quiz) => quiz.theme.id === themeId);
+  }
+
+  /**
+   * Creates a quiz.
+   * @param quiz The quiz to be created.
+   */
+  createQuiz(quiz: Quiz) {
+    this.http
+      .post<Quiz>(`${this.serverURL}/quizzes`, quiz, this.serverOptions)
+      .subscribe(() => {
+        this.findAllQuizzes();
+      });
+  }
+
+  /**
+   * Updates a quiz.
+   * @param quiz The quiz to be updated.
+   */
+  updateQuiz(quiz: Quiz) {
+    this.http
+      .put<Quiz>(`${this.serverURL}/quizzes/${quiz.id}`, quiz, this.serverOptions)
+      .subscribe(() => {
+        this.findAllQuizzes();
+      });
+  }
+
+  /**
+   * Deletes a quiz.
+   * @param quiz The quiz to be deleted.
+   */
+  deleteQuiz(quiz: Quiz) {
+    this.http
+      .delete<Quiz>(`${this.serverURL}/quizzes/${quiz.id}`)
+      .subscribe(() => {
+        this.findAllQuizzes();
+      });
+  }
+
+  /**
+   * Creates a question.
+   * @param question The question to be created.
+   */
+  createQuestion(question: Question) {
+    this.http
+      .post<Question>(
+        `${this.serverURL}/quizzes/${this.currentQuiz.id}/questions`,
+        question,
+        this.serverOptions
+      )
+      .subscribe(() => {
+        this.findAllQuizzes();
+      });
+  }
+
+  updateQuestion(question: Question) {
+    this.http
+      .put<Question>(
+        `${this.serverURL}/quizzes/${this.currentQuiz.id}/questions/${question.id}`,
+        question,
+        this.serverOptions
+      )
+      .subscribe(() => {
+        this.findAllQuizzes();
+      });
   }
 
   deleteQuestion(question: Question) {
-    console.log('On veut supprimer la question', question, 'du quiz', this.currentQuiz);
+    this.http
+      .delete<Question>(
+        `${this.serverURL}/quizzes/${this.currentQuiz.id}/questions/${question.id}`
+      )
+      .subscribe(() => {
+        this.findAllQuizzes();
+      });
   }
 
-  createAnswer(answerToCreate: Answer) {
-    console.log('On veut créer la réponse', answerToCreate, 'dans la question', this.questionToModify, 'du quiz', this.currentQuiz);
-    // TODO
+  createAnswer(answer: Answer) {
+    this.http
+      .post<Answer>(
+        `${this.serverURL}/quizzes/${this.currentQuiz.id}/questions/${this.questionToModify.id}/answers`,
+        answer,
+        this.serverOptions
+      )
+      .subscribe(() => {
+        this.findAllQuizzes();
+      });
   }
 
-  updateAnswer(answerToCreate: Answer) {
-    console.log('On veut modifier la réponse', answerToCreate, 'dans la question', this.questionToModify, 'du quiz', this.currentQuiz);
-    // TODO
+  updateAnswer(answer: Answer) {
+    this.http
+      .put<Answer>(
+        `${this.serverURL}/quizzes/${this.currentQuiz.id}/questions/${this.questionToModify.id}/answers/${answer.id}`,
+        answer,
+        this.serverOptions
+      )
+      .subscribe(() => {
+        this.findAllQuizzes();
+      });
   }
 
-  deleteAnswer(questionToEdit: Question, reponse: Answer) {
-    console.log('On veut supprimer la réponse', reponse, ' de la question ', questionToEdit, 'du quiz', this.currentQuiz);
-    // TODO
+  deleteAnswer(questionToEdit: Question, answer: Answer) {
+    this.http
+      .delete<Answer>(
+        `${this.serverURL}/quizzes/${this.currentQuiz.id}/questions/${questionToEdit.id}/answers/${answer.id}`,
+      )
+      .subscribe(() => {
+        this.findAllQuizzes();
+      });
   }
 }

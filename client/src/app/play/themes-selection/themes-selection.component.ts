@@ -15,16 +15,15 @@ export class ThemesSelectionComponent implements OnInit {
     themes: Theme[];
     images: Image[];
 
-    constructor(private themeService: ThemeService, private imageService: ImageService, private router: Router) {
+    constructor(private themeService: ThemeService, private router: Router) {
     }
 
     ngOnInit() {
-      this.themes = this.themeService.getThemes();
-      this.images = this.imageService.getImages();
-    }
-
-    getImageById(id: number): Image {
-        return this.images.find(image => image.id === id);
+      this.themeService
+        .getThemes()
+        .subscribe((themes: Theme[]) => {
+          this.themes = themes;
+        });
     }
 
     goToRelatedQuizzes(theme: number) {

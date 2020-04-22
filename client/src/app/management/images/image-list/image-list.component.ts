@@ -18,7 +18,11 @@ export class ImageListComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.imageList = this.imageService.getImages();
+    this.imageService
+      .getImages()
+      .subscribe((images: Image[]) => {
+        this.imageList = images;
+      });
   }
 
   modifyFilter(value: string) {

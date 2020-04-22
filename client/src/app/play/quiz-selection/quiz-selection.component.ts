@@ -15,12 +15,15 @@ export class QuizSelectionComponent implements OnInit {
     quizzes: Quiz[];
     images: Image[];
 
-    constructor(private quizService: QuizService, private imageService: ImageService, private router: Router, private route: ActivatedRoute) {
+    constructor(private quizService: QuizService, private router: Router, private route: ActivatedRoute) {
     }
 
     ngOnInit() {
-      this.quizzes = this.quizService.getQuizzes();
-      this.images = this.imageService.getImages();
+      this.quizService
+        .getQuizzes()
+        .subscribe((quizzes) => {
+          this.quizzes = quizzes;
+        });
     }
 
     getRelatedQuizzes(): Quiz[] {
