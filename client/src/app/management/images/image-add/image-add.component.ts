@@ -1,7 +1,7 @@
 import {Component, ElementRef, OnInit, ViewChild} from '@angular/core';
 import {ActivatedRoute, Router} from '@angular/router';
-import {ImageService} from "../../../../services/image.service";
-import {Image} from "../../../../models/image.model";
+import {ImageService} from '../../../../services/image.service';
+import {Image} from '../../../../models/image.model';
 
 @Component({
   selector: 'app-ImageAdd',
@@ -21,13 +21,11 @@ export class ImageAddComponent implements OnInit {
   }
 
   createImage() {
-    let sentence = this.keywordsInput.nativeElement.value;
-    let imageToCreate: Image = {
+    const sentence = this.keywordsInput.nativeElement.value;
+    const imageToCreate: Image = {
       id: -1,
       name: this.nameInput.nativeElement.value,
-      path: this.pathInput.nativeElement.value,
-      keywords: sentence.split(' '),
-
+      path: this.pathInput.nativeElement.value
     };
     this.imageService.createImage(imageToCreate);
   }

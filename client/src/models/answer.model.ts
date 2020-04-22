@@ -1,6 +1,10 @@
+import { Image } from './image.model';
+
 export interface Answer {
   id: number;
+  image: Image;
   value: string;
-  imageId: number;
   isCorrect: boolean;
+  createdAt?: Date;
+  updatedAt?: Date;
 }

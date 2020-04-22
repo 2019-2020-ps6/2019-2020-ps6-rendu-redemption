@@ -2,7 +2,7 @@
   <div *ngFor="let x of totalTheme | paginate: { itemsPerPage: 2, currentPage: pageCount }">
     <div style="display: inline;" *ngFor="let y of x">
       <div class="card" (click)="navigate(this.getTheme(y))">
-        <img src="{{this.getImageById(this.getTheme(y).imageId).path}}" width="280" height="151">
+        <img *ngIf="this.getTheme(y).image" src="{{this.getTheme(y).image.path}}" width="280" height="151">
         {{this.getTheme(y).name}}
       </div>
     </div>

@@ -1,10 +1,13 @@
-import {Question} from './question.model';
+import { Theme } from './theme.model';
+import { Image } from './image.model';
+import { Question } from './question.model';
 
 export interface Quiz {
   id: number;
-  themeId: number;
-  imageId: number;
+  theme: Theme;
+  image: Image;
   name: string;
-  keywords: string[];
-  questions: Question[]
+  questions: Question[];
+  createdAt?: Date;
+  updatedAt?: Date;
 }

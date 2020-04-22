@@ -6,52 +6,48 @@ const NotFoundError = require('../utils/errors/not-found-error');
 /* -------------------------------------------------------------------------- */
 
 /**
- * Finds all the guests.
+ * Finds all the images.
  */
 function findAll() {
-  return models.Guest
+  return models.Image
     .findAll({
       order: [['id', 'ASC']]
     });
 }
 
 /**
- * Finds a guest by id.
- * @param id The id of the guest.
+ * Finds an image by id.
+ * @param id The id of the image.
  */
 function find(id) {
-  return models.Guest.findByPk(id);
+  return models.Image.findByPk(id);
 }
 
 /**
- * Creates a guest.
- * @param firstName The first name of the guest.
- * @param lastName The last name of the guest.
- * @param accessibility The accessibility profile of the guest.
+ * Creates an image.
+ * @param name The name of the image.
+ * @param path The path of the image.
  */
-function create(firstName, lastName, accessibility) {
-  return models.Guest
+function create(name, path) {
+  return models.Image
     .create({
-      firstName,
-      lastName,
-      accessibility
+      name,
+      path
     });
 }
 
 /**
- * Updates a guest by id.
- * @param id The id of the guest.
- * @param firstName The first name of the guest.
- * @param lastName The last name of the guest.
- * @param accessibility The accessibility profile of the guest.
+ * Updates an image by id.
+ * @param id The id of the image.
+ * @param name The name of the image.
+ * @param path The path of the image.
  */
-function update(id, firstName, lastName, accessibility) {
-  return models.Guest
+function update(id, name, path) {
+  return models.Image
     .update(
       {
-        firstName,
-        lastName,
-        accessibility
+        name,
+        path
       },
       {
         where: { id }
@@ -60,11 +56,11 @@ function update(id, firstName, lastName, accessibility) {
 }
 
 /**
- * Destroys a guest by id.
- * @param id The id of the guest.
+ * Destroys an image by id.
+ * @param id The id of the image.
  */
 function destroy(id) {
-  return models.Guest
+  return models.Image
     .destroy({
       where: { id }
     });
@@ -75,33 +71,33 @@ function destroy(id) {
 /* -------------------------------------------------------------------------- */
 
 /**
- * Prints all the guests.
+ * Prints all the images.
  * @param req The request object.
  * @param res The response object.
  * @param next The callback for the next middleware.
  */
 function printFindAll(req, res, next) {
   findAll()
-    .then((guests) => {
-      res.status(200).json(guests);
+    .then((images) => {
+      res.status(200).json(images);
     })
     // Errors.
     .catch(next);
 }
 
 /**
- * Prints a guest by id.
+ * Prints an image by id.
  * @param req The request object.
  * @param res The response object.
  * @param next The callback for the next middleware.
  */
 function printFind(req, res, next) {
-  find(req.params.guestId)
-    .then((guest) => {
-      if (guest) {
-        res.status(200).json(guest);
+  find(req.params.imageId)
+    .then((image) => {
+      if (image) {
+        res.status(200).json(image);
       } else {
-        // Guest not found.
+        // Image not found.
         next(new NotFoundError());
       }
     })
@@ -110,48 +106,39 @@ function printFind(req, res, next) {
 }
 
 /**
- * Prints the created guest.
+ * Prints the created image.
  * @param req The request object.
  * @param res The response object.
  * @param next The callback for the next middleware.
  */
 function printCreate(req, res, next) {
-  create(
-    req.body.firstName,
-    req.body.lastName,
-    req.body.accessibility
-  )
-    .then((guest) => {
-      res.status(201).json(guest);
+  create(req.body.name, req.body.path)
+    .then((image) => {
+      res.status(201).json(image);
     })
     // Errors.
     .catch(next);
 }
 
 /**
- * Prints the updated guest.
+ * Prints the updated image.
  * @param req The request object.
  * @param res The response object.
  * @param next The callback for the next middleware.
  */
 function printUpdate(req, res, next) {
-  // Update the guest.
-  update(
-    req.params.guestId,
-    req.body.firstName,
-    req.body.lastName,
-    req.body.accessibility
-  )
+  // Update the image.
+  update(req.params.imageId, req.body.name, req.body.path)
     .then((result) => {
       const updatedRows = result[0];
       if (updatedRows > 0) {
-        // Find the guest.
-        return find(req.params.guestId)
-          .then((guest) => {
-            res.status(200).json(guest);
+        // Find the image.
+        return find(req.params.imageId)
+          .then((image) => {
+            res.status(200).json(image);
           });
       }
-      // Guest not found.
+      // Image not found.
       throw new NotFoundError();
     })
     // Errors.
@@ -159,23 +146,23 @@ function printUpdate(req, res, next) {
 }
 
 /**
- * Prints the destroyed guest.
+ * Prints the destroyed image.
  * @param req The request object.
  * @param res The response object.
  * @param next The callback for the next middleware.
  */
 function printDestroy(req, res, next) {
-  // Find the guest.
-  find(req.params.guestId)
-    .then((guest) => {
-      if (guest) {
-        // Destroy the guest.
-        return destroy(req.params.guestId)
+  // Find the image.
+  find(req.params.imageId)
+    .then((image) => {
+      if (image) {
+        // Destroy the image.
+        return destroy(req.params.imageId)
           .then(() => {
-            res.status(200).json(guest);
+            res.status(200).json(image);
           });
       }
-      // Guest not found.
+      // Image not found.
       throw new NotFoundError();
     })
     // Errors.

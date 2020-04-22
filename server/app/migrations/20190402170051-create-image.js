@@ -1,22 +1,18 @@
 module.exports = {
   // Create the guests table.
-  up: (queryInterface, Sequelize) => queryInterface.createTable('guests', {
+  up: (queryInterface, Sequelize) => queryInterface.createTable('images', {
     id: {
       type: Sequelize.INTEGER,
       primaryKey: true,
       autoIncrement: true
     },
-    firstName: {
+    name: {
       type: Sequelize.STRING,
       allowNull: false
     },
-    lastName: {
+    path: {
       type: Sequelize.STRING,
       allowNull: false
-    },
-    accessibility: {
-      type: Sequelize.STRING,
-      allowNull: true
     },
     createdAt: {
       type: Sequelize.DATE,
@@ -28,5 +24,5 @@ module.exports = {
     }
   }),
   // Drop the guests table.
-  down: (queryInterface) => queryInterface.dropTable('guests')
+  down: (queryInterface) => queryInterface.dropTable('images')
 };

@@ -5,19 +5,19 @@ const QuestionController = require('../../../controllers/question.controller');
 const router = new Router({ mergeParams: true });
 
 // Find all the questions.
-router.get('/', QuestionController.findAll);
+router.get('/', QuestionController.printFindAll);
 
 // Insert a question.
-router.post('/', QuestionController.create);
+router.post('/', QuestionController.printCreate);
 
 // Find a question by id.
-router.get('/:questionId([0-9]+)', QuestionController.findById);
+router.get('/:questionId([0-9]+)', QuestionController.printFind);
 
-// Update (or insert) a question by id.
-router.put('/:questionId([0-9]+)', QuestionController.updateById);
+// Update a question by id.
+router.put('/:questionId([0-9]+)', QuestionController.printUpdate);
 
 // Delete a question by id.
-router.delete('/:questionId([0-9]+)', QuestionController.deleteById);
+router.delete('/:questionId([0-9]+)', QuestionController.printDestroy);
 
 // Answer routes.
 router.use('/:questionId([0-9]+)/answers', AnswerRouter);

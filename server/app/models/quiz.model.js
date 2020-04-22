@@ -21,20 +21,43 @@ module.exports = (sequelize, DataTypes) => {
 
   // Define the quiz associations.
   Quiz.associate = (models) => {
-    // A quiz has many questions.
-    Quiz.hasMany(models.Question, {
-      foreignKey: 'quizId'
+    // A quiz belongs to a theme
+    Quiz.belongsTo(models.Theme, {
+      as: 'theme',
+      foreignKey: {
+        name: 'themeId',
+        allowNull: false
+      },
+      onUpdate: 'CASCADE',
+      onDelete: 'CASCADE'
     });
 
-    // A quiz has many answers.
-    Quiz.hasMany(models.Answer, {
-      foreignKey: 'quizId'
+    // A quiz belongs to an image.
+    Quiz.belongsTo(models.Image, {
+      as: 'image',
+      foreignKey: {
+        name: 'imageId',
+        allowNull: true
+      },
+      onUpdate: 'CASCADE',
+      onDelete: 'SET NULL'
     });
 
     // A quiz belongs to many guests.
     Quiz.belongsToMany(models.Guest, {
       foreignKey: 'quizId',
       through: 'guest_quizzes'
+    });
+
+    // A quiz has many questions.
+    Quiz.hasMany(models.Question, {
+      as: 'questions',
+      foreignKey: 'quizId'
+    });
+
+    // A quiz has many answers.
+    Quiz.hasMany(models.Answer, {
+      foreignKey: 'quizId'
     });
   };
 

@@ -1,14 +1,14 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-
+import { HttpClientModule } from '@angular/common/http';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { HeaderComponent } from './header/header.component';
 import { QuestionsComponent } from './play/questions/questions.component';
 import { PlayQuizComponent } from './play/play-quiz/play-quiz.component';
 import {QuizSelectionComponent} from './play/quiz-selection/quiz-selection.component';
-import {ThemesSelectionComponent} from "./play/themes-selection/themes-selection.component";
+import {ThemesSelectionComponent} from './play/themes-selection/themes-selection.component';
 import {MainComponent} from './main/main.component';
 import {GuestSelectionComponent} from './play/guest-selection/guest-selection.component';
 import {Ng2SearchPipeModule} from 'ng2-search-filter';
@@ -28,10 +28,9 @@ import {ModalConfirmQuestionDeletion} from './management/quizzes/quiz/questions/
 import {QuestionEditComponent} from './management/quizzes/quiz/questions/question-edit/question-edit.component';
 import {ModalConfirmAnswerDeletion} from './management/quizzes/quiz/questions/question-edit/modal-confirm-answer-deletion';
 import {AnswerEditComponent} from './management/quizzes/quiz/questions/answers-edit/answer-edit.component';
-import {ImageListComponent} from "./management/images/image-list/image-list.component";
-import {ImageEditComponent} from "./management/images/image-edit/image-edit.component";
-import {ImageAddComponent} from "./management/images/image-add/image-add.component";
-
+import {ImageListComponent} from './management/images/image-list/image-list.component';
+import {ImageEditComponent} from './management/images/image-edit/image-edit.component';
+import {ImageAddComponent} from './management/images/image-add/image-add.component';
 
 @NgModule({
   declarations: [
@@ -61,6 +60,7 @@ import {ImageAddComponent} from "./management/images/image-add/image-add.compone
   ],
   imports: [
     BrowserModule,
+    HttpClientModule,
     AppRoutingModule,
     BrowserAnimationsModule,
     Ng2SearchPipeModule,

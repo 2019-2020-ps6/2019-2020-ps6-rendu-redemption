@@ -14,9 +14,9 @@ import {FormBuilder, FormGroup} from '@angular/forms';
 export class GuestEditComponent implements OnInit {
   guestToEdit: Guest;
   //TODO modifier ça
-  accessibilities: String[] = ['none', 'TBD'];
+  accessibilities: string[] = ['none', 'TBD'];
   icon = faUserPlus;
-  buttonText: String;
+  buttonText: string;
   @ViewChild('firstName') firstNameInput: ElementRef;
   @ViewChild('lastName') lastNameInput: ElementRef;
   @ViewChild('accessibility') accessibilityInput: ElementRef;
@@ -39,7 +39,7 @@ export class GuestEditComponent implements OnInit {
   }
 
   createModifyGuest() {
-    let guestToCreate: Guest = {
+    const guestToCreate: Guest = {
       id: -1,
       firstName: this.firstNameInput.nativeElement.value,
       lastName: this.lastNameInput.nativeElement.value,

@@ -13,13 +13,6 @@
       <input class="long" id="image" type="text" required="required" placeholder="Chemin de l'image" #path
              [value]="imageToEdit ? imageToEdit.path : null">
     </div>
-
-    <div class="line">
-      <label for="keywords">Mots-clés associés à l'image :</label>
-      <br>
-      <input class="long" id="keywords" type="text" required="required" placeholder="Mots-clés associés à l'image" #keywords
-             [value]="imageToEdit ? imageToEdit.keywords : null">
-    </div>
   </div>
 
   <button (click)="createModifyImage()">

@@ -1,189 +1,205 @@
 const models = require('../models');
 const NotFoundError = require('../utils/errors/not-found-error');
-const LimitReachedError = require('../utils/errors/limit-reached-error');
+
+/* -------------------------------------------------------------------------- */
+/*                              GETTERS / SETTERS                             */
+/* -------------------------------------------------------------------------- */
 
 /**
- * Finds all the questions.
- * @param req The request object.
- * @param res The response object.
- * @param next The callback for the next middleware.
+ * Finds the parent quiz of the question.
+ * @param quizId The quiz id of the question.
  */
-exports.findAll = (req, res, next) => {
-  // Find the quiz.
-  models.Quiz
+function findParentQuiz(quizId) {
+  return models.Quiz
     .findOne({
       where: {
-        id: req.params.quizId
+        id: quizId
       }
-    })
+    });
+}
+
+/**
+ * Finds all the questions of a quiz.
+ * @param quizId The quiz id of the question.
+ */
+function findAll(quizId) {
+  // Find the parent quiz.
+  return findParentQuiz(quizId)
     .then((quiz) => {
       if (quiz) {
         // Find the questions.
-        quiz
+        return quiz
           .getQuestions({
-            order: [['orderNb', 'ASC']]
-          })
-          .then((questions) => {
-            // Success.
-            res
-              .status(200)
-              .json(questions);
-          })
-          // Errors.
-          .catch(next);
-      } else {
-        // Quiz not found.
-        next(new NotFoundError());
+            attributes: {
+              exclude: ['quizId', 'imageId']
+            },
+            include: [
+              // Include image.
+              {
+                model: models.Image,
+                as: 'image'
+              },
+              // Include answers.
+              {
+                model: models.Answer,
+                as: 'answers',
+                attributes: {
+                  exclude: ['questionId', 'quizId', 'imageId']
+                },
+                // Include image of answers.
+                include: [{
+                  model: models.Image,
+                  as: 'image'
+                }]
+              }
+            ],
+            order: [
+              // Order the questions.
+              ['id', 'ASC'],
+
+              // Order the answers.
+              [{ model: models.Answer, as: 'answers' }, 'id', 'ASC']
+            ]
+          });
       }
-    })
-    // Errors.
-    .catch(next);
-};
+      // Quiz not found.
+      throw new NotFoundError();
+    });
+}
+
+/**
+ * Finds an question by id.
+ * @param id The id of the question.
+ * @param quizId The quiz id of the question.
+ */
+function find(id, quizId) {
+  return models.Question
+    .findOne({
+      attributes: {
+        exclude: ['quizId', 'imageId']
+      },
+      include: [
+        // Include image.
+        {
+          model: models.Image,
+          as: 'image'
+        },
+        // Include answers.
+        {
+          model: models.Answer,
+          as: 'answers',
+          attributes: {
+            exclude: ['questionId', 'quizId', 'imageId']
+          },
+          // Include image of answers.
+          include: [{
+            model: models.Image,
+            as: 'image'
+          }]
+        }
+      ],
+      order: [
+        // Order the answers.
+        [{ model: models.Answer, as: 'answers' }, 'id', 'ASC']
+      ],
+      where: {
+        id,
+        quizId
+      }
+    });
+}
 
 /**
  * Creates a question.
- * @param req The request object.
- * @param res The response object.
- * @param next The callback for the next middleware.
+ * @param quizId The quiz id of the question.
+ * @param imageId The image id of the question.
+ * @param label The label of the question.
  */
-exports.create = (req, res, next) => {
-  // Find the quiz.
-  models.Quiz
-    .findOne({
-      where: {
-        id: req.params.quizId
-      }
-    })
+function create(quizId, imageId, label) {
+  // Find the parent quiz.
+  return findParentQuiz(quizId)
     .then((quiz) => {
       if (quiz) {
-        // Count the questions.
-        quiz
-          .countQuestions()
-          .then((number) => {
-            if (number < 20) {
-              // Create the question.
-              quiz
-                .createQuestion({
-                  label: req.body.label
-                })
-                .then((question) => {
-                  // Created.
-                  res
-                    .status(201)
-                    .json({
-                      id: question.id,
-                      message: 'The question has been created.'
-                    });
-                })
-                // Errors.
-                .catch(next);
-            } else {
-              // Too many questions.
-              next(new LimitReachedError());
-            }
-          })
-          // Errors.
-          .catch(next);
-      } else {
-        // Quiz not found.
-        next(new NotFoundError());
+        // Create the question.
+        return quiz
+          .createQuestion({
+            imageId,
+            label
+          });
       }
-    })
-    // Errors.
-    .catch(next);
-};
-
-/**
- * Finds a question by id.
- * @param req The request object.
- * @param res The response object.
- * @param next The callback for the next middleware.
- */
-exports.findById = (req, res, next) => {
-  // Find the question.
-  models.Question
-    .findOne({
-      where: {
-        id: req.params.questionId,
-        quizId: req.params.quizId
-      }
-    })
-    .then((question) => {
-      if (question) {
-        // Found.
-        res
-          .status(200)
-          .json(question);
-      } else {
-        // Question not found.
-        next(new NotFoundError());
-      }
-    })
-    // Errors.
-    .catch(next);
-};
+      // Quiz not found.
+      throw new NotFoundError();
+    });
+}
 
 /**
  * Updates a question by id.
- * @param req The request object.
- * @param res The response object.
- * @param next The callback for the next middleware.
+ * @param id The id of the question.
+ * @param quizId The quiz id of the question.
+ * @param imageId The image id of the question.
+ * @param label The label of the question.
  */
-exports.updateById = (req, res, next) => {
-  models.Question
+function update(id, quizId, imageId, label) {
+  return models.Question
     .update(
       {
-        orderNb: req.body.orderNb,
-        label: req.body.label
+        imageId,
+        label
       },
       {
         where: {
-          id: req.params.questionId,
-          quizId: req.params.quizId
+          id,
+          quizId
         }
       }
-    )
-    .then((updatedRows) => {
-      if (updatedRows > 0) {
-        // Updated.
-        res
-          .status(200)
-          .json({
-            id: req.params.questionId,
-            message: 'The question has been updated.'
-          });
-      } else {
-        // Question not found.
-        next(new NotFoundError());
-      }
-    })
-    // Errors.
-    .catch(next);
-};
+    );
+}
 
 /**
- * Deletes a question by id.
+ * Destroys a question by id.
+ * @param id The id of the question.
+ * @param quizId The quiz id of the question.
+ */
+function destroy(id, quizId) {
+  return models.Question
+    .destroy({
+      where: {
+        id,
+        quizId
+      }
+    });
+}
+
+/* -------------------------------------------------------------------------- */
+/*                                    PRINTS                                  */
+/* -------------------------------------------------------------------------- */
+
+/**
+ * Prints all the questions.
  * @param req The request object.
  * @param res The response object.
  * @param next The callback for the next middleware.
  */
-exports.deleteById = (req, res, next) => {
-  models.Question
-    .destroy({
-      where: {
-        id: req.params.questionId,
-        quizId: req.params.quizId
-      }
+function printFindAll(req, res, next) {
+  findAll(req.params.quizId)
+    .then((questions) => {
+      res.status(200).json(questions);
     })
-    .then((destroyedRows) => {
-      if (destroyedRows > 0) {
-        // Deleted.
-        res
-          .status(200)
-          .json({
-            id: req.params.questionId,
-            message: 'The question has been deleted.'
-          });
+    // Errors.
+    .catch(next);
+}
+
+/**
+ * Prints a question by id.
+ * @param req The request object.
+ * @param res The response object.
+ * @param next The callback for the next middleware.
+ */
+function printFind(req, res, next) {
+  find(req.params.questionId, req.params.quizId)
+    .then((question) => {
+      if (question) {
+        res.status(200).json(question);
       } else {
         // Question not found.
         next(new NotFoundError());
@@ -191,4 +207,97 @@ exports.deleteById = (req, res, next) => {
     })
     // Errors.
     .catch(next);
+}
+
+/**
+ * Prints the created question.
+ * @param req The request object.
+ * @param res The response object.
+ * @param next The callback for the next middleware.
+ */
+function printCreate(req, res, next) {
+  // Create the question.
+  create(
+    req.params.quizId,
+    req.body.imageId,
+    req.body.label
+  )
+    // eslint-disable-next-line arrow-body-style
+    .then((question) => {
+      // Find the question.
+      return find(question.id, req.params.quizId)
+        .then((foundQuestion) => {
+          res.status(201).json(foundQuestion);
+        });
+    })
+    // Errors.
+    .catch(next);
+}
+
+/**
+ * Prints the updated question.
+ * @param req The request object.
+ * @param res The response object.
+ * @param next The callback for the next middleware.
+ */
+function printUpdate(req, res, next) {
+  // Update the question.
+  update(
+    req.params.questionId,
+    req.params.quizId,
+    req.body.imageId,
+    req.body.label
+  )
+    .then((result) => {
+      const updatedRows = result[0];
+      if (updatedRows > 0) {
+        // Find the question.
+        return find(req.params.questionId, req.params.quizId)
+          .then((question) => {
+            res.status(200).json(question);
+          });
+      }
+      // Question not found.
+      throw new NotFoundError();
+    })
+    // Errors.
+    .catch(next);
+}
+
+/**
+ * Prints the destroyed question.
+ * @param req The request object.
+ * @param res The response object.
+ * @param next The callback for the next middleware.
+ */
+function printDestroy(req, res, next) {
+  // Find the question.
+  find(req.params.questionId, req.params.quizId)
+    .then((question) => {
+      if (question) {
+        // Destroy the question.
+        return destroy(req.params.questionId, req.params.quizId)
+          .then(() => {
+            res.status(200).json(question);
+          });
+      }
+      // Question not found.
+      throw new NotFoundError();
+    })
+    // Errors.
+    .catch(next);
+}
+
+module.exports = {
+  findAll,
+  printFindAll,
+  create,
+  printCreate,
+  find,
+  printFind,
+  update,
+  printUpdate,
+  destroy,
+  printDestroy
 };
+

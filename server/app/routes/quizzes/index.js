@@ -5,19 +5,19 @@ const QuizController = require('../../controllers/quiz.controller');
 const router = new Router();
 
 // Find all the quizzes.
-router.get('/', QuizController.findAll);
+router.get('/', QuizController.printFindAll);
 
 // Create a quiz.
-router.post('/', QuizController.create);
+router.post('/', QuizController.printCreate);
 
 // Find a quiz by id.
-router.get('/:quizId([0-9]+)', QuizController.findById);
+router.get('/:quizId([0-9]+)', QuizController.printFind);
 
-// Update (or create) a quiz by id.
-router.put('/:quizId([0-9]+)', QuizController.updateById);
+// Update a quiz by id.
+router.put('/:quizId([0-9]+)', QuizController.printUpdate);
 
 // Delete a quiz by id.
-router.delete('/:quizId([0-9]+)', QuizController.deleteById);
+router.delete('/:quizId([0-9]+)', QuizController.printDestroy);
 
 // Questions routes.
 router.use('/:quizId([0-9]+)/questions', QuestionRouter);

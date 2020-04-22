@@ -34,7 +34,7 @@ export class QuestionsComponent implements OnInit, OnChanges {
 
   @Output() goToNextQuestion: EventEmitter<answerFirstTry> = new EventEmitter<answerFirstTry>();
   @Input() question: Question;
-  forAnimation: String[];
+  forAnimation: string[];
   numberOfErrors: number;
   skiped: boolean;
   enableSkip: boolean;
@@ -65,12 +65,12 @@ export class QuestionsComponent implements OnInit, OnChanges {
   }
 
   goToNext(i: number, event: AnimationEvent) {
-    if (i == -2 || this.forAnimation[i] === 'correct') {
-      let res : answerFirstTry = {
+    if (i === -2 || this.forAnimation[i] === 'correct') {
+      const res: answerFirstTry = {
         answer: this.question.answers[i],
         numberOfErrors: this.numberOfErrors,
         skiped: this.skiped
-      }
+      };
       this.goToNextQuestion.emit(res);
     }
   }

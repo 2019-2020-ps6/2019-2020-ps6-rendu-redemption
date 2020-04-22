@@ -1,20 +1,40 @@
 @import '../../../styles/variables';
 
 .recherche {
+  margin: 2%;
   font-size: 150%;
+}
+
+.inputRecherche {
+  margin-right: 2%;
+  border: solid black;
+}
+
+.boutonRecherche {
+  border: solid black;
 }
 
 .row {
   font-size: 200%;
   background: $white;
   width: 90%;
-  border-radius: 2px;
+  border-radius: 0.5%;
+  border: solid black;
   margin: 1rem auto;
   position: relative;
   box-shadow: 0 6px 10px rgba(0, 0, 0, 0.08), 0 0 6px rgba(0, 0, 0, 0.05);
   padding: 2%;
 }
 
+.pagination {
+  display: inline-block;
+  border: solid black;
+  padding-top: 1%;
+  padding-right: 2%;
+  background: #f2f2f2;
+}
+
 .my-paginator {
+  margin-top: 2%;
   font-size: 150%;
 }

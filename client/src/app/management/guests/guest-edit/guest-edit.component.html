@@ -20,7 +20,7 @@
     <label for="accessibility">Profil d'accessibilité :</label>
     <select id="accessibility">
       <option *ngFor="let access of accessibilities" [value]="access" #accessibility
-              [selected]="guestToEdit && guestToEdit.accessibility == access ? true : false">
+              [selected]="guestToEdit && guestToEdit.accessibility == access">
         {{access}}
       </option>
     </select>

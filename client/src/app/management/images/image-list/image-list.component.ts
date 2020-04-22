@@ -1,7 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {ActivatedRoute, Router} from '@angular/router';
-import {Image} from "../../../../models/image.model";
-import {ImageService} from "../../../../services/image.service";
+import {Image} from '../../../../models/image.model';
+import {ImageService} from '../../../../services/image.service';
 
 @Component({
   selector: 'app-imageList',
@@ -12,13 +12,17 @@ import {ImageService} from "../../../../services/image.service";
 export class ImageListComponent implements OnInit {
   imageList: Image[];
   searchElement: string;
-  pageCount: number = 1;
+  pageCount = 1;
 
   constructor(private imageService: ImageService, private router: Router, private route: ActivatedRoute) {
   }
 
   ngOnInit(): void {
-    this.imageList = this.imageService.getImages();
+    this.imageService
+      .getImages()
+      .subscribe((images: Image[]) => {
+        this.imageList = images;
+      });
   }
 
   modifyFilter(value: string) {

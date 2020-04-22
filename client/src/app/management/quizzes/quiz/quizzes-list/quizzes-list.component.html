@@ -2,7 +2,7 @@
   <div *ngFor="let x of totalQuiz | paginate: { itemsPerPage: 2, currentPage: pageCount }">
     <div style="display: inline;" *ngFor="let y of x">
       <div class="card" (click)="navigate(this.getQuiz(y))">
-        <img src="{{this.getImageById(this.getQuiz(y).imageId).path}}" width="280" height="151">
+        <img *ngIf="this.getQuiz(y).image" src="{{this.getQuiz(y).image.path}}" width="280" height="151">
         {{this.getQuiz(y).name}}
       </div>
     </div>

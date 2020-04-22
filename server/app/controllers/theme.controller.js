@@ -6,52 +6,65 @@ const NotFoundError = require('../utils/errors/not-found-error');
 /* -------------------------------------------------------------------------- */
 
 /**
- * Finds all the guests.
+ * Finds all the themes.
  */
 function findAll() {
-  return models.Guest
+  return models.Theme
     .findAll({
-      order: [['id', 'ASC']]
+      attributes: ['id', 'name', 'createdAt', 'updatedAt'],
+      order: [['id', 'ASC']],
+      // Include the image.
+      include: [{
+        model: models.Image,
+        as: 'image'
+      }]
     });
 }
 
 /**
- * Finds a guest by id.
- * @param id The id of the guest.
+ * Finds a theme by id.
+ * @param id The id of the theme.
  */
 function find(id) {
-  return models.Guest.findByPk(id);
+  return models.Theme
+    .findByPk(
+      id,
+      {
+        attributes: ['id', 'name', 'createdAt', 'updatedAt'],
+        // Include the image.
+        include: [{
+          model: models.Image,
+          as: 'image'
+        }]
+      }
+    );
 }
 
 /**
- * Creates a guest.
- * @param firstName The first name of the guest.
- * @param lastName The last name of the guest.
- * @param accessibility The accessibility profile of the guest.
+ * Creates a theme.
+ * @param name The name of the theme.
+ * @param imageId The id of the image.
  */
-function create(firstName, lastName, accessibility) {
-  return models.Guest
+function create(name, imageId) {
+  return models.Theme
     .create({
-      firstName,
-      lastName,
-      accessibility
+      name,
+      imageId
     });
 }
 
 /**
- * Updates a guest by id.
- * @param id The id of the guest.
- * @param firstName The first name of the guest.
- * @param lastName The last name of the guest.
- * @param accessibility The accessibility profile of the guest.
+ * Updates a theme by id.
+ * @param id The id of the theme.
+ * @param name The name of the theme.
+ * @param imageId The id of the image.
  */
-function update(id, firstName, lastName, accessibility) {
-  return models.Guest
+function update(id, name, imageId) {
+  return models.Theme
     .update(
       {
-        firstName,
-        lastName,
-        accessibility
+        name,
+        imageId
       },
       {
         where: { id }
@@ -60,11 +73,11 @@ function update(id, firstName, lastName, accessibility) {
 }
 
 /**
- * Destroys a guest by id.
- * @param id The id of the guest.
+ * Destroys a theme by id.
+ * @param id The id of the theme.
  */
 function destroy(id) {
-  return models.Guest
+  return models.Theme
     .destroy({
       where: { id }
     });
@@ -75,33 +88,33 @@ function destroy(id) {
 /* -------------------------------------------------------------------------- */
 
 /**
- * Prints all the guests.
+ * Prints all the themes.
  * @param req The request object.
  * @param res The response object.
  * @param next The callback for the next middleware.
  */
 function printFindAll(req, res, next) {
   findAll()
-    .then((guests) => {
-      res.status(200).json(guests);
+    .then((themes) => {
+      res.status(200).json(themes);
     })
     // Errors.
     .catch(next);
 }
 
 /**
- * Prints a guest by id.
+ * Prints a theme by id.
  * @param req The request object.
  * @param res The response object.
  * @param next The callback for the next middleware.
  */
 function printFind(req, res, next) {
-  find(req.params.guestId)
-    .then((guest) => {
-      if (guest) {
-        res.status(200).json(guest);
+  find(req.params.themeId)
+    .then((theme) => {
+      if (theme) {
+        res.status(200).json(theme);
       } else {
-        // Guest not found.
+        // Theme not found.
         next(new NotFoundError());
       }
     })
@@ -110,48 +123,45 @@ function printFind(req, res, next) {
 }
 
 /**
- * Prints the created guest.
+ * Prints the created theme.
  * @param req The request object.
  * @param res The response object.
  * @param next The callback for the next middleware.
  */
 function printCreate(req, res, next) {
-  create(
-    req.body.firstName,
-    req.body.lastName,
-    req.body.accessibility
-  )
-    .then((guest) => {
-      res.status(201).json(guest);
+  // Create the theme.
+  create(req.body.name, req.body.imageId)
+    // eslint-disable-next-line arrow-body-style
+    .then((theme) => {
+      // Find the theme.
+      return find(theme.id)
+        .then((foundTheme) => {
+          res.status(201).json(foundTheme);
+        });
     })
     // Errors.
     .catch(next);
 }
 
 /**
- * Prints the updated guest.
+ * Prints the updated theme.
  * @param req The request object.
  * @param res The response object.
  * @param next The callback for the next middleware.
  */
 function printUpdate(req, res, next) {
-  // Update the guest.
-  update(
-    req.params.guestId,
-    req.body.firstName,
-    req.body.lastName,
-    req.body.accessibility
-  )
+  // Update the theme.
+  update(req.params.themeId, req.body.name, req.body.imageId)
     .then((result) => {
       const updatedRows = result[0];
       if (updatedRows > 0) {
-        // Find the guest.
-        return find(req.params.guestId)
-          .then((guest) => {
-            res.status(200).json(guest);
+        // Find the theme.
+        return find(req.params.themeId)
+          .then((theme) => {
+            res.status(200).json(theme);
           });
       }
-      // Guest not found.
+      // Theme not found.
       throw new NotFoundError();
     })
     // Errors.
@@ -159,23 +169,23 @@ function printUpdate(req, res, next) {
 }
 
 /**
- * Prints the destroyed guest.
+ * Prints the destroyed theme.
  * @param req The request object.
  * @param res The response object.
  * @param next The callback for the next middleware.
  */
 function printDestroy(req, res, next) {
-  // Find the guest.
-  find(req.params.guestId)
-    .then((guest) => {
-      if (guest) {
-        // Destroy the guest.
-        return destroy(req.params.guestId)
+  // Find the theme.
+  find(req.params.themeId)
+    .then((theme) => {
+      if (theme) {
+        // Destroy the theme.
+        return destroy(req.params.themeId)
           .then(() => {
-            res.status(200).json(guest);
+            res.status(200).json(theme);
           });
       }
-      // Guest not found.
+      // Theme not found.
       throw new NotFoundError();
     })
     // Errors.

@@ -24,7 +24,11 @@ export class GuestListComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.guestList = this.guestService.getGuests();
+    this.guestService
+      .getGuests()
+      .subscribe((guests) => {
+        this.guestList = guests;
+      });
   }
 
   modifyFilter(value: string) {
@@ -32,7 +36,7 @@ export class GuestListComponent implements OnInit {
   }
 
   deleteGuest(guest: Guest) {
-    let modal = this._modalService.open(ModalConfirmDeletion);
+    const modal = this._modalService.open(ModalConfirmDeletion);
     modal.componentInstance.guest = guest;
     modal.result.then((result) => {
       if (`${result}` === 'Le click de la suppression') {

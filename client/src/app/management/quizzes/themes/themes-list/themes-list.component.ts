@@ -14,38 +14,45 @@ import {Image} from '../../../../../models/image.model';
 export class ThemesListComponent implements OnInit {
   themeList: Theme[];
   totalTheme: number[][];
-  pageCount: number = 1;
+  pageCount = 1;
 
-  constructor(private themeService: ThemeService, private router: Router, private route: ActivatedRoute, private imageService: ImageService) {
-  }
+  constructor(
+    private themeService: ThemeService,
+    private router: Router,
+    private route: ActivatedRoute
+  ) {}
 
   ngOnInit(): void {
-    this.themeList = [...this.themeService.getThemes()];
-    this.themeList[this.themeList.length] = {
-      id: 0,
-      imageId: 0,
-      name: 'Ajouter un thème',
-      keywords: []
-    };
-    this.totalTheme = [];
-    for (let i = 0; i < Math.trunc(this.themeList.length / 3); i++) {
-      this.totalTheme[i] = [];
-      for (let j = 0; j < 3; j++) {
-        this.totalTheme[i][j] = i + j;
-      }
-    }
-    if (!Number.isInteger(this.themeList.length / 3)) {
-      let firstIndex = Math.trunc(this.themeList.length / 3);
-      let x = (this.themeList.length / 3) - firstIndex;
-      this.totalTheme[firstIndex] = [];
-      for (let i = 0; i < Math.round(x * 3); i++) {
-        this.totalTheme[firstIndex][i] = firstIndex + i;
-      }
-    }
-  }
+    this.themeService
+      .getThemes()
+      .subscribe((themes: Theme[]) => {
+        // Get the themes.
+        this.themeList = themes.slice();
 
-  getImageById(id: number): Image {
-    return this.imageService.getImageById(id);
+        // Add the button.
+        this.themeList.push({
+          id: 0,
+          image: null,
+          name: 'Ajouter un thème'
+        });
+
+        // Compute the layout.
+        this.totalTheme = [];
+        for (let i = 0; i < Math.trunc(this.themeList.length / 3); i++) {
+          this.totalTheme[i] = [];
+          for (let j = 0; j < 3; j++) {
+            this.totalTheme[i][j] = i + j;
+          }
+        }
+        if (!Number.isInteger(this.themeList.length / 3)) {
+          const firstIndex = Math.trunc(this.themeList.length / 3);
+          const x = (this.themeList.length / 3) - firstIndex;
+          this.totalTheme[firstIndex] = [];
+          for (let i = 0; i < Math.round(x * 3); i++) {
+            this.totalTheme[firstIndex][i] = firstIndex + i;
+          }
+        }
+      });
   }
 
   getTheme(y: number): Theme {
@@ -53,7 +60,7 @@ export class ThemesListComponent implements OnInit {
   }
 
   navigate(theme: Theme) {
-    if (theme.id == 0) {
+    if (theme.id === 0) {
       this.router.navigate(['./../create-theme'], {relativeTo: this.route});
     } else {
       this.themeService.setCurrentTheme(theme);
