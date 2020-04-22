@@ -32,7 +32,7 @@ export class GuestListComponent implements OnInit {
   }
 
   deleteGuest(guest: Guest) {
-    let modal = this._modalService.open(ModalConfirmDeletion);
+    const modal = this._modalService.open(ModalConfirmDeletion);
     modal.componentInstance.guest = guest;
     modal.result.then((result) => {
       if (`${result}` === 'Le click de la suppression') {

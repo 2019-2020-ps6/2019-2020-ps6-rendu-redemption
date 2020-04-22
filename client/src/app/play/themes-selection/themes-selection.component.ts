@@ -1,9 +1,9 @@
-import {Component, OnInit} from "@angular/core";
-import {ThemeService} from "../../../services/theme.service";
-import {ImageService} from "../../../services/image.service";
-import {Theme} from "../../../models/theme.model";
-import {Image} from "../../../models/image.model";
-import {Router} from "@angular/router";
+import {Component, OnInit} from '@angular/core';
+import {ThemeService} from '../../../services/theme.service';
+import {ImageService} from '../../../services/image.service';
+import {Theme} from '../../../models/theme.model';
+import {Image} from '../../../models/image.model';
+import {Router} from '@angular/router';
 @Component({
   selector: 'app-themes-selection',
   templateUrl: './themes-selection.component.html',
@@ -24,11 +24,11 @@ export class ThemesSelectionComponent implements OnInit {
     }
 
     getImageById(id: number): Image {
-        return this.images.find(image => image.id == id);
+        return this.images.find(image => image.id === id);
     }
 
     goToRelatedQuizzes(theme: number) {
-        this.router.navigate(['../quiz-selection'], {queryParams: {theme: theme}})
+        this.router.navigate(['../quiz-selection'], {queryParams: {theme}});
     }
 }
 

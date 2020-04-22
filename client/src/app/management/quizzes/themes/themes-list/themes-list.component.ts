@@ -14,7 +14,7 @@ import {Image} from '../../../../../models/image.model';
 export class ThemesListComponent implements OnInit {
   themeList: Theme[];
   totalTheme: number[][];
-  pageCount: number = 1;
+  pageCount = 1;
 
   constructor(private themeService: ThemeService, private router: Router, private route: ActivatedRoute, private imageService: ImageService) {
   }
@@ -23,9 +23,8 @@ export class ThemesListComponent implements OnInit {
     this.themeList = [...this.themeService.getThemes()];
     this.themeList[this.themeList.length] = {
       id: 0,
-      imageId: 0,
-      name: 'Ajouter un thème',
-      keywords: []
+      image: null,
+      name: 'Ajouter un thème'
     };
     this.totalTheme = [];
     for (let i = 0; i < Math.trunc(this.themeList.length / 3); i++) {
@@ -35,8 +34,8 @@ export class ThemesListComponent implements OnInit {
       }
     }
     if (!Number.isInteger(this.themeList.length / 3)) {
-      let firstIndex = Math.trunc(this.themeList.length / 3);
-      let x = (this.themeList.length / 3) - firstIndex;
+      const firstIndex = Math.trunc(this.themeList.length / 3);
+      const x = (this.themeList.length / 3) - firstIndex;
       this.totalTheme[firstIndex] = [];
       for (let i = 0; i < Math.round(x * 3); i++) {
         this.totalTheme[firstIndex][i] = firstIndex + i;
@@ -53,7 +52,7 @@ export class ThemesListComponent implements OnInit {
   }
 
   navigate(theme: Theme) {
-    if (theme.id == 0) {
+    if (theme.id === 0) {
       this.router.navigate(['./../create-theme'], {relativeTo: this.route});
     } else {
       this.themeService.setCurrentTheme(theme);

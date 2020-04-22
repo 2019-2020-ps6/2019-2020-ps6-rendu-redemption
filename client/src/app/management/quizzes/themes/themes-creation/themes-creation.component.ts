@@ -22,12 +22,11 @@ export class ThemesCreationComponent implements OnInit {
   }
 
   createTheme() {
-    let sentence = this.keywordsInput.nativeElement.value;
-    let themeToCreate: Theme = {
+    const sentence = this.keywordsInput.nativeElement.value;
+    const themeToCreate: Theme = {
       id: -1,
-      imageId: this.imageIdInput.nativeElement.value,
-      name: this.nameInput.nativeElement.value,
-      keywords: sentence.split(" ")
+      image: this.imageIdInput.nativeElement,
+      name: this.nameInput.nativeElement.value
     };
     this.themeService.createTheme(themeToCreate);
   }

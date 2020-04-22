@@ -2,7 +2,7 @@ import {Component, ElementRef, OnInit, ViewChild} from '@angular/core';
 import {ActivatedRoute, Router} from '@angular/router';
 import {faEdit, faPlusCircle, faTrashAlt, faUserEdit, faUserPlus} from '@fortawesome/free-solid-svg-icons';
 import {Question} from '../../../../../../models/question.model';
-import {QuizService} from '../../../../../../services/quizz.service';
+import {QuizService} from '../../../../../../services/quiz.service';
 import {Answer} from '../../../../../../models/answer.model';
 import {ModalConfirmAnswerDeletion} from './modal-confirm-answer-deletion';
 import {NgbModal} from '@ng-bootstrap/ng-bootstrap';
@@ -33,9 +33,9 @@ export class QuestionEditComponent implements OnInit {
   }
 
   createModifyQuestion() {
-    let questionToCreate: Question = {
+    const questionToCreate: Question = {
       id: -1,
-      imageId: this.imageInput.nativeElement.value,
+      image: this.imageInput.nativeElement,
       label: this.labelInput.nativeElement.value,
       answers: []
     };
@@ -53,7 +53,7 @@ export class QuestionEditComponent implements OnInit {
   }
 
   deleteAnswer(reponse: Answer) {
-    let modal = this._modalService.open(ModalConfirmAnswerDeletion);
+    const modal = this._modalService.open(ModalConfirmAnswerDeletion);
     modal.componentInstance.answer = reponse;
     modal.result.then((result) => {
       if (`${result}` === 'Le click de la suppression') {

@@ -2,7 +2,7 @@ import {Component, ElementRef, OnInit, ViewChild} from '@angular/core';
 import {ActivatedRoute, Router} from '@angular/router';
 import {ThemeService} from '../../../../../services/theme.service';
 import {Quiz} from '../../../../../models/quiz.model';
-import {QuizService} from '../../../../../services/quizz.service';
+import {QuizService} from '../../../../../services/quiz.service';
 
 @Component({
   selector: 'app-QuizCreation',
@@ -19,18 +19,18 @@ export class QuizCreationComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    if(this.themeService.getCurrentTheme() === undefined)
-      this.router.navigate(["../themes-list"], {relativeTo: this.route});
+    if (this.themeService.getCurrentTheme() === undefined) {
+      this.router.navigate(['../themes-list'], {relativeTo: this.route});
+    }
   }
 
   createQuiz() {
-    let sentence = this.keywordsInput.nativeElement.value;
-    let quizToCreate: Quiz = {
+    const sentence = this.keywordsInput.nativeElement.value;
+    const quizToCreate: Quiz = {
       id: -1,
-      themeId: this.themeService.getCurrentTheme().id,
-      imageId: this.imageIdInput.nativeElement.value,
+      theme: this.themeService.getCurrentTheme(),
+      image: this.imageIdInput.nativeElement,
       name: this.nameInput.nativeElement.value,
-      keywords: sentence.split(' '),
       questions: []
     };
     this.quizService.createQuiz(quizToCreate);

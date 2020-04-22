@@ -1,8 +1,8 @@
 import {Component, ElementRef, OnInit, ViewChild} from '@angular/core';
 import {ActivatedRoute, Router} from '@angular/router';
 import {faUserEdit, faUserPlus} from '@fortawesome/free-solid-svg-icons';
-import {Image} from "../../../../models/image.model";
-import {ImageService} from "../../../../services/image.service";
+import {Image} from '../../../../models/image.model';
+import {ImageService} from '../../../../services/image.service';
 
 @Component({
   selector: 'app-imageEdit',
@@ -14,7 +14,7 @@ export class ImageEditComponent implements OnInit {
 
   imageToEdit: Image;
   icon = faUserPlus;
-  buttonText: String;
+  buttonText: string;
   @ViewChild('name') nameInput: ElementRef;
   @ViewChild('path') pathInput: ElementRef;
   @ViewChild('keywords') keywordsInput: ElementRef;
@@ -28,11 +28,10 @@ export class ImageEditComponent implements OnInit {
   }
 
   createModifyImage() {
-    let imageToCreate: Image = {
+    const imageToCreate: Image = {
       id: -1,
       name: this.nameInput.nativeElement.value,
-      path: this.pathInput.nativeElement.value,
-      keywords: this.keywordsInput.nativeElement.value,
+      path: this.pathInput.nativeElement.value
     };
     if (this.imageToEdit == null) {
       this.imageService.createImage(imageToCreate);

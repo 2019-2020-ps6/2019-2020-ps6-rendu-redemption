@@ -9,7 +9,7 @@
     <label for="image">Image associée au quiz</label>
     <br>
     <input class="long" id="image" type="text" placeholder="Image associée au quiz" #image
-           [value]="questionToEdit ? questionToEdit.imageId : null">
+           [value]="questionToEdit ? questionToEdit.image.id : null">
   </div>
   <div class="line">
     <label for="reponses">Réponses</label>

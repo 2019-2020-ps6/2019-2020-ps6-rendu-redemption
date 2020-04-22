@@ -1,6 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 import {Quiz} from '../../../../../models/quiz.model';
-import {QuizService} from '../../../../../services/quizz.service';
+import {QuizService} from '../../../../../services/quiz.service';
 import {ThemeService} from '../../../../../services/theme.service';
 import {ActivatedRoute, Router} from '@angular/router';
 import {ImageService} from '../../../../../services/image.service';
@@ -15,13 +15,13 @@ import {Image} from '../../../../../models/image.model';
 export class QuizzesListComponent implements OnInit {
   quizzesList: Quiz[];
   totalQuiz: number[][];
-  pageCount: number = 1;
+  pageCount = 1;
 
   constructor(private quizService: QuizService, private themeService: ThemeService, private imageService: ImageService,
               private router: Router, private route: ActivatedRoute) {
   }
 
-  //TODO modifier pour la duplication de code
+  // TODO modifier pour la duplication de code
   ngOnInit(): void {
     if (this.themeService.getCurrentTheme() === undefined) {
       this.router.navigate(['../themes-list'], {relativeTo: this.route});
@@ -29,10 +29,9 @@ export class QuizzesListComponent implements OnInit {
       this.quizzesList = [...this.quizService.getQuizzes()];
       this.quizzesList[this.quizzesList.length] = {
         id: 0,
-        themeId: 0,
-        imageId: 0,
+        theme: null,
+        image: null,
         name: 'Ajouter un quiz',
-        keywords: [],
         questions: []
       };
       this.totalQuiz = [];
@@ -43,8 +42,8 @@ export class QuizzesListComponent implements OnInit {
         }
       }
       if (!Number.isInteger(this.quizzesList.length / 3)) {
-        let firstIndex = Math.trunc(this.quizzesList.length / 3);
-        let x = (this.quizzesList.length / 3) - firstIndex;
+        const firstIndex = Math.trunc(this.quizzesList.length / 3);
+        const x = (this.quizzesList.length / 3) - firstIndex;
         this.totalQuiz[firstIndex] = [];
         for (let i = 0; i < Math.round(x * 3); i++) {
           this.totalQuiz[firstIndex][i] = firstIndex * 3 + i;
@@ -62,7 +61,7 @@ export class QuizzesListComponent implements OnInit {
   }
 
   navigate(quiz: Quiz) {
-    if (quiz.id == 0) {
+    if (quiz.id === 0) {
       this.router.navigate(['./../create-quiz'], {relativeTo: this.route});
     } else {
       this.quizService.setCurrentQuiz(quiz);

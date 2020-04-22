@@ -1,6 +1,9 @@
+import { Image } from './image.model';
+
 export interface Theme {
   id: number;
-  imageId: number;
+  image: Image;
   name: string;
-  keywords: string[];
+  createdAt?: Date;
+  updatedAt?: Date;
 }

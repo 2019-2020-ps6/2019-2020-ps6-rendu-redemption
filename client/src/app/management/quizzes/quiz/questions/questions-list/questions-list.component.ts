@@ -1,5 +1,5 @@
 import {Component, OnInit} from '@angular/core';
-import {QuizService} from '../../../../../../services/quizz.service';
+import {QuizService} from '../../../../../../services/quiz.service';
 import {ActivatedRoute, Router} from '@angular/router';
 import {Quiz} from '../../../../../../models/quiz.model';
 import {Question} from '../../../../../../models/question.model';
@@ -28,7 +28,7 @@ export class QuestionsListComponent implements OnInit {
   }
 
   deleteQuestion(question: Question) {
-    let modal = this._modalService.open(ModalConfirmQuestionDeletion);
+    const modal = this._modalService.open(ModalConfirmQuestionDeletion);
     modal.componentInstance.question = question;
     modal.result.then((result) => {
       if (`${result}` === 'Le click de la suppression') {

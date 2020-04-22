@@ -1,5 +1,5 @@
 import {Component, ElementRef, OnInit, ViewChild} from '@angular/core';
-import {QuizService} from '../../../../../../services/quizz.service';
+import {QuizService} from '../../../../../../services/quiz.service';
 import {ActivatedRoute, Router} from '@angular/router';
 import {Answer} from '../../../../../../models/answer.model';
 
@@ -26,19 +26,19 @@ export class AnswerEditComponent implements OnInit {
       this.answerToEdit === undefined) {
       this.router.navigate(['../themes-list'], {relativeTo: this.route});
     }
-    if(this.answerToEdit == null)
+    if (this.answerToEdit == null) {
       this.isCorrect = false;
-    else {
-      console.log(this.answerToEdit.isCorrect)
+    } else {
+      console.log(this.answerToEdit.isCorrect);
       this.isCorrect = this.answerToEdit.isCorrect;
     }
   }
 
   createModifyAnswer() {
-    let answerToCreate: Answer = {
+    const answerToCreate: Answer = {
       id: -1,
       value: this.valueInput.nativeElement.value,
-      imageId: this.imageInput.nativeElement.value,
+      image: this.imageInput.nativeElement,
       isCorrect: this.isCorrect
     };
     if (this.answerToEdit == null) {
