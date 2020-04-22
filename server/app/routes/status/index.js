@@ -8,14 +8,7 @@ router.get('/', (req, res, next) => {
   models.sequelize
     .authenticate()
     .then(() => {
-      // Success.
-      res
-        .status(200)
-        .json({
-          data: {
-            status: 'ok'
-          }
-        });
+      res.status(200).json({ status: 'ok' });
     })
     // Errors.
     .catch(next);

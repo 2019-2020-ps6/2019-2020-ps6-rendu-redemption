@@ -1,137 +1,105 @@
 const models = require('../models');
 const NotFoundError = require('../utils/errors/not-found-error');
 
-/**
- * Finds all the guests.
- * @param req The request object.
- * @param res The response object.
- * @param next The callback for the next middleware.
- */
-exports.findAll = (req, res, next) => {
-  // Find the guests.
-  models.Guest
-    .findAll({
-      order: [['id', 'ASC']]
-    })
-    .then((guests) => {
-      // Success.
-      res
-        .status(200)
-        .json(guests);
-    })
-    // Errors.
-    .catch(next);
-};
+/* -------------------------------------------------------------------------- */
+/*                              GETTERS / SETTERS                             */
+/* -------------------------------------------------------------------------- */
 
 /**
- * Creates a guest.
- * @param req The request object.
- * @param res The response object.
- * @param next The callback for the next middleware.
+ * Finds all the guests.
  */
-exports.create = (req, res, next) => {
-  models.Guest
-    .create({
-      firstName: req.body.firstName,
-      lastName: req.body.lastName
-    })
-    .then((guest) => {
-      // Created.
-      res
-        .status(201)
-        .json({
-          id: guest.id,
-          message: 'The guest has been created.'
-        });
-    })
-    // Errors.
-    .catch(next);
-};
+function findAll() {
+  return models.Guest
+    .findAll({
+      order: [['id', 'ASC']]
+    });
+}
 
 /**
  * Finds a guest by id.
- * @param req The request object.
- * @param res The response object.
- * @param next The callback for the next middleware.
+ * @param id The id of the guest.
  */
-exports.findById = (req, res, next) => {
-  // Find the guest.
-  models.Guest
-    .findByPk(req.params.guestId)
-    .then((guest) => {
-      if (guest) {
-        // Found.
-        res
-          .status(200)
-          .json(guest);
-      } else {
-        // Guest not found.
-        next(new NotFoundError());
-      }
-    })
-    // Errors.
-    .catch(next);
-};
+function find(id) {
+  return models.Guest.findByPk(id);
+}
+
+/**
+ * Creates a guest.
+ * @param firstName The first name of the guest.
+ * @param lastName The last name of the guest.
+ * @param accessibility The accessibility profile of the guest.
+ */
+function create(firstName, lastName, accessibility) {
+  return models.Guest
+    .create({
+      firstName,
+      lastName,
+      accessibility
+    });
+}
 
 /**
  * Updates a guest by id.
- * @param req The request object.
- * @param res The response object.
- * @param next The callback for the next middleware.
+ * @param id The id of the guest.
+ * @param firstName The first name of the guest.
+ * @param lastName The last name of the guest.
+ * @param accessibility The accessibility profile of the guest.
  */
-exports.updateById = (req, res, next) => {
-  models.Guest
+function update(id, firstName, lastName, accessibility) {
+  return models.Guest
     .update(
       {
-        firstName: req.body.firstName,
-        lastName: req.body.lastName
+        firstName,
+        lastName,
+        accessibility
       },
       {
-        where: {
-          id: req.params.guestId
-        }
+        where: { id }
       }
-    )
-    .then((updatedRows) => {
-      if (updatedRows > 0) {
-        // Updated.
-        res
-          .status(200)
-          .json({
-            id: req.params.guestId,
-            message: 'The guest has been updated.'
-          });
-      } else {
-        // Guest not found.
-        next(new NotFoundError());
-      }
-    })
-    // Errors.
-    .catch(next);
-};
+    );
+}
 
 /**
- * Deletes a guest by id.
+ * Destroys a guest by id.
+ * @param id The id of the guest.
+ */
+function destroy(id) {
+  return models.Guest
+    .destroy({
+      where: { id }
+    });
+}
+
+/* -------------------------------------------------------------------------- */
+/*                                    PRINTS                                  */
+/* -------------------------------------------------------------------------- */
+
+/**
+ * Prints all the guests.
  * @param req The request object.
  * @param res The response object.
  * @param next The callback for the next middleware.
  */
-exports.deleteById = (req, res, next) => {
-  models.Guest
-    .destroy({
-      where: {
-        id: req.params.questId
-      }
+function printFindAll(req, res, next) {
+  findAll()
+    .then((guests) => {
+      res.status(200).json(guests);
     })
-    .then((destroyedRows) => {
-      if (destroyedRows > 0) {
-        // Deleted.
-        res
-          .status(200)
-          .json({
-            id: req.params.questId,
-            message: 'The guest has been deleted.'
-          });
+    // Errors.
+    .catch(next);
+}
+
+/**
+ * Prints a guest by id.
+ * @param req The request object.
+ * @param res The response object.
+ * @param next The callback for the next middleware.
+ */
+function printFind(req, res, next) {
+  find(req.params.guestId)
+    .then((guest) => {
+      if (guest) {
+        res.status(200).json(guest);
       } else {
         // Guest not found.
         next(new NotFoundError());
@@ -139,4 +107,90 @@ exports.deleteById = (req, res, next) => {
     })
     // Errors.
     .catch(next);
+}
+
+/**
+ * Prints the created guest.
+ * @param req The request object.
+ * @param res The response object.
+ * @param next The callback for the next middleware.
+ */
+function printCreate(req, res, next) {
+  create(
+    req.body.firstName,
+    req.body.lastName,
+    req.body.accessibility
+  )
+    .then((guest) => {
+      res.status(201).json(guest);
+    })
+    // Errors.
+    .catch(next);
+}
+
+/**
+ * Prints the updated guest.
+ * @param req The request object.
+ * @param res The response object.
+ * @param next The callback for the next middleware.
+ */
+function printUpdate(req, res, next) {
+  // Update the guest.
+  update(
+    req.params.guestId,
+    req.body.firstName,
+    req.body.lastName,
+    req.body.accessibility
+  )
+    .then((result) => {
+      const updatedRows = result[0];
+      if (updatedRows > 0) {
+        // Find the guest.
+        return find(req.params.guestId)
+          .then((guest) => {
+            res.status(200).json(guest);
+          });
+      }
+      // Guest not found.
+      throw new NotFoundError();
+    })
+    // Errors.
+    .catch(next);
+}
+
+/**
+ * Prints the destroyed guest.
+ * @param req The request object.
+ * @param res The response object.
+ * @param next The callback for the next middleware.
+ */
+function printDestroy(req, res, next) {
+  // Find the guest.
+  find(req.params.guestId)
+    .then((guest) => {
+      if (guest) {
+        // Destroy the guest.
+        return destroy(req.params.guestId)
+          .then(() => {
+            res.status(200).json(guest);
+          });
+      }
+      // Guest not found.
+      throw new NotFoundError();
+    })
+    // Errors.
+    .catch(next);
+}
+
+module.exports = {
+  findAll,
+  printFindAll,
+  create,
+  printCreate,
+  find,
+  printFind,
+  update,
+  printUpdate,
+  destroy,
+  printDestroy
 };

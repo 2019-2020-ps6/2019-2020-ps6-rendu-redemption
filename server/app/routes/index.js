@@ -5,8 +5,6 @@ const GuestRouter = require('./guests');
 const ThemeRouter = require('./themes');
 const ImageRouter = require('./images');
 
-
-
 const router = new Router();
 
 // Status routes.
@@ -18,10 +16,10 @@ router.use('/quizzes', QuizRouter);
 // Guest routes.
 router.use('/guests', GuestRouter);
 
-// themes routes.
+// Theme routes.
 router.use('/themes', ThemeRouter);
 
-// themes routes.
+// Image routes.
 router.use('/images', ImageRouter);
 
 module.exports = router;

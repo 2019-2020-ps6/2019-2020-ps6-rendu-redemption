@@ -1,135 +1,211 @@
 const models = require('../models');
 const NotFoundError = require('../utils/errors/not-found-error');
 const AlreadyExistsError = require('../utils/errors/already-exists-error');
+const QuizController = require('./quiz.controller');
+
+/* -------------------------------------------------------------------------- */
+/*                              GETTERS / SETTERS                             */
+/* -------------------------------------------------------------------------- */
 
 /**
  * Finds all the quizzes of the guest.
- * @param req The request object.
- * @param res The response object.
- * @param next The callback for the next middleware.
+ * @param id The id of the guest.
  */
-exports.findAll = (req, res, next) => {
+function findAll(id) {
   // Find the guest.
-  models.Guest
-    .findByPk(req.params.guestId)
+  return models.Guest
+    .findByPk(id)
     .then((guest) => {
       if (guest) {
         // Find the quizzes.
-        guest
-          .getQuizzes()
-          .then((quizzes) => {
-            // Success.
-            res
-              .status(200)
-              .json(quizzes);
-          })
-          // Errors.
-          .catch(next);
-      } else {
-        // Guest not found.
-        next(new NotFoundError());
+        return guest.getQuizzes({
+          joinTableAttributes: [],
+          attributes: {
+            exclude: ['imageId', 'themeId']
+          },
+          include: [
+            // Include image.
+            {
+              model: models.Image,
+              as: 'image'
+            },
+            // Include theme.
+            {
+              model: models.Theme,
+              as: 'theme',
+              attributes: {
+                exclude: ['imageId']
+              },
+              // Include image of theme.
+              include: [{
+                model: models.Image,
+                as: 'image'
+              }]
+            },
+            // Include questions.
+            {
+              model: models.Question,
+              as: 'questions',
+              attributes: {
+                exclude: ['quizId', 'imageId']
+              },
+              include: [
+                // Include image of questions.
+                {
+                  model: models.Image,
+                  as: 'image'
+                },
+                // Include answers of questions.
+                {
+                  model: models.Answer,
+                  as: 'answers',
+                  attributes: {
+                    exclude: ['questionId', 'quizId', 'imageId']
+                  },
+                  // Include image of answers.
+                  include: [{
+                    model: models.Image,
+                    as: 'image'
+                  }]
+                }
+              ]
+            }
+          ],
+          order: [
+            // Order the quizzes.
+            ['id', 'ASC'],
+
+            // Order the questions and the answers.
+            [{ model: models.Question, as: 'questions' }, { model: models.Answer, as: 'answers' }, 'id', 'ASC']
+          ]
+        });
       }
-    })
-    // Errors.
-    .catch(next);
-};
+      // Guest not found.
+      throw new NotFoundError();
+    });
+}
 
 /**
  * Adds a quiz to the guest.
- * @param req The request object.
- * @param res The response object.
- * @param next The callback for the next middleware.
+ * @param id The id of the guest.
+ * @param quizId The id of the quiz to be added.
  */
-exports.add = (req, res, next) => {
-  const guestId = parseInt(req.params.guestId, 10);
-  const quizId = parseInt(req.params.quizId, 10);
-
+function add(id, quizId) {
   // Find the guest.
-  models.Guest
-    .findByPk(req.params.guestId)
+  return models.Guest
+    .findByPk(id)
     .then((guest) => {
       if (guest) {
         // If the guest has the quiz.
-        guest
-          .hasQuiz(quizId)
+        return guest
+          .hasQuiz(parseInt(quizId, 10))
           .then((hasQuiz) => {
+            console.log(hasQuiz);
             if (!hasQuiz) {
               // Add the quiz.
-              guest
-                .addQuiz(quizId)
-                .then(() => {
-                  res
-                    .status(201)
-                    .json({
-                      guestId,
-                      quizId,
-                      message: 'The quiz has been added from the guest.'
-                    });
-                })
-                // Errors.
-                .catch(next);
-            } else {
-              // Quiz already added.
-              next(new AlreadyExistsError());
+              return guest.addQuiz(quizId);
             }
-          })
-          // Errors.
-          .catch(next);
-      } else {
-        // Guest not found.
-        next(new NotFoundError());
+            // Quiz already added.
+            throw new AlreadyExistsError();
+          });
       }
-    })
-    // Errors.
-    .catch(next);
-};
+      // Guest not found.
+      throw new NotFoundError();
+    });
+}
+
+
 
 /**
- * Deletes a guest by id.
- * @param req The request object.
- * @param res The response object.
- * @param next The callback for the next middleware.
+ * Removes a quiz from a guest.
+ * @param id The id of the guest.
+ * @param quizId The id of the quiz to be deleted.
  */
-exports.remove = (req, res, next) => {
-  const guestId = parseInt(req.params.guestId, 10);
-  const quizId = parseInt(req.params.quizId, 10);
-
+function remove(id, quizId) {
   // Find the guest.
-  models.Guest
-    .findByPk(req.params.guestId)
+  return models.Guest
+    .findByPk(id)
     .then((guest) => {
       if (guest) {
         // If the guest has the quiz.
-        guest
-          .hasQuiz(quizId)
+        return guest
+          .hasQuiz(parseInt(quizId, 10))
           .then((hasQuiz) => {
             if (hasQuiz) {
               // Remove the quiz.
-              guest
-                .removeQuiz(quizId)
-                .then(() => {
-                  res
-                    .status(200)
-                    .json({
-                      guestId,
-                      quizId,
-                      message: 'The quiz has been removed from the guest.'
-                    });
-                })
-                // Errors.
-                .catch(next);
-            } else {
-              // Quiz not found.
-              next(new NotFoundError());
+              guest.removeQuiz(quizId);
             }
-          })
-          // Errors.
-          .catch(next);
-      } else {
-        // Guest not found.
-        next(new NotFoundError());
+            // Quiz not found.
+            throw new NotFoundError();
+          });
       }
+      // Guest not found.
+      throw new NotFoundError();
+    });
+}
+
+/* -------------------------------------------------------------------------- */
+/*                                    PRINTS                                  */
+/* -------------------------------------------------------------------------- */
+
+/**
+ * Prints all the quizzes of a guest.
+ * @param req The request object.
+ * @param res The response object.
+ * @param next The callback for the next middleware.
+ */
+function printFindAll(req, res, next) {
+  findAll(req.params.guestId)
+    .then((quizzes) => {
+      res.status(200).json(quizzes);
     })
     // Errors.
     .catch(next);
+}
+
+/**
+ * Print the quiz added to a guest.
+ * @param req The request object.
+ * @param res The response object.
+ * @param next The callback for the next middleware.
+ */
+function printAdd(req, res, next) {
+  add(req.params.guestId, req.params.quizId)
+    // eslint-disable-next-line arrow-body-style
+    .then(() => {
+      return QuizController
+        .find(req.params.quizId)
+        .then((quiz) => {
+          res.status(201).json(quiz);
+        });
+    })
+    .catch(next);
+}
+
+/**
+ * Prints the quiz removed from a guest.
+ * @param req The request object.
+ * @param res The response object.
+ * @param next The callback for the next middleware.
+ */
+function printRemove(req, res, next) {
+  remove(req.params.guestId, req.params.quizId)
+    // eslint-disable-next-line arrow-body-style
+    .then(() => {
+      return QuizController
+        .find(req.params.quizId)
+        .then((quiz) => {
+          res.status(200).json(quiz);
+        });
+    })
+    .catch(next);
+}
+
+module.exports = {
+  findAll,
+  printFindAll,
+  add,
+  printAdd,
+  remove,
+  printRemove
 };

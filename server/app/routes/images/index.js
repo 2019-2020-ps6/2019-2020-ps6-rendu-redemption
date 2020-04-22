@@ -4,22 +4,19 @@ const ImageController = require('../../controllers/image.controller');
 
 const router = new Router();
 
-// Find all the themes.
-router.get('/', ImageController.findAll);
+// Find all the images.
+router.get('/', ImageController.printFindAll);
 
-// Create a theme.
-router.post('/', ImageController.create);
+// Create an image.
+router.post('/', ImageController.printCreate);
 
-// Find a theme by id.
-router.get('/:imageId([0-9]+)', ImageController.findById);
+// Find an image by id.
+router.get('/:imageId([0-9]+)', ImageController.printFind);
 
-// Update (or create) a theme by id.
-router.put('/:imageId([0-9]+)', ImageController.updateById);
+// Update an image by id.
+router.put('/:imageId([0-9]+)', ImageController.printUpdate);
 
-// Delete a theme by id.
-router.delete('/:imageId([0-9]+)', ImageController.deleteById);
-
-// Questions routes.
-// router.use('/:quizId([0-9]+)/questions', QuestionRouter);
+// Delete an image by id.
+router.delete('/:imageId([0-9]+)', ImageController.printDestroy);
 
 module.exports = router;

@@ -43,6 +43,12 @@ module.exports = (sequelize, DataTypes) => {
       onDelete: 'SET NULL'
     });
 
+    // A quiz belongs to many guests.
+    Quiz.belongsToMany(models.Guest, {
+      foreignKey: 'quizId',
+      through: 'guest_quizzes'
+    });
+
     // A quiz has many questions.
     Quiz.hasMany(models.Question, {
       as: 'questions',
@@ -52,12 +58,6 @@ module.exports = (sequelize, DataTypes) => {
     // A quiz has many answers.
     Quiz.hasMany(models.Answer, {
       foreignKey: 'quizId'
-    });
-
-    // A quiz belongs to many guests.
-    Quiz.belongsToMany(models.Guest, {
-      foreignKey: 'quizId',
-      through: 'guest_quizzes'
     });
   };
 

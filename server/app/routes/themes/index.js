@@ -1,25 +1,21 @@
 const { Router } = require('express');
-// const QuestionRouter = require('../questions');
 const ThemeController = require('../../controllers/theme.controller');
 
 const router = new Router();
 
 // Find all the themes.
-router.get('/', ThemeController.findAll);
+router.get('/', ThemeController.printFindAll);
 
 // Create a theme.
-router.post('/', ThemeController.create);
+router.post('/', ThemeController.printCreate);
 
 // Find a theme by id.
-router.get('/:themeId([0-9]+)', ThemeController.findById);
+router.get('/:themeId([0-9]+)', ThemeController.printFind);
 
-// Update (or create) a theme by id.
-router.put('/:themeId([0-9]+)', ThemeController.updateById);
+// Update a theme by id.
+router.put('/:themeId([0-9]+)', ThemeController.printUpdate);
 
 // Delete a theme by id.
-router.delete('/:themeId([0-9]+)', ThemeController.deleteById);
-
-// Questions routes.
-// router.use('/:quizId([0-9]+)/questions', QuestionRouter);
+router.delete('/:themeId([0-9]+)', ThemeController.printDestroy);
 
 module.exports = router;
