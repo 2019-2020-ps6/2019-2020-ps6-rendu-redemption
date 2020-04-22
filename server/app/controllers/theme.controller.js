@@ -11,13 +11,19 @@ const NotFoundError = require('../utils/errors/not-found-error');
 function findAll() {
   return models.Theme
     .findAll({
-      attributes: ['id', 'name', 'createdAt', 'updatedAt'],
-      order: [['id', 'ASC']],
+      // Exclude the foreign keys.
+      attributes: {
+        exclude: ['imageId']
+      },
       // Include the image.
-      include: [{
-        model: models.Image,
-        as: 'image'
-      }]
+      include: [
+        {
+          model: models.Image,
+          as: 'image'
+        }
+      ],
+      // Order the themes.
+      order: [['id', 'ASC']]
     });
 }
 
@@ -30,12 +36,17 @@ function find(id) {
     .findByPk(
       id,
       {
-        attributes: ['id', 'name', 'createdAt', 'updatedAt'],
+        // Exclude the foreign keys.
+        attributes: {
+          exclude: ['imageId']
+        },
         // Include the image.
-        include: [{
-          model: models.Image,
-          as: 'image'
-        }]
+        include: [
+          {
+            model: models.Image,
+            as: 'image'
+          }
+        ]
       }
     );
 }
@@ -194,13 +205,13 @@ function printDestroy(req, res, next) {
 
 module.exports = {
   findAll,
-  printFindAll,
   create,
-  printCreate,
   find,
-  printFind,
   update,
-  printUpdate,
   destroy,
+  printFindAll,
+  printCreate,
+  printFind,
+  printUpdate,
   printDestroy
 };

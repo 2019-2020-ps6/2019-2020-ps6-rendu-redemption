@@ -30,23 +30,25 @@ function findAll(quizId) {
         // Find the questions.
         return quiz
           .getQuestions({
+            // Exclude foreign keys.
             attributes: {
               exclude: ['quizId', 'imageId']
             },
             include: [
-              // Include image.
+              // Include the images.
               {
                 model: models.Image,
                 as: 'image'
               },
-              // Include answers.
+              // Include the answers.
               {
                 model: models.Answer,
                 as: 'answers',
+                // Exclude foreign keys.
                 attributes: {
                   exclude: ['questionId', 'quizId', 'imageId']
                 },
-                // Include image of answers.
+                // Include the images of the answers.
                 include: [{
                   model: models.Image,
                   as: 'image'
@@ -79,19 +81,19 @@ function find(id, quizId) {
         exclude: ['quizId', 'imageId']
       },
       include: [
-        // Include image.
+        // Include the image.
         {
           model: models.Image,
           as: 'image'
         },
-        // Include answers.
+        // Include the answers.
         {
           model: models.Answer,
           as: 'answers',
           attributes: {
             exclude: ['questionId', 'quizId', 'imageId']
           },
-          // Include image of answers.
+          // Include the images of the answers.
           include: [{
             model: models.Image,
             as: 'image'

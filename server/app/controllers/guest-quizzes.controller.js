@@ -19,50 +19,55 @@ function findAll(id) {
       if (guest) {
         // Find the quizzes.
         return guest.getQuizzes({
+          // Exclude join table attributes.
           joinTableAttributes: [],
+          // Exclude foreign keys.
           attributes: {
             exclude: ['imageId', 'themeId']
           },
           include: [
-            // Include image.
+            // Include the image.
             {
               model: models.Image,
               as: 'image'
             },
-            // Include theme.
+            // Include the theme.
             {
               model: models.Theme,
               as: 'theme',
+              // Exclude foreign keys.
               attributes: {
                 exclude: ['imageId']
               },
-              // Include image of theme.
+              // Include the image of the theme.
               include: [{
                 model: models.Image,
                 as: 'image'
               }]
             },
-            // Include questions.
+            // Include the questions.
             {
               model: models.Question,
               as: 'questions',
+              // Exclude foreign keys.
               attributes: {
                 exclude: ['quizId', 'imageId']
               },
               include: [
-                // Include image of questions.
+                // Include the images of the questions.
                 {
                   model: models.Image,
                   as: 'image'
                 },
-                // Include answers of questions.
+                // Include the answers of the questions.
                 {
                   model: models.Answer,
                   as: 'answers',
+                  // Exclude foreign keys.
                   attributes: {
                     exclude: ['questionId', 'quizId', 'imageId']
                   },
-                  // Include image of answers.
+                  // Include the images of the answers.
                   include: [{
                     model: models.Image,
                     as: 'image'
@@ -113,8 +118,6 @@ function add(id, quizId) {
       throw new NotFoundError();
     });
 }
-
-
 
 /**
  * Removes a quiz from a guest.

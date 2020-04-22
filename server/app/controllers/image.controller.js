@@ -171,13 +171,13 @@ function printDestroy(req, res, next) {
 
 module.exports = {
   findAll,
-  printFindAll,
   create,
-  printCreate,
   find,
-  printFind,
   update,
-  printUpdate,
   destroy,
+  printFindAll,
+  printCreate,
+  printFind,
+  printUpdate,
   printDestroy
 };
