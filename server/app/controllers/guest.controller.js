@@ -252,13 +252,18 @@ function printFind(req, res, next) {
  * @param next The callback for the next middleware.
  */
 function printCreate(req, res, next) {
+  // Create the guest.
   create(
     req.body.firstName,
     req.body.lastName,
     req.body.accessibility
   )
     .then((guest) => {
-      res.status(201).json(guest);
+      // Find the guest.
+      return find(guest.id)
+        .then((foundGuest) => {
+          res.status(201).json(foundGuest);
+        });
     })
     // Errors.
     .catch(next);
