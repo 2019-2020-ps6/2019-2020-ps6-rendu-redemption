@@ -4,6 +4,7 @@ const QuizRouter = require('./quizzes');
 const GuestRouter = require('./guests');
 const ThemeRouter = require('./themes');
 const ImageRouter = require('./images');
+const ResultRouter = require('./results');
 
 const router = new Router();
 
@@ -21,5 +22,8 @@ router.use('/themes', ThemeRouter);
 
 // Image routes.
 router.use('/images', ImageRouter);
+
+// Result routes.
+router.use('/results', ResultRouter);
 
 module.exports = router;

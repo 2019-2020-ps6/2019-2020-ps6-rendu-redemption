@@ -1,5 +1,5 @@
 module.exports = {
-  // Create the quizzes table.
+  // Create the themes table.
   up: (queryInterface, Sequelize) => queryInterface.createTable('themes', {
     id: {
       type: Sequelize.INTEGER,
@@ -29,6 +29,6 @@ module.exports = {
       allowNull: false
     }
   }),
-  // Drop the quizzes table.
+  // Drop the themes table.
   down: (queryInterface) => queryInterface.dropTable('themes')
 };

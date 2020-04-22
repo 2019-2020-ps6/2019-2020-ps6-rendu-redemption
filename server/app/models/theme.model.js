@@ -1,5 +1,5 @@
 module.exports = (sequelize, DataTypes) => {
-  // Define the quiz model.
+  // Define the theme model.
   const Theme = sequelize.define('Theme', {
     id: {
       type: DataTypes.INTEGER,

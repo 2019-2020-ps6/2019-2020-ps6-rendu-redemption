@@ -47,6 +47,11 @@ module.exports = (sequelize, DataTypes) => {
       as: 'answers',
       foreignKey: 'questionId'
     });
+
+    // A question has many question results.
+    Question.hasMany(models.QuestionResult, {
+      foreignKey: 'questionId'
+    });
   };
 
   return Question;

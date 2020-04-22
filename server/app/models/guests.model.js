@@ -39,6 +39,11 @@ module.exports = (sequelize, DataTypes) => {
       through: 'guest_quizzes',
       as: 'quizzes'
     });
+
+    // A guest has many results.
+    Guest.hasMany(models.Result, {
+      foreignKey: 'guestId'
+    });
   };
 
   return Guest;

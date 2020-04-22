@@ -1,5 +1,5 @@
 module.exports = (sequelize, DataTypes) => {
-  // Define the guest model.
+  // Define the image model.
   const Image = sequelize.define('Image', {
     id: {
       type: DataTypes.INTEGER,

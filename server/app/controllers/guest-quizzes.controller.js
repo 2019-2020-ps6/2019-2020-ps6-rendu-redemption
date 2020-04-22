@@ -80,8 +80,16 @@ function findAll(id) {
             // Order the quizzes.
             ['id', 'ASC'],
 
-            // Order the questions and the answers.
-            [{ model: models.Question, as: 'questions' }, { model: models.Answer, as: 'answers' }, 'id', 'ASC']
+            // Order the questions.
+            [{ model: models.Question, as: 'questions' }, 'id', 'ASC'],
+
+            // Order the answers.
+            [
+              { model: models.Question, as: 'questions' },
+              { model: models.Answer, as: 'answers' },
+              'id',
+              'ASC'
+            ]
           ]
         });
       }
