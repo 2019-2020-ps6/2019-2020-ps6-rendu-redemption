@@ -36,7 +36,8 @@ module.exports = (sequelize, DataTypes) => {
     // A guest belongs to many quizzes.
     Guest.belongsToMany(models.Quiz, {
       foreignKey: 'guestId',
-      through: 'guest_quizzes'
+      through: 'guest_quizzes',
+      as: 'quizzes'
     });
   };
 

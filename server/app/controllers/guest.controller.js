@@ -11,7 +11,73 @@ const NotFoundError = require('../utils/errors/not-found-error');
 function findAll() {
   return models.Guest
     .findAll({
-      order: [['id', 'ASC']]
+      order: [['id', 'ASC']],
+      // Include the quizzes.
+      include: [
+        {
+          model: models.Quiz,
+          as: 'quizzes',
+          // Exclude join table attributes.
+          through: {
+            attributes: []
+          },
+          // Exclude foreign keys.
+          attributes: {
+            exclude: ['imageId', 'themeId']
+          },
+          include: [
+            // Include the image.
+            {
+              model: models.Image,
+              as: 'image'
+            },
+            // Include the theme.
+            {
+              model: models.Theme,
+              as: 'theme',
+              // Exclude foreign keys.
+              attributes: {
+                exclude: ['imageId']
+              },
+              // Include the image of the theme.
+              include: [{
+                model: models.Image,
+                as: 'image'
+              }]
+            },
+            // Include the questions.
+            {
+              model: models.Question,
+              as: 'questions',
+              // Exclude foreign keys.
+              attributes: {
+                exclude: ['quizId', 'imageId']
+              },
+              include: [
+                // Include the images of the questions.
+                {
+                  model: models.Image,
+                  as: 'image'
+                },
+                // Include the answers of the questions.
+                {
+                  model: models.Answer,
+                  as: 'answers',
+                  // Exclude foreign keys.
+                  attributes: {
+                    exclude: ['questionId', 'quizId', 'imageId']
+                  },
+                  // Include the images of the answers.
+                  include: [{
+                    model: models.Image,
+                    as: 'image'
+                  }]
+                }
+              ]
+            }
+          ]
+        }
+      ]
     });
 }
 
@@ -20,7 +86,77 @@ function findAll() {
  * @param id The id of the guest.
  */
 function find(id) {
-  return models.Guest.findByPk(id);
+  return models.Guest.findByPk(
+    id,
+    {
+      // Include the quizzes.
+      include: [
+        {
+          model: models.Quiz,
+          as: 'quizzes',
+          // Exclude join table attributes.
+          through: {
+            attributes: []
+          },
+          // Exclude foreign keys.
+          attributes: {
+            exclude: ['imageId', 'themeId']
+          },
+          include: [
+            // Include the image.
+            {
+              model: models.Image,
+              as: 'image'
+            },
+            // Include the theme.
+            {
+              model: models.Theme,
+              as: 'theme',
+              // Exclude foreign keys.
+              attributes: {
+                exclude: ['imageId']
+              },
+              // Include the image of the theme.
+              include: [{
+                model: models.Image,
+                as: 'image'
+              }]
+            },
+            // Include the questions.
+            {
+              model: models.Question,
+              as: 'questions',
+              // Exclude foreign keys.
+              attributes: {
+                exclude: ['quizId', 'imageId']
+              },
+              include: [
+                // Include the images of the questions.
+                {
+                  model: models.Image,
+                  as: 'image'
+                },
+                // Include the answers of the questions.
+                {
+                  model: models.Answer,
+                  as: 'answers',
+                  // Exclude foreign keys.
+                  attributes: {
+                    exclude: ['questionId', 'quizId', 'imageId']
+                  },
+                  // Include the images of the answers.
+                  include: [{
+                    model: models.Image,
+                    as: 'image'
+                  }]
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  );
 }
 
 /**
