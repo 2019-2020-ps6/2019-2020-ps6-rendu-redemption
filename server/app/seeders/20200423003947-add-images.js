@@ -24,7 +24,7 @@ module.exports = {
     {
       id: 4,
       name: 'Requin',
-      path: 'http://www.sympatico.ca/image/policy:1.1575927:1443637487/Photo-d-un-grand-requin-blanc.jpg',
+      path: 'https://img.huffingtonpost.com/asset/5cb9a7cb1f0000c6007f2015.jpeg?cache=DWPxGV1Det&ops=1200_630',
       createdAt: new Date(),
       updatedAt: new Date()
     },
