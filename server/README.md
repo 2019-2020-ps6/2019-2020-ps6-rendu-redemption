@@ -31,7 +31,11 @@ npx sequelize db:migrate:undo:all
 ```bash
 npx sequelize db:migrate
 ```
-6. Run the server.
+6. Run the database seeds (fake data).
+```bash
+npx sequelize db:seed:all
+```
+7. Run the server.
 ```bash
 npm run dev
 ```
