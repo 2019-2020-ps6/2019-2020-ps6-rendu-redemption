@@ -12,56 +12,24 @@ function findAll() {
   // Find the quizzes.
   return models.Quiz
     .findAll({
-      // Exclude foreign keys.
-      attributes: {
-        exclude: ['imageId', 'themeId']
-      },
       include: [
-        // Include the image.
-        {
-          model: models.Image,
-          as: 'image'
-        },
-        // Include the theme.
-        {
-          model: models.Theme,
-          as: 'theme',
-          attributes: {
-            exclude: ['imageId']
-          },
-          // Include the image of the theme.
-          include: [{
-            model: models.Image,
-            as: 'image'
-          }]
-        },
         // Include the questions.
         {
           model: models.Question,
           as: 'questions',
           // Exclude foreign keys.
           attributes: {
-            exclude: ['quizId', 'imageId']
+            exclude: ['quizId']
           },
           include: [
-            // Include the images of the questions.
-            {
-              model: models.Image,
-              as: 'image'
-            },
             // Include the answers of the questions.
             {
               model: models.Answer,
               as: 'answers',
               // Exclude foreign keys.
               attributes: {
-                exclude: ['questionId', 'quizId', 'imageId']
-              },
-              // Include the images of the answers.
-              include: [{
-                model: models.Image,
-                as: 'image'
-              }]
+                exclude: ['questionId', 'quizId']
+              }
             }
           ]
         }
@@ -93,56 +61,24 @@ function find(id) {
     .findByPk(
       id,
       {
-        // Exclude foreign keys.
-        attributes: {
-          exclude: ['imageId', 'themeId']
-        },
         include: [
-          // Include the image.
-          {
-            model: models.Image,
-            as: 'image'
-          },
-          // Include the theme.
-          {
-            model: models.Theme,
-            as: 'theme',
-            attributes: {
-              exclude: ['imageId']
-            },
-            // Include the image of the theme.
-            include: [{
-              model: models.Image,
-              as: 'image'
-            }]
-          },
           // Include the questions.
           {
             model: models.Question,
             as: 'questions',
             // Exclude foreign keys.
             attributes: {
-              exclude: ['quizId', 'imageId']
+              exclude: ['quizId']
             },
             include: [
-              // Include the images of the questions.
-              {
-                model: models.Image,
-                as: 'image'
-              },
-              // Include the answers of questions.
+              // Include the answers of the questions.
               {
                 model: models.Answer,
                 as: 'answers',
                 // Exclude foreign keys.
                 attributes: {
-                  exclude: ['questionId', 'quizId', 'imageId']
-                },
-                // Include the images of the answers.
-                include: [{
-                  model: models.Image,
-                  as: 'image'
-                }]
+                  exclude: ['questionId', 'quizId']
+                }
               }
             ]
           }
@@ -240,10 +176,9 @@ function printFind(req, res, next) {
     .then((quiz) => {
       if (quiz) {
         res.status(200).json(quiz);
-      } else {
-        // Quiz not found.
-        next(new NotFoundError());
       }
+      // Quiz not found.
+      next(new NotFoundError());
     })
     // Errors.
     .catch(next);

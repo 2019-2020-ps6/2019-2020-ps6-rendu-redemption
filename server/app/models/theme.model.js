@@ -31,6 +31,11 @@ module.exports = (sequelize, DataTypes) => {
       onUpdate: 'CASCADE',
       onDelete: 'SET NULL'
     });
+
+    // A theme has many quizzes.
+    Theme.hasMany(models.Quiz, {
+      foreignKey: 'themeId'
+    });
   };
 
   return Theme;

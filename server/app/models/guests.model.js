@@ -35,9 +35,9 @@ module.exports = (sequelize, DataTypes) => {
   Guest.associate = (models) => {
     // A guest belongs to many quizzes.
     Guest.belongsToMany(models.Quiz, {
+      as: 'quizzes',
       foreignKey: 'guestId',
-      through: 'guest_quizzes',
-      as: 'quizzes'
+      through: 'guest_quizzes'
     });
 
     // A guest has many results.

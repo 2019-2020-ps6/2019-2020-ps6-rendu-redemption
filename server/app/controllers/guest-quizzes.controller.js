@@ -8,97 +8,6 @@ const QuizController = require('./quiz.controller');
 /* -------------------------------------------------------------------------- */
 
 /**
- * Finds all the quizzes of the guest.
- * @param id The id of the guest.
- */
-function findAll(id) {
-  // Find the guest.
-  return models.Guest
-    .findByPk(id)
-    .then((guest) => {
-      if (guest) {
-        // Find the quizzes.
-        return guest.getQuizzes({
-          // Exclude join table attributes.
-          joinTableAttributes: [],
-          // Exclude foreign keys.
-          attributes: {
-            exclude: ['imageId', 'themeId']
-          },
-          include: [
-            // Include the image.
-            {
-              model: models.Image,
-              as: 'image'
-            },
-            // Include the theme.
-            {
-              model: models.Theme,
-              as: 'theme',
-              // Exclude foreign keys.
-              attributes: {
-                exclude: ['imageId']
-              },
-              // Include the image of the theme.
-              include: [{
-                model: models.Image,
-                as: 'image'
-              }]
-            },
-            // Include the questions.
-            {
-              model: models.Question,
-              as: 'questions',
-              // Exclude foreign keys.
-              attributes: {
-                exclude: ['quizId', 'imageId']
-              },
-              include: [
-                // Include the images of the questions.
-                {
-                  model: models.Image,
-                  as: 'image'
-                },
-                // Include the answers of the questions.
-                {
-                  model: models.Answer,
-                  as: 'answers',
-                  // Exclude foreign keys.
-                  attributes: {
-                    exclude: ['questionId', 'quizId', 'imageId']
-                  },
-                  // Include the images of the answers.
-                  include: [{
-                    model: models.Image,
-                    as: 'image'
-                  }]
-                }
-              ]
-            }
-          ],
-          order: [
-            // Order the quizzes.
-            ['id', 'ASC'],
-
-            // Order the questions.
-            [{ model: models.Question, as: 'questions' }, 'id', 'ASC'],
-
-            // Order the answers.
-            [
-              { model: models.Question, as: 'questions' },
-              { model: models.Answer, as: 'answers' },
-              'id',
-              'ASC'
-            ]
-          ]
-        });
-      }
-      // Guest not found.
-      throw new NotFoundError();
-    });
-}
-
-/**
  * Adds a quiz to the guest.
  * @param id The id of the guest.
  * @param quizId The id of the quiz to be added.
@@ -113,7 +22,6 @@ function add(id, quizId) {
         return guest
           .hasQuiz(parseInt(quizId, 10))
           .then((hasQuiz) => {
-            console.log(hasQuiz);
             if (!hasQuiz) {
               // Add the quiz.
               return guest.addQuiz(quizId);
@@ -144,7 +52,7 @@ function remove(id, quizId) {
           .then((hasQuiz) => {
             if (hasQuiz) {
               // Remove the quiz.
-              guest.removeQuiz(quizId);
+              return guest.removeQuiz(quizId);
             }
             // Quiz not found.
             throw new NotFoundError();
@@ -158,21 +66,6 @@ function remove(id, quizId) {
 /* -------------------------------------------------------------------------- */
 /*                                    PRINTS                                  */
 /* -------------------------------------------------------------------------- */
-
-/**
- * Prints all the quizzes of a guest.
- * @param req The request object.
- * @param res The response object.
- * @param next The callback for the next middleware.
- */
-function printFindAll(req, res, next) {
-  findAll(req.params.guestId)
-    .then((quizzes) => {
-      res.status(200).json(quizzes);
-    })
-    // Errors.
-    .catch(next);
-}
 
 /**
  * Print the quiz added to a guest.
@@ -213,8 +106,6 @@ function printRemove(req, res, next) {
 }
 
 module.exports = {
-  findAll,
-  printFindAll,
   add,
   printAdd,
   remove,

@@ -32,27 +32,17 @@ function findAll(quizId) {
           .getQuestions({
             // Exclude foreign keys.
             attributes: {
-              exclude: ['quizId', 'imageId']
+              exclude: ['quizId']
             },
             include: [
-              // Include the images.
-              {
-                model: models.Image,
-                as: 'image'
-              },
               // Include the answers.
               {
                 model: models.Answer,
                 as: 'answers',
                 // Exclude foreign keys.
                 attributes: {
-                  exclude: ['questionId', 'quizId', 'imageId']
-                },
-                // Include the images of the answers.
-                include: [{
-                  model: models.Image,
-                  as: 'image'
-                }]
+                  exclude: ['questionId', 'quizId']
+                }
               }
             ],
             order: [
@@ -77,27 +67,19 @@ function findAll(quizId) {
 function find(id, quizId) {
   return models.Question
     .findOne({
+      // Exclude foreign keys.
       attributes: {
-        exclude: ['quizId', 'imageId']
+        exclude: ['quizId']
       },
       include: [
-        // Include the image.
-        {
-          model: models.Image,
-          as: 'image'
-        },
         // Include the answers.
         {
           model: models.Answer,
           as: 'answers',
+          // Exclude foreign keys.
           attributes: {
-            exclude: ['questionId', 'quizId', 'imageId']
-          },
-          // Include the images of the answers.
-          include: [{
-            model: models.Image,
-            as: 'image'
-          }]
+            exclude: ['questionId', 'quizId']
+          }
         }
       ],
       order: [
