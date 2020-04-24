@@ -188,14 +188,14 @@ function printCreate(req, res, next) {
   // Create the question result.
   create(
     req.params.resultId,
-    req.body.questionId,
+    req.params.questionId,
     req.body.wrongAnswers,
     req.body.skipped
   )
     // eslint-disable-next-line arrow-body-style
     .then(() => {
       // Find the question result.
-      return find(req.params.resultId, req.body.questionId)
+      return find(req.params.resultId, req.params.questionId)
         .then((questionResult) => {
           res.status(201).json(questionResult);
         });

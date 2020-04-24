@@ -7,7 +7,7 @@ const router = new Router({ mergeParams: true });
 router.get('/', QuestionResultController.printFindAll);
 
 // Create a question result.
-router.post('/', QuestionResultController.printCreate);
+router.post('/:questionId([0-9]+)', QuestionResultController.printCreate);
 
 // Find a question result by id.
 router.get('/:questionId([0-9]+)', QuestionResultController.printFind);
