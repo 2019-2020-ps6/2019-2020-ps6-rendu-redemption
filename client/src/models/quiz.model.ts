@@ -4,8 +4,8 @@ import { Question } from './question.model';
 
 export interface Quiz {
   id: number;
-  theme: Theme;
-  image: Image;
+  themeId: number;
+  imageId: number;
   name: string;
   questions: Question[];
   createdAt?: Date;

@@ -1,9 +1,8 @@
 import { Answer } from './answer.model';
-import { Image } from './image.model';
 
 export interface Question {
   id: number;
-  image: Image;
+  imageId: number;
   label: string;
   answers: Answer[];
   createdAt?: Date;

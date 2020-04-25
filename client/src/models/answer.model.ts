@@ -2,7 +2,7 @@ import { Image } from './image.model';
 
 export interface Answer {
   id: number;
-  image: Image;
+  imageId: number;
   value: string;
   isCorrect: boolean;
   createdAt?: Date;

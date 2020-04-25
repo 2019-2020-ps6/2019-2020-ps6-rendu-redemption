@@ -1,29 +1,19 @@
 // App.
 import { Injectable } from '@angular/core';
-import { environment } from '../environments/environment';
-
-// Models.
-import { Theme } from '../models/theme.model';
 
 // Communication.
 import { HttpClient } from '@angular/common/http';
 import { BehaviorSubject, Observable } from 'rxjs';
 
+// Models and services.
+import { Theme } from '../models/theme.model';
+import { DataService } from './data.service';
+import { map } from 'rxjs/operators';
+
 @Injectable({
   providedIn: 'root'
 })
-export class ThemeService {
-  /**
-   * The server URL.
-   */
-  private serverURL: string;
-
-  /**
-   * The server options.
-   * These options are used for JSON requests.
-   */
-  private serverOptions: object;
-
+export class ThemeService extends DataService {
   /**
    * The list of themes.
    */
@@ -35,21 +25,11 @@ export class ThemeService {
   private themes$: BehaviorSubject<Theme[]>;
 
   /**
-   * The current theme.
-   * TODO: Use route params or user session.
-   */
-  private currentTheme;
-
-  /**
    * Constructs the theme service.
    * @param http The HTTP client.
    */
   constructor(private http: HttpClient) {
-    // Initialize the service.
-    this.serverURL = environment.serverURL;
-    this.serverOptions = environment.serverOptions;
-
-    // Initialize the themes.
+    super();
     this.themes = [];
     this.themes$ = new BehaviorSubject<Theme[]>(this.themes);
     this.findAllThemes();
@@ -60,6 +40,17 @@ export class ThemeService {
    */
   getThemes(): Observable<Theme[]> {
     return this.themes$.asObservable();
+  }
+
+  /**
+   * Returns an observable theme by id.
+   * @param id The id of the theme.
+   */
+  getTheme(id: number): Observable<Theme> {
+    return this.getThemes()
+      .pipe(
+        map((themes) => themes.find((theme) => theme.id === id))
+      );
   }
 
   /**
@@ -75,20 +66,20 @@ export class ThemeService {
   }
 
   /**
-   * Finds a theme.
-   * @param id The id of the theme.
-   */
-  findTheme(id: number): Theme {
-    return this.themes.find((theme: Theme) => theme.id === id);
-  }
-
-  /**
    * Creates a theme.
-   * @param theme The theme to be created.
+   * @param name The name of the theme.
+   * @param imageId The image id of the theme.
    */
-  createTheme(theme: Theme) {
+  createTheme(name: string, imageId: number) {
     this.http
-      .post<Theme>(`${this.serverURL}/themes`, theme, this.serverOptions)
+      .post<Theme>(
+        `${this.serverURL}/themes`,
+        {
+          name,
+          imageId
+        },
+        this.serverOptions
+      )
       .subscribe(() => {
         this.findAllThemes();
       });
@@ -96,11 +87,20 @@ export class ThemeService {
 
   /**
    * Updates a theme.
-   * @param theme The theme to be updated.
+   * @param id The id of the theme.
+   * @param name The name of the theme.
+   * @param imageId The image id of the theme.
    */
-  updateTheme(theme: Theme) {
+  updateTheme(id: number, name: string, imageId: number) {
     this.http
-      .put<Theme>(`${this.serverURL}/themes/${theme.id}`, theme, this.serverOptions)
+      .put<Theme>(
+        `${this.serverURL}/themes/${id}`,
+        {
+          name,
+          imageId
+        },
+        this.serverOptions
+      )
       .subscribe(() => {
         this.findAllThemes();
       });
@@ -108,21 +108,13 @@ export class ThemeService {
 
   /**
    * Deletes a theme.
-   * @param theme The theme to be deleted.
+   * @param id The id of the theme.
    */
-  deleteTheme(theme: Theme) {
+  deleteTheme(id) {
     this.http
-      .delete<Theme>(`${this.serverURL}/themes/${theme.id}`)
+      .delete<Theme>(`${this.serverURL}/themes/${id}`)
       .subscribe(() => {
         this.findAllThemes();
       });
-  }
-
-  setCurrentTheme(theme: Theme) {
-    this.currentTheme = theme;
-  }
-
-  getCurrentTheme(): Theme {
-    return this.currentTheme;
   }
 }

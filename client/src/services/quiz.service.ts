@@ -2,31 +2,20 @@
 import { Injectable } from '@angular/core';
 import { environment } from '../environments/environment';
 
-// Models.
-import { Quiz } from '../models/quiz.model';
-import { Question } from '../models/question.model';
-import { Answer } from '../models/answer.model';
-
 // Communication.
 import { HttpClient } from '@angular/common/http';
 import { BehaviorSubject, Observable } from 'rxjs';
-import {Image} from "../models/image.model";
+
+// Models and services.
+import { Quiz } from '../models/quiz.model';
+import { Question } from '../models/question.model';
+import { Answer } from '../models/answer.model';
+import { DataService } from './data.service';
 
 @Injectable({
   providedIn: 'root'
 })
-export class QuizService {
-  /**
-   * The server URL.
-   */
-  private serverURL: string;
-
-  /**
-   * The server options.
-   * These options are used for JSON requests.
-   */
-  private serverOptions: object;
-
+export class QuizService extends DataService {
   /**
    * The list of quizzes.
    */
@@ -37,90 +26,16 @@ export class QuizService {
    */
   private quizzes$: BehaviorSubject<Quiz[]>;
 
-  // TODO: Use route params or user session.
-  private compt = 0;
-  private currentQuiz: Quiz = undefined;
-  private questionToModify: Question = undefined;
-  private answerIndexToModify: number = undefined;
-
   /**
    * Constructs the image service.
    * @param http The HTTP client.
    */
   constructor(private http: HttpClient) {
-    // Initialize the service.
-    this.serverURL = environment.serverURL;
-    this.serverOptions = environment.serverOptions;
-
-    // Initialize the images.
+    super();
     this.quizzes = [];
     this.quizzes$ = new BehaviorSubject<Quiz[]>(this.quizzes);
     this.findAllQuizzes();
   }
-
-  /*
-   * PLAY
-   */
-
-  /**
-   * Returns the observable list of quizzes.
-   */
-  getQuizzes(): Observable<Quiz[]> {
-    return this.quizzes$.asObservable();
-  }
-
-
-
-  getQuestion(): Question {
-    return this.quizzes[0].questions[this.compt];
-  }
-
-  getNextQuestion(): Question {
-    const q = this.quizzes[0].questions[++this.compt];
-    if (q === undefined) {
-      return null;
-    }
-    return q;
-  }
-
-  /*
-   * PASS ELEMENTS BETWEEN PAGES
-   */
-
-  setCurrentQuiz(quiz: Quiz) {
-    this.currentQuiz = quiz;
-  }
-
-  getCurrentQuiz(): Quiz {
-    return this.currentQuiz;
-  }
-
-  setQuestionToModify(question: Question) {
-    this.questionToModify = question;
-  }
-
-  getQuestionToModify(): Question {
-    return this.questionToModify;
-  }
-
-  setAnswerIndexToModify(i: number) {
-    this.answerIndexToModify = i;
-  }
-
-  getAnswerToModify(): Answer {
-    if (this.answerIndexToModify === undefined) {
-      return undefined;
-    }
-    const answer = this.questionToModify.answers[this.answerIndexToModify];
-    if (answer === undefined) {
-      return null;
-    }
-    return answer;
-  }
-
-  /*
-   * DATA TO BACK
-   */
 
   /**
    * Finds all the quizzes.
@@ -135,28 +50,22 @@ export class QuizService {
   }
 
   /**
-   * Finds a quiz by id.
-   * @param quizId The id of the quiz.
-   */
-  findQuiz(quizId: number): Quiz {
-    return this.quizzes.find((quiz: Quiz) => quiz.id === quizId);
-  }
-
-  /**
-   * Finds a quiz by theme id.
-   * @param themeId The theme id to be found.
-   */
-  findQuizByTheme(themeId: number): Quiz {
-    return this.quizzes.find((quiz: Quiz) => quiz.theme.id === themeId);
-  }
-
-  /**
    * Creates a quiz.
-   * @param quiz The quiz to be created.
+   * @param name The name of the quiz.
+   * @param themeId The theme id of the quiz.
+   * @param imageId The image id of the quiz.
    */
-  createQuiz(quiz: Quiz) {
+  createQuiz(name: string, themeId: number, imageId: number) {
     this.http
-      .post<Quiz>(`${this.serverURL}/quizzes`, quiz, this.serverOptions)
+      .post<Quiz>(
+        `${this.serverURL}/quizzes`,
+        {
+          name,
+          themeId,
+          imageId
+        },
+        this.serverOptions
+      )
       .subscribe(() => {
         this.findAllQuizzes();
       });
@@ -164,11 +73,22 @@ export class QuizService {
 
   /**
    * Updates a quiz.
-   * @param quiz The quiz to be updated.
+   * @param id The id of the quiz.
+   * @param name The name of the quiz.
+   * @param themeId The theme id of the quiz.
+   * @param imageId The image id of the quiz.
    */
-  updateQuiz(quiz: Quiz) {
+  updateQuiz(id: number, name: string, themeId: number, imageId: number) {
     this.http
-      .put<Quiz>(`${this.serverURL}/quizzes/${quiz.id}`, quiz, this.serverOptions)
+      .put<Quiz>(
+        `${this.serverURL}/quizzes/${id}`,
+        {
+          name,
+          themeId,
+          imageId
+        },
+        this.serverOptions
+      )
       .subscribe(() => {
         this.findAllQuizzes();
       });
@@ -176,11 +96,11 @@ export class QuizService {
 
   /**
    * Deletes a quiz.
-   * @param quiz The quiz to be deleted.
+   * @param id The id of the quiz.
    */
-  deleteQuiz(quiz: Quiz) {
+  deleteQuiz(id: number) {
     this.http
-      .delete<Quiz>(`${this.serverURL}/quizzes/${quiz.id}`)
+      .delete<Quiz>(`${this.serverURL}/quizzes/${id}`)
       .subscribe(() => {
         this.findAllQuizzes();
       });
@@ -188,13 +108,18 @@ export class QuizService {
 
   /**
    * Creates a question.
-   * @param question The question to be created.
+   * @param quizId The id of the quiz.
+   * @param label The label of the question.
+   * @param imageId The imageId of the question.
    */
-  createQuestion(question: Question) {
+  createQuestion(quizId: number, label: string, imageId: number) {
     this.http
       .post<Question>(
-        `${this.serverURL}/quizzes/${this.currentQuiz.id}/questions`,
-        question,
+        `${this.serverURL}/quizzes/${quizId}/questions`,
+        {
+          label,
+          imageId
+        },
         this.serverOptions
       )
       .subscribe(() => {
@@ -202,11 +127,21 @@ export class QuizService {
       });
   }
 
-  updateQuestion(question: Question) {
+  /**
+   * Updates a question.
+   * @param quizId The id of the quiz.
+   * @param questionId The id of the question.
+   * @param label The label of the question.
+   * @param imageId The imageId of the question.
+   */
+  updateQuestion(quizId: number, questionId: number, label: string, imageId: number) {
     this.http
       .put<Question>(
-        `${this.serverURL}/quizzes/${this.currentQuiz.id}/questions/${question.id}`,
-        question,
+        `${this.serverURL}/quizzes/${quizId}/questions/${questionId}`,
+        {
+          label,
+          imageId
+        },
         this.serverOptions
       )
       .subscribe(() => {
@@ -214,21 +149,44 @@ export class QuizService {
       });
   }
 
-  deleteQuestion(question: Question) {
+  /**
+   * Deletes a question.
+   * @param quizId The id of the quiz.
+   * @param questionId The id of the question.
+   */
+  deleteQuestion(quizId: number, questionId: number) {
     this.http
       .delete<Question>(
-        `${this.serverURL}/quizzes/${this.currentQuiz.id}/questions/${question.id}`
+        `${this.serverURL}/quizzes/${quizId}/questions/${questionId}`
       )
       .subscribe(() => {
         this.findAllQuizzes();
       });
   }
 
-  createAnswer(answer: Answer) {
+  /**
+   * Creates an answer.
+   * @param quizId The id of the quiz.
+   * @param questionId The id of the question.
+   * @param value The value of the answer.
+   * @param isCorrect Whether the answer is correct, or not.
+   * @param imageId The image id of the answer.
+   */
+  createAnswer(
+    quizId: number,
+    questionId: number,
+    value: string,
+    isCorrect: boolean,
+    imageId: number
+  ) {
     this.http
       .post<Answer>(
-        `${this.serverURL}/quizzes/${this.currentQuiz.id}/questions/${this.questionToModify.id}/answers`,
-        answer,
+        `${this.serverURL}/quizzes/${quizId}/questions/${questionId}/answers`,
+        {
+          value,
+          isCorrect,
+          imageId
+        },
         this.serverOptions
       )
       .subscribe(() => {
@@ -236,11 +194,31 @@ export class QuizService {
       });
   }
 
-  updateAnswer(answer: Answer) {
+  /**
+   * Creates an answer.
+   * @param quizId The id of the quiz.
+   * @param questionId The id of the question.
+   * @param answerId The id of the answer.
+   * @param value The value of the answer.
+   * @param isCorrect Whether the answer is correct, or not.
+   * @param imageId The image id of the answer.
+   */
+  updateAnswer(
+    quizId: number,
+    questionId: number,
+    answerId: number,
+    value: string,
+    isCorrect: boolean,
+    imageId: number
+  ) {
     this.http
       .put<Answer>(
-        `${this.serverURL}/quizzes/${this.currentQuiz.id}/questions/${this.questionToModify.id}/answers/${answer.id}`,
-        answer,
+        `${this.serverURL}/quizzes/${quizId}/questions/${questionId}/answers/${answerId}`,
+        {
+          value,
+          isCorrect,
+          imageId
+        },
         this.serverOptions
       )
       .subscribe(() => {
@@ -248,10 +226,16 @@ export class QuizService {
       });
   }
 
-  deleteAnswer(questionToEdit: Question, answer: Answer) {
+  /**
+   * Deletes an answer.
+   * @param quizId The id of the quiz.
+   * @param questionId The id of the question.
+   * @param answerId The id of the answer.
+   */
+  deleteAnswer(quizId: number, questionId: number, answerId: number) {
     this.http
       .delete<Answer>(
-        `${this.serverURL}/quizzes/${this.currentQuiz.id}/questions/${questionToEdit.id}/answers/${answer.id}`,
+        `${this.serverURL}/quizzes/${quizId}/questions/${questionId}/answers/${answerId}`,
       )
       .subscribe(() => {
         this.findAllQuizzes();

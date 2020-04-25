@@ -1,29 +1,19 @@
 // App.
 import { Injectable } from '@angular/core';
-import { environment } from '../environments/environment';
-
-// Models.
-import { Image } from '../models/image.model';
 
 // Communication.
 import { HttpClient } from '@angular/common/http';
 import { BehaviorSubject, Observable } from 'rxjs';
+import { map } from 'rxjs/operators';
+
+// Models and services.
+import { Image } from '../models/image.model';
+import { DataService } from './data.service';
 
 @Injectable({
   providedIn: 'root'
 })
-export class ImageService {
-  /**
-   * The server URL.
-   */
-  private serverURL: string;
-
-  /**
-   * The server options.
-   * These options are used for JSON requests.
-   */
-  private serverOptions: object;
-
+export class ImageService extends DataService {
   /**
    * The list of images.
    */
@@ -35,21 +25,11 @@ export class ImageService {
   private images$: BehaviorSubject<Image[]>;
 
   /**
-   * The image to modify.
-   * TODO: Use route params or user session.
-   */
-  private imageToModify: Image;
-
-  /**
    * Constructs the image service.
    * @param http The HTTP client.
    */
   constructor(private http: HttpClient) {
-    // Initialize the service.
-    this.serverURL = environment.serverURL;
-    this.serverOptions = environment.serverOptions;
-
-    // Initialize the images.
+    super();
     this.images = [];
     this.images$ = new BehaviorSubject<Image[]>(this.images);
     this.findAllImages();
@@ -60,6 +40,17 @@ export class ImageService {
    */
   getImages(): Observable<Image[]> {
     return this.images$.asObservable();
+  }
+
+  /**
+   * Returns an observable image by id.
+   * @param id The id of the image.
+   */
+  getImage(id: number): Observable<Image> {
+    return this.getImages()
+      .pipe(
+        map((images) => images.find((image) => image.id === id))
+      );
   }
 
   /**
@@ -75,20 +66,20 @@ export class ImageService {
   }
 
   /**
-   * Finds an image.
-   * @param imageId The id of the image.
-   */
-  findImage(imageId: number): Image {
-    return this.images.find((image: Image) => image.id === imageId);
-  }
-
-  /**
    * Creates an image.
-   * @param image The image to be created.
+   * @param name The name of the image.
+   * @param path The path of the image.
    */
-  createImage(image: Image) {
+  createImage(name: string, path: string) {
     this.http
-      .post<Image>(`${this.serverURL}/images`, image, this.serverOptions)
+      .post<Image>(
+        `${this.serverURL}/images`,
+        {
+          name,
+          path
+        },
+        this.serverOptions
+      )
       .subscribe(() => {
         this.findAllImages();
       });
@@ -96,11 +87,20 @@ export class ImageService {
 
   /**
    * Updates an image.
-   * @param image The image to be updated.
+   * @param id The id of the image.
+   * @param name The name of the image.
+   * @param path The path of the image.
    */
-  updateImage(image: Image) {
+  updateImage(id: number, name: string, path: string) {
     this.http
-      .post<Image>(`${this.serverURL}/images/${image.id}`, image, this.serverOptions)
+      .post<Image>(
+        `${this.serverURL}/images/${id}`,
+        {
+          name,
+          path
+        },
+        this.serverOptions
+      )
       .subscribe(() => {
         this.findAllImages();
       });
@@ -108,30 +108,13 @@ export class ImageService {
 
   /**
    * Deletes an image.
-   * @param image The image to be deleted.
+   * @param id The id of the image.
    */
-  deleteImage(image: Image) {
+  deleteImage(id: number) {
     this.http
-      .delete<Image>(`${this.serverURL}/images/${image.id}`)
+      .delete<Image>(`${this.serverURL}/images/${id}`)
       .subscribe(() => {
         this.findAllImages();
       });
-  }
-
-  /**
-   * Sets the image to modify.
-   * TODO: Use route params or user session.
-   * @param image The image to modify.
-   */
-  setImageToModify(image: Image) {
-    this.imageToModify = image;
-  }
-
-  /**
-   * Returns the image to modify.
-   * TODO: Use route params or user session.
-   */
-  getImageToModify() {
-    return this.imageToModify;
   }
 }

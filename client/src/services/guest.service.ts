@@ -1,29 +1,19 @@
 // App.
 import { Injectable } from '@angular/core';
-import { environment } from '../environments/environment';
-
-// Models.
-import { Guest } from '../models/guest.model';
 
 // Communication.
 import { HttpClient } from '@angular/common/http';
 import { BehaviorSubject, Observable } from 'rxjs';
+import { map } from 'rxjs/operators';
+
+// Models and services.
+import { Guest } from '../models/guest.model';
+import { DataService } from './data.service';
 
 @Injectable({
   providedIn: 'root'
 })
-export class GuestService {
-  /**
-   * The server URL.
-   */
-  private serverURL: string;
-
-  /**
-   * The server options.
-   * These options are used for JSON requests.
-   */
-  private serverOptions: object;
-
+export class GuestService extends DataService {
   /**
    * The list of guests.
    */
@@ -35,21 +25,11 @@ export class GuestService {
   private guests$: BehaviorSubject<Guest[]>;
 
   /**
-   * The guest to modify.
-   * TODO: Use route params or user session.
-   */
-  private guestToModify: Guest;
-
-  /**
    * Constructs the guest service.
    * @param http The HTTP client.
    */
   constructor(private http: HttpClient) {
-    // Initialize the service.
-    this.serverURL = environment.serverURL;
-    this.serverOptions = environment.serverOptions;
-
-    // Initialize the guests.
+    super();
     this.guests = [];
     this.guests$ = new BehaviorSubject<Guest[]>(this.guests);
     this.findAllGuests();
@@ -60,6 +40,17 @@ export class GuestService {
    */
   getGuests(): Observable<Guest[]> {
     return this.guests$.asObservable();
+  }
+
+  /**
+   * Returns an observable guest by id.
+   * @param id The id of the guest.
+   */
+  getGuest(id: number): Observable<Guest> {
+    return this.getGuests()
+      .pipe(
+        map((guests) => guests.find((guest) => guest.id === id))
+      );
   }
 
   /**
@@ -76,31 +67,44 @@ export class GuestService {
 
   /**
    * Creates a guest.
-   * @param guest The guest to be created.
+   * @param firstName The first name of the guest.
+   * @param lastName The last name of the guest.
+   * @param accessibility The accessibility profile of the guest.
    */
-  createGuest(guest: Guest) {
+  createGuest(firstName: string, lastName: string, accessibility: string) {
     this.http
-      .post<Guest>(`${this.serverURL}/guests`, guest, this.serverOptions)
+      .post<Guest>(
+        `${this.serverURL}/guests`,
+        {
+          firstName,
+          lastName,
+          accessibility
+        },
+        this.serverOptions
+      )
       .subscribe(() => {
         this.findAllGuests();
       });
   }
 
   /**
-   * Finds a guest.
-   * @param guestId The id of the guest.
-   */
-  findImage(guestId: number): Guest {
-    return this.guests.find((guest) => guest.id === guestId);
-  }
-
-  /**
    * Updates a guest.
-   * @param guest The guest to be updated.
+   * @param id The id of the theme.
+   * @param firstName The first name of the guest.
+   * @param lastName The last name of the guest.
+   * @param accessibility The accessibility profile of the guest.
    */
-  updateGuest(guest: Guest) {
+  updateGuest(id: number, firstName: string, lastName: string, accessibility: string) {
     this.http
-      .put<Guest>(`${this.serverURL}/guests/${guest.id}`, guest, this.serverOptions)
+      .put<Guest>(
+        `${this.serverURL}/guests/${id}`,
+        {
+          firstName,
+          lastName,
+          accessibility
+        },
+        this.serverOptions
+      )
       .subscribe(() => {
         this.findAllGuests();
       });
@@ -108,30 +112,13 @@ export class GuestService {
 
   /**
    * Deletes a guest.
-   * @param guest The guest to be deleted.
+   * @param id The id of the theme.
    */
-  deleteGuest(guest: Guest) {
+  deleteGuest(id: number) {
     this.http
-      .delete<Guest>(`${this.serverURL}/guests/${guest.id}`)
+      .delete<Guest>(`${this.serverURL}/guests/${id}`)
       .subscribe(() => {
         this.findAllGuests();
       });
-  }
-
-  /**
-   * Sets the guest to modify.
-   * TODO: Use route params or user session.
-   * @param guest The guest to modify.
-   */
-  setGuestToModify(guest: Guest) {
-    this.guestToModify = guest;
-  }
-
-  /**
-   * Returns the guest to modify.
-   * TODO: Use route params or user session.
-   */
-  getGuestToModify(): Guest {
-    return this.guestToModify;
   }
 }
