@@ -1,5 +1,5 @@
 import {Component, OnInit} from '@angular/core';
-import {Router} from '@angular/router';
+import {ActivatedRoute, Router} from '@angular/router';
 import {GuestService} from '../../../services/guest.service';
 import {Guest} from '../../../models/guest.model';
 
@@ -14,7 +14,7 @@ export class GuestSelectionComponent implements OnInit{
   searchElement: string;
   pageCount = 1;
 
-  constructor(private guestService: GuestService, private router: Router) {
+  constructor(private guestService: GuestService, private router: Router, private route: ActivatedRoute) {
   }
 
   ngOnInit(): void {
@@ -29,8 +29,13 @@ export class GuestSelectionComponent implements OnInit{
     this.searchElement = value;
   }
 
-  putGuestInSessionAndSelectTheme(guest: Guest) {
+  putGuestInSessionAndGo(guest: Guest) {
     sessionStorage.setItem('selectedGuest', guest.firstName);
-    this.router.navigate(['../themes-selection']);
+    if(this.router.url === '/guest-selection')
+      this.router.navigate(['../themes-selection']);
+    else if(this.router.url === '/see-results/guest-selection')
+      this.router.navigate(['../results-list'], {relativeTo: this.route});
+    else
+      this.router.navigate(['/']);
   }
 }

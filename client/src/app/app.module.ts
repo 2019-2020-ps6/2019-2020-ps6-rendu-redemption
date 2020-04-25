@@ -31,6 +31,7 @@ import {AnswerEditComponent} from './management/quizzes/quiz/questions/answers-e
 import {ImageListComponent} from './management/images/image-list/image-list.component';
 import {ImageEditComponent} from './management/images/image-edit/image-edit.component';
 import {ImageAddComponent} from './management/images/image-add/image-add.component';
+import {ResultsListComponent} from './see-results/results-list/results-list.component';
 
 @NgModule({
   declarations: [
@@ -56,7 +57,8 @@ import {ImageAddComponent} from './management/images/image-add/image-add.compone
     AnswerEditComponent,
     ImageListComponent,
     ImageEditComponent,
-    ImageAddComponent
+    ImageAddComponent,
+    ResultsListComponent
   ],
   imports: [
     BrowserModule,
