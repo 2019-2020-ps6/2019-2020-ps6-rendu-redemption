@@ -25,6 +25,3 @@ mocks/*
 # System Files
 .DS_Store
 Thumbs.db
-
-# Environment Variables.
-.env.example
