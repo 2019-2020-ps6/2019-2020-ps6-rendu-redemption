@@ -1,6 +1,7 @@
 const models = require('../models');
 const NotFoundError = require('../utils/errors/not-found-error');
 const ValidationError = require('../utils/errors/validation-error');
+const AlreadyExistsError = require('../utils/errors/already-exists-error');
 
 /* -------------------------------------------------------------------------- */
 /*                              GETTERS / SETTERS                             */
@@ -43,12 +44,43 @@ function findAll(resultId) {
       if (result) {
         // Find the question results.
         return result
-          .getQuestionResults({
-            order: [['questionId', 'ASC']]
+          .getQuestions({
+            // Exclude some attributes.
+            attributes: {
+              exclude: ['id', 'resultId', 'createdAt', 'updatedAt']
+            },
+            // Include the answer results.
+            include: [
+              {
+                model: models.AnswerResult,
+                as: 'answers',
+                attributes: {
+                  exclude: ['id', 'questionResultId', 'createdAt', 'updatedAt']
+                }
+              }
+            ],
+            order: [
+              // Order the questions.
+              ['questionId', 'ASC'],
+
+              // Order the answers.
+              [{ model: models.AnswerResult, as: 'answers' }, 'id', 'ASC']
+            ]
           });
       }
       // Result not found.
       throw new NotFoundError();
+    })
+    // Transform array of answers to array answer ids.
+    .then((foundQuestionResults) => {
+      const questionResults = JSON.parse(JSON.stringify(foundQuestionResults));
+      questionResults.forEach((questionResult) => {
+        questionResult.answers.forEach((answer, index) => {
+          // eslint-disable-next-line no-param-reassign
+          questionResult.answers[index] = answer.answerId;
+        });
+      });
+      return questionResults;
     });
 }
 
@@ -60,10 +92,37 @@ function findAll(resultId) {
 function find(resultId, questionId) {
   return models.QuestionResult
     .findOne({
+      // Exclude some attributes.
+      attributes: {
+        exclude: ['id', 'resultId', 'createdAt', 'updatedAt']
+      },
+      // Include the answer results.
+      include: [
+        {
+          model: models.AnswerResult,
+          as: 'answers',
+          attributes: {
+            exclude: ['id', 'questionResultId', 'createdAt', 'updatedAt']
+          }
+        }
+      ],
+      order: [
+        // Order the answers.
+        [{ model: models.AnswerResult, as: 'answers' }, 'id', 'ASC']
+      ],
       where: {
         resultId,
         questionId
       }
+    })
+    // Transform array of answers to array answer ids.
+    .then((foundQuestionResult) => {
+      const questionResult = JSON.parse(JSON.stringify(foundQuestionResult));
+      questionResult.answers.forEach((answer, index) => {
+        // eslint-disable-next-line no-param-reassign
+        questionResult.answers[index] = answer.answerId;
+      });
+      return questionResult;
     });
 }
 
@@ -71,10 +130,9 @@ function find(resultId, questionId) {
  * Creates a question result.
  * @param resultId The id of the parent result.
  * @param questionId The id of the question.
- * @param wrongAnswers The number of wrong answers.
  * @param skipped Whether the question has been skipped, or not.
  */
-function create(resultId, questionId, wrongAnswers, skipped) {
+function create(resultId, questionId, skipped) {
   // Find the parent result.
   return findParentResult(resultId)
     .then((result) => {
@@ -82,17 +140,25 @@ function create(resultId, questionId, wrongAnswers, skipped) {
         // Find the parent question.
         return findParentQuestion(questionId)
           .then((question) => {
+            // Check the quiz id.
             if (question && question.quizId === result.quizId) {
-              // Create the question result.
-              return models.QuestionResult
-                .create({
-                  resultId,
-                  questionId,
-                  wrongAnswers,
-                  skipped
+              // Find the question result.
+              return find(resultId, questionId)
+                .then((questionResult) => {
+                  if (!questionResult) {
+                    // Create the question result.
+                    return models.QuestionResult
+                      .create({
+                        resultId,
+                        questionId,
+                        skipped
+                      });
+                  }
+                  // Question result already exists.
+                  throw new AlreadyExistsError();
                 });
             }
-            // Invalid quiz / Question not found.
+            // Invalid question or quiz.
             throw new ValidationError();
           });
       }
@@ -105,14 +171,12 @@ function create(resultId, questionId, wrongAnswers, skipped) {
  * Updates a question result by id.
  * @param resultId The id of the result.
  * @param questionId The id of the question.
- * @param wrongAnswers The number of wrong answers.
  * @param skipped Whether the question has been skipped, or not.
  */
-function update(resultId, questionId, wrongAnswers, skipped) {
+function update(resultId, questionId, skipped) {
   return models.QuestionResult
     .update(
       {
-        wrongAnswers,
         skipped
       },
       {
@@ -189,7 +253,6 @@ function printCreate(req, res, next) {
   create(
     req.params.resultId,
     req.params.questionId,
-    req.body.wrongAnswers,
     req.body.skipped
   )
     // eslint-disable-next-line arrow-body-style
@@ -215,7 +278,6 @@ function printUpdate(req, res, next) {
   update(
     req.params.resultId,
     req.params.questionId,
-    req.body.wrongAnswers,
     req.body.skipped
   )
     .then((result) => {

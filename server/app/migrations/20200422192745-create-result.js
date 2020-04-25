@@ -26,12 +26,8 @@ module.exports = {
       onDelete: 'CASCADE',
       allowNull: false
     },
-    wrongQuestions: {
-      type: Sequelize.INTEGER,
-      allowNull: false
-    },
-    skippedQuestions: {
-      type: Sequelize.INTEGER,
+    timedOut: {
+      type: Sequelize.BOOLEAN,
       allowNull: false
     },
     createdAt: {

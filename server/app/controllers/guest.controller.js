@@ -29,6 +29,7 @@ function findAll() {
         [{ model: models.Quiz, as: 'quizzes' }, 'id', 'ASC']
       ]
     })
+    // Transform array of quizzes to array quiz ids.
     .then((result) => {
       const guests = JSON.parse(JSON.stringify(result));
       guests.forEach((guest) => {
@@ -65,6 +66,7 @@ function find(id) {
         ]
       }
     )
+    // Transform array of quizzes to array quiz ids.
     .then((result) => {
       if (result) {
         const guest = JSON.parse(JSON.stringify(result));

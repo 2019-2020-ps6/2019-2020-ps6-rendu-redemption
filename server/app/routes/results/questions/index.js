@@ -1,4 +1,5 @@
 const { Router } = require('express');
+const AnswerResultRouter = require('./answers');
 const QuestionResultController = require('../../../controllers/question-result.controller');
 
 const router = new Router({ mergeParams: true });
@@ -17,5 +18,8 @@ router.put('/:questionId([0-9]+)', QuestionResultController.printUpdate);
 
 // Delete a question result by id.
 router.delete('/:questionId([0-9]+)', QuestionResultController.printDestroy);
+
+// Answer result routes.
+router.use('/:questionId([0-9]+)/answers', AnswerResultRouter);
 
 module.exports = router;
