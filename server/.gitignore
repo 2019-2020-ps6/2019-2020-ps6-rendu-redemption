@@ -27,4 +27,4 @@ mocks/*
 Thumbs.db
 
 # Environment Variables.
-.env
+.env.example
