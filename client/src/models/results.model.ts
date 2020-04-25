@@ -1,16 +1,15 @@
 export interface Results {
   id: number;
-  wrongQuestions: number;
-  skippedQuestions: number;
-  createdAt?: Date;
-  updatedAt?: Date;
   guestId: number;
   quizId: number;
+  timedOut: boolean;
+  createdAt?: Date;
+  updatedAt?: Date;
   questionResults: QuestionResults[];
 }
 
 export interface QuestionResults {
-  wrongAnswers: number;
+  answers: number[];
   skipped: boolean;
   questionId: number;
 }

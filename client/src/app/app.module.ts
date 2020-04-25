@@ -32,6 +32,7 @@ import {ImageListComponent} from './management/images/image-list/image-list.comp
 import {ImageEditComponent} from './management/images/image-edit/image-edit.component';
 import {ImageAddComponent} from './management/images/image-add/image-add.component';
 import {ResultsListComponent} from './see-results/results-list/results-list.component';
+import {QuestionResultsListComponent} from './see-results/question-results-list/question-results-list.component';
 
 @NgModule({
   declarations: [
@@ -58,7 +59,8 @@ import {ResultsListComponent} from './see-results/results-list/results-list.comp
     ImageListComponent,
     ImageEditComponent,
     ImageAddComponent,
-    ResultsListComponent
+    ResultsListComponent,
+    QuestionResultsListComponent
   ],
   imports: [
     BrowserModule,
