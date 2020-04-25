@@ -1,33 +1,29 @@
 module.exports = {
-  // Create the question_results table.
+  // Create the answer_results table.
   up: (queryInterface, Sequelize) => queryInterface
-    .createTable('question_results', {
+    .createTable('answer_results', {
       id: {
         type: Sequelize.INTEGER,
         primaryKey: true,
         autoIncrement: true
       },
-      resultId: {
+      questionResultId: {
         type: Sequelize.INTEGER,
         references: {
-          model: 'results',
+          model: 'question_results',
           key: 'id'
         },
         onUpdate: 'CASCADE',
         onDelete: 'CASCADE'
       },
-      questionId: {
+      answerId: {
         type: Sequelize.INTEGER,
         references: {
-          model: 'questions',
+          model: 'answers',
           key: 'id'
         },
         onUpdate: 'CASCADE',
         onDelete: 'CASCADE'
-      },
-      skipped: {
-        type: Sequelize.BOOLEAN,
-        allowNull: false
       },
       createdAt: {
         type: Sequelize.DATE,
@@ -38,6 +34,6 @@ module.exports = {
         allowNull: false
       }
     }),
-  // Drop the question_results table.
-  down: (queryInterface) => queryInterface.dropTable('question_results')
+  // Drop the answer_results table.
+  down: (queryInterface) => queryInterface.dropTable('answer_results')
 };

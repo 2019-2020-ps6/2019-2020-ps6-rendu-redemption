@@ -13,15 +13,52 @@ function findAll() {
     .findAll({
       // Include the question results.
       include: [
-        { model: models.QuestionResult, as: 'questionResults' }
+        {
+          model: models.QuestionResult,
+          as: 'questions',
+          attributes: {
+            exclude: ['id', 'resultId', 'createdAt', 'updatedAt']
+          },
+          // Include the answer results.
+          include: [
+            {
+              model: models.AnswerResult,
+              as: 'answers',
+              attributes: {
+                exclude: ['id', 'questionResultId', 'createdAt', 'updatedAt']
+              }
+            }
+          ]
+        }
       ],
       order: [
         // Order the results.
         ['id', 'ASC'],
 
         // Order the question results.
-        [{ model: models.QuestionResult, as: 'questionResults' }, 'questionId', 'ASC']
+        [{ model: models.QuestionResult, as: 'questions' }, 'questionId', 'ASC'],
+
+        // Order the answer results.
+        [
+          { model: models.QuestionResult, as: 'questions' },
+          { model: models.AnswerResult, as: 'answers' },
+          'id',
+          'ASC'
+        ]
       ]
+    })
+    // Transform array of answers to array answer ids.
+    .then((foundResults) => {
+      const results = JSON.parse(JSON.stringify(foundResults));
+      results.forEach((result) => {
+        result.questions.forEach((question) => {
+          question.answers.forEach((answer, index) => {
+            // eslint-disable-next-line no-param-reassign
+            question.answers[index] = answer.answerId;
+          });
+        });
+      });
+      return results;
     });
 }
 
@@ -35,30 +72,63 @@ function find(id) {
     {
       // Include the question results.
       include: [
-        { model: models.QuestionResult, as: 'questionResults' }
+        {
+          model: models.QuestionResult,
+          as: 'questions',
+          attributes: {
+            exclude: ['id', 'resultId', 'createdAt', 'updatedAt']
+          },
+          // Include the answer results.
+          include: [
+            {
+              model: models.AnswerResult,
+              as: 'answers',
+              attributes: {
+                exclude: ['id', 'questionResultId', 'createdAt', 'updatedAt']
+              }
+            }
+          ]
+        }
       ],
       order: [
         // Order the question results.
-        [{ model: models.QuestionResult, as: 'questionResults' }, 'questionId', 'ASC']
+        [{ model: models.QuestionResult, as: 'questions' }, 'questionId', 'ASC'],
+
+        // Order the answer results.
+        [
+          { model: models.QuestionResult, as: 'questions' },
+          { model: models.AnswerResult, as: 'answers' },
+          'id',
+          'ASC'
+        ]
       ]
     }
-  );
+  )
+    // Transform array of answers to array answer ids.
+    .then((foundResult) => {
+      const result = JSON.parse(JSON.stringify(foundResult));
+      result.questions.forEach((question) => {
+        question.answers.forEach((answer, index) => {
+          // eslint-disable-next-line no-param-reassign
+          question.answers[index] = answer.answerId;
+        });
+      });
+      return result;
+    });
 }
 
 /**
  * Creates a result.
  * @param guestId The id of the guest.
  * @param quizId The id of the quiz.
- * @param wrongQuestions The number of wrong questions.
- * @param skippedQuestions The number of skipped questions.
+ * @param timedOut Whether the quiz has timed out, or not.
  */
-function create(guestId, quizId, wrongQuestions, skippedQuestions) {
+function create(guestId, quizId, timedOut) {
   return models.Result
     .create({
       guestId,
       quizId,
-      wrongQuestions,
-      skippedQuestions
+      timedOut
     });
 }
 
@@ -67,17 +137,15 @@ function create(guestId, quizId, wrongQuestions, skippedQuestions) {
  * @param id The id of the result.
  * @param guestId The id of the result.
  * @param quizId The id of the result.
- * @param wrongQuestions The number of wrong questions.
- * @param skippedQuestions The number of skipped questions.
+ * @param timedOut Whether the quiz has timed out, or not.
  */
-function update(id, guestId, quizId, wrongQuestions, skippedQuestions) {
+function update(id, guestId, quizId, timedOut) {
   return models.Result
     .update(
       {
         guestId,
         quizId,
-        wrongQuestions,
-        skippedQuestions
+        timedOut
       },
       {
         where: { id }
@@ -146,8 +214,7 @@ function printCreate(req, res, next) {
   create(
     req.body.guestId,
     req.body.quizId,
-    req.body.wrongQuestions,
-    req.body.skippedQuestions
+    req.body.timedOut
   )
     // eslint-disable-next-line arrow-body-style
     .then((result) => {
@@ -173,8 +240,7 @@ function printUpdate(req, res, next) {
     req.params.resultId,
     req.body.guestId,
     req.body.quizId,
-    req.body.wrongQuestions,
-    req.body.skippedQuestions
+    req.body.timedOut
   )
     .then((result) => {
       const updatedRows = result[0];

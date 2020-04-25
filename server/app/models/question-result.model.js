@@ -1,9 +1,10 @@
 module.exports = (sequelize, DataTypes) => {
   // Define the question result model.
   const QuestionResult = sequelize.define('QuestionResult', {
-    wrongAnswers: {
+    id: {
       type: DataTypes.INTEGER,
-      allowNull: false
+      primaryKey: true,
+      autoIncrement: true
     },
     skipped: {
       type: DataTypes.BOOLEAN,
@@ -11,8 +12,7 @@ module.exports = (sequelize, DataTypes) => {
     }
   },
   {
-    tableName: 'question_results',
-    timestamps: false
+    tableName: 'question_results'
   });
 
   // Define the result associations.
@@ -20,8 +20,7 @@ module.exports = (sequelize, DataTypes) => {
     // A question result belongs to a result.
     QuestionResult.belongsTo(models.Result, {
       foreignKey: {
-        name: 'resultId',
-        primaryKey: true
+        name: 'resultId'
       },
       onUpdate: 'CASCADE',
       onDelete: 'CASCADE'
@@ -30,16 +29,18 @@ module.exports = (sequelize, DataTypes) => {
     // A question result belongs to a question.
     QuestionResult.belongsTo(models.Question, {
       foreignKey: {
-        name: 'questionId',
-        primaryKey: true
+        name: 'questionId'
       },
       onUpdate: 'CASCADE',
       onDelete: 'CASCADE'
     });
-  };
 
-  // Remove the id column (f*ck you Sequelize).
-  QuestionResult.removeAttribute('id');
+    // A question result has many answer results.
+    QuestionResult.hasMany(models.AnswerResult, {
+      as: 'answers',
+      foreignKey: 'questionResultId'
+    });
+  };
 
   return QuestionResult;
 };

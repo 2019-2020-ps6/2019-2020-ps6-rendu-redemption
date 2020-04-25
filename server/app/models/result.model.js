@@ -6,12 +6,8 @@ module.exports = (sequelize, DataTypes) => {
       primaryKey: true,
       autoIncrement: true
     },
-    wrongQuestions: {
-      type: DataTypes.INTEGER,
-      allowNull: false
-    },
-    skippedQuestions: {
-      type: DataTypes.INTEGER,
+    timedOut: {
+      type: DataTypes.BOOLEAN,
       allowNull: false
     }
   },
@@ -43,7 +39,7 @@ module.exports = (sequelize, DataTypes) => {
 
     // A result has many question results.
     Result.hasMany(models.QuestionResult, {
-      as: 'questionResults',
+      as: 'questions',
       foreignKey: 'resultId'
     });
   };

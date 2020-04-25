@@ -11,17 +11,6 @@ const NotFoundError = require('../utils/errors/not-found-error');
 function findAll() {
   return models.Theme
     .findAll({
-      // Exclude the foreign keys.
-      attributes: {
-        exclude: ['imageId']
-      },
-      // Include the image.
-      include: [
-        {
-          model: models.Image,
-          as: 'image'
-        }
-      ],
       // Order the themes.
       order: [['id', 'ASC']]
     });
@@ -32,23 +21,7 @@ function findAll() {
  * @param id The id of the theme.
  */
 function find(id) {
-  return models.Theme
-    .findByPk(
-      id,
-      {
-        // Exclude the foreign keys.
-        attributes: {
-          exclude: ['imageId']
-        },
-        // Include the image.
-        include: [
-          {
-            model: models.Image,
-            as: 'image'
-          }
-        ]
-      }
-    );
+  return models.Theme.findByPk(id);
 }
 
 /**

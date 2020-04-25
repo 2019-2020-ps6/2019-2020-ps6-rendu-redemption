@@ -47,7 +47,6 @@ module.exports = (sequelize, DataTypes) => {
 
     // An answer belongs to an image.
     Answer.belongsTo(models.Image, {
-      as: 'image',
       foreignKey: {
         name: 'imageId',
         allowNull: true

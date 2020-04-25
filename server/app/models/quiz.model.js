@@ -23,7 +23,6 @@ module.exports = (sequelize, DataTypes) => {
   Quiz.associate = (models) => {
     // A quiz belongs to a theme
     Quiz.belongsTo(models.Theme, {
-      as: 'theme',
       foreignKey: {
         name: 'themeId',
         allowNull: false
@@ -34,7 +33,6 @@ module.exports = (sequelize, DataTypes) => {
 
     // A quiz belongs to an image.
     Quiz.belongsTo(models.Image, {
-      as: 'image',
       foreignKey: {
         name: 'imageId',
         allowNull: true

@@ -36,15 +36,8 @@ function findAll(questionId, quizId) {
           .getAnswers({
             // Exclude the foreign keys.
             attributes: {
-              exclude: ['questionId', 'quizId', 'imageId']
+              exclude: ['questionId', 'quizId']
             },
-            // Include the images.
-            include: [
-              {
-                model: models.Image,
-                as: 'image'
-              }
-            ],
             // Order the answers.
             order: [['id', 'ASC']]
           });
@@ -65,15 +58,8 @@ function find(id, questionId, quizId) {
     .findOne({
       // Exclude the foreign keys.
       attributes: {
-        exclude: ['questionId', 'quizId', 'imageId']
+        exclude: ['questionId', 'quizId']
       },
-      // Include the image.
-      include: [
-        {
-          model: models.Image,
-          as: 'image'
-        }
-      ],
       where: {
         id,
         questionId,
