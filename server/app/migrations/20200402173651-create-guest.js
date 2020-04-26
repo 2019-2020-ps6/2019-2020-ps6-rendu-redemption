@@ -16,7 +16,7 @@ module.exports = {
     },
     accessibility: {
       type: Sequelize.STRING,
-      allowNull: true
+      allowNull: false
     },
     createdAt: {
       type: Sequelize.DATE,

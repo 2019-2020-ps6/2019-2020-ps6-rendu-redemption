@@ -7,7 +7,7 @@ export interface Quiz {
   themeId: number;
   imageId: number;
   name: string;
-  questions: Question[];
+  questions?: Question[];
   createdAt?: Date;
   updatedAt?: Date;
 }

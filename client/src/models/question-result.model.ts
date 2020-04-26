@@ -1,5 +1,5 @@
 export interface QuestionResult {
   questionId: number;
   skipped: boolean;
-  answers: number[];
+  answers?: number[];
 }

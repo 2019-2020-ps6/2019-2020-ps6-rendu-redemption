@@ -14,6 +14,8 @@ import { MainComponent } from './main/main.component';
 // Guest components.
 import { GuestListComponent } from './admin/guests/guest-list/guest-list.component';
 import { GuestFormComponent } from './admin/guests/guest-form/guest-form.component';
+import { GuestNewComponent } from './admin/guests/guest-new/guest-new.component';
+import { GuestEditComponent } from './admin/guests/guest-edit/guest-edit.component';
 
 // // Result components.
 // import { ResultsListComponent } from './admin/results/results-list/results-list.component';
@@ -44,7 +46,8 @@ const routes: Routes = [
 
   // Guest routes.
   { path: 'admin/guests', component: GuestListComponent},
-  { path: 'admin/guests/new', component: GuestFormComponent},
+  { path: 'admin/guests/new', component: GuestNewComponent},
+  { path: 'admin/guests/:guestId', component: GuestEditComponent},
 
   // // Result routes.
   // { path: 'admin/guests/results', component: GuestSelectionComponent},

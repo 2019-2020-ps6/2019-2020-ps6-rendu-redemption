@@ -28,6 +28,8 @@ import { MainComponent} from './main/main.component';
 import { GuestListComponent } from './admin/guests/guest-list/guest-list.component';
 import { GuestFormComponent } from './admin/guests/guest-form/guest-form.component';
 import { GuestModalComponent } from './admin/guests/guest-modal/guest-modal.component';
+import { GuestEditComponent } from './admin/guests/guest-edit/guest-edit.component';
+import { GuestNewComponent } from './admin/guests/guest-new/guest-new.component';
 
 // // Result components.
 // import { ResultsListComponent } from './admin/results/results-list/results-list.component';
@@ -58,6 +60,8 @@ import { GuestModalComponent } from './admin/guests/guest-modal/guest-modal.comp
     GuestListComponent,
     GuestFormComponent,
     GuestModalComponent,
+    GuestEditComponent,
+    GuestNewComponent,
     // QuestionsComponent,
     // PlayQuizComponent,
     // QuizSelectionComponent,

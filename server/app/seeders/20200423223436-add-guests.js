@@ -5,7 +5,7 @@ module.exports = {
         id: 1,
         firstName: 'Gérard',
         lastName: 'Martin',
-        accessibility: null,
+        accessibility: 'none',
         createdAt: new Date(),
         updatedAt: new Date()
       },
@@ -13,7 +13,7 @@ module.exports = {
         id: 2,
         firstName: 'Françoise',
         lastName: 'Dupont',
-        accessibility: 'TBD',
+        accessibility: 'tbd1',
         createdAt: new Date(),
         updatedAt: new Date()
       },
@@ -21,7 +21,7 @@ module.exports = {
         id: 3,
         firstName: 'Jean-François',
         lastName: 'Deschamps',
-        accessibility: null,
+        accessibility: 'none',
         createdAt: new Date(),
         updatedAt: new Date()
       },
@@ -29,7 +29,7 @@ module.exports = {
         id: 4,
         firstName: 'Jaqueline',
         lastName: 'Dubois',
-        accessibility: null,
+        accessibility: 'none',
         createdAt: new Date(),
         updatedAt: new Date()
       },
@@ -37,7 +37,7 @@ module.exports = {
         id: 5,
         firstName: 'Juliette',
         lastName: 'Després',
-        accessibility: null,
+        accessibility: 'none',
         createdAt: new Date(),
         updatedAt: new Date()
       },
@@ -45,7 +45,7 @@ module.exports = {
         id: 6,
         firstName: 'Michel',
         lastName: 'Clément',
-        accessibility: null,
+        accessibility: 'none',
         createdAt: new Date(),
         updatedAt: new Date()
       },
@@ -53,7 +53,7 @@ module.exports = {
         id: 7,
         firstName: 'Pierre',
         lastName: 'Roche',
-        accessibility: null,
+        accessibility: 'none',
         createdAt: new Date(),
         updatedAt: new Date()
       },
@@ -61,7 +61,7 @@ module.exports = {
         id: 8,
         firstName: 'Antoine',
         lastName: 'Labelle',
-        accessibility: null,
+        accessibility: 'none',
         createdAt: new Date(),
         updatedAt: new Date()
       },
@@ -69,7 +69,7 @@ module.exports = {
         id: 9,
         firstName: 'Julie',
         lastName: 'Richard',
-        accessibility: null,
+        accessibility: 'none',
         createdAt: new Date(),
         updatedAt: new Date()
       },
@@ -77,7 +77,7 @@ module.exports = {
         id: 10,
         firstName: 'Marcel',
         lastName: 'Durand',
-        accessibility: null,
+        accessibility: 'none',
         createdAt: new Date(),
         updatedAt: new Date()
       },
@@ -85,7 +85,7 @@ module.exports = {
         id: 11,
         firstName: 'Nathalie',
         lastName: 'Petit',
-        accessibility: null,
+        accessibility: 'none',
         createdAt: new Date(),
         updatedAt: new Date()
       },
@@ -93,7 +93,7 @@ module.exports = {
         id: 12,
         firstName: 'Gilles',
         lastName: 'David',
-        accessibility: null,
+        accessibility: 'none',
         createdAt: new Date(),
         updatedAt: new Date()
       },
@@ -101,7 +101,7 @@ module.exports = {
         id: 13,
         firstName: 'François',
         lastName: 'Muller',
-        accessibility: null,
+        accessibility: 'none',
         createdAt: new Date(),
         updatedAt: new Date()
       },
@@ -109,7 +109,7 @@ module.exports = {
         id: 14,
         firstName: 'Jean',
         lastName: 'Lefevre',
-        accessibility: null,
+        accessibility: 'none',
         createdAt: new Date(),
         updatedAt: new Date()
       },
@@ -117,7 +117,7 @@ module.exports = {
         id: 15,
         firstName: 'Yvette',
         lastName: 'Lambert',
-        accessibility: null,
+        accessibility: 'none',
         createdAt: new Date(),
         updatedAt: new Date()
       },
@@ -125,7 +125,7 @@ module.exports = {
         id: 16,
         firstName: 'Chantal',
         lastName: 'Roux',
-        accessibility: null,
+        accessibility: 'none',
         createdAt: new Date(),
         updatedAt: new Date()
       },
@@ -133,7 +133,7 @@ module.exports = {
         id: 17,
         firstName: 'Catherine',
         lastName: 'Ségurane',
-        accessibility: null,
+        accessibility: 'none',
         createdAt: new Date(),
         updatedAt: new Date()
       },
@@ -141,7 +141,7 @@ module.exports = {
         id: 18,
         firstName: 'Didier',
         lastName: 'Morel',
-        accessibility: null,
+        accessibility: 'none',
         createdAt: new Date(),
         updatedAt: new Date()
       },
@@ -149,7 +149,7 @@ module.exports = {
         id: 19,
         firstName: 'Gilbert',
         lastName: 'Chevalier',
-        accessibility: null,
+        accessibility: 'none',
         createdAt: new Date(),
         updatedAt: new Date()
       },
@@ -157,7 +157,7 @@ module.exports = {
         id: 20,
         firstName: 'René',
         lastName: 'Martinez',
-        accessibility: null,
+        accessibility: 'none',
         createdAt: new Date(),
         updatedAt: new Date()
       }

@@ -1,9 +1,11 @@
-import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup } from '@angular/forms';
-
-import { GuestService } from '../../../../services/guest.service';
-import { Guest } from '../../../../models/guest.model';
+// App.
+import { Component, OnInit, EventEmitter, Input, Output } from '@angular/core';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
+
+// Models and services.
+import { Guest } from '../../../../models/guest.model';
+import { GuestService } from '../../../../services/guest.service';
 
 @Component({
   selector: 'app-guest-form',
@@ -12,6 +14,18 @@ import { Router } from '@angular/router';
 })
 export class GuestFormComponent implements OnInit {
   /**
+   * The guest to be displayed.
+   */
+  @Input()
+  public guest: Guest;
+
+  /**
+   * The event emitter to submit the guest.
+   */
+  @Output()
+  public submitGuest: EventEmitter<Guest> = new EventEmitter<Guest>();
+
+  /**
    * The form group of the guest.
    */
   public guestForm: FormGroup;
@@ -19,7 +33,7 @@ export class GuestFormComponent implements OnInit {
   /**
    * The available accessibility profiles.
    */
-  public accessibilities: string[];
+  public accessibilities: object[];
 
   constructor(
     private router: Router,
@@ -29,24 +43,33 @@ export class GuestFormComponent implements OnInit {
     // Create the form group.
     this.guestForm = this.formBuilder
       .group({
-        firstName: [''],
-        lastName: [''],
-        accessibility: ['']
+        id: [{ value: 0, disabled: true }],
+        firstName: ['', Validators.required],
+        lastName: ['', Validators.required],
+        accessibility: ['none', Validators.required]
       });
 
     // Get the accessibilities.
     this.accessibilities = this.guestService.getAccessibilities();
   }
 
-  ngOnInit() {}
+  ngOnInit() {
+    // Input the guest values.
+    if (this.guest) {
+      this.guestForm.setValue({
+        id: this.guest.id,
+        firstName: this.guest.firstName,
+        lastName: this.guest.lastName,
+        accessibility: this.guest.accessibility
+      });
+    }
+  }
 
-  createGuest() {
-    const guest = this.guestForm.getRawValue();
-    this.guestService.createGuest(
-      guest.firstName,
-      guest.lastName,
-      guest.accessibility
-    );
-    this.router.navigate(['/admin/guests/']);
+  /**
+   * Submits the guest.
+   */
+  submit() {
+    const guest: Guest = this.guestForm.getRawValue() as Guest;
+    this.submitGuest.emit(guest);
   }
 }

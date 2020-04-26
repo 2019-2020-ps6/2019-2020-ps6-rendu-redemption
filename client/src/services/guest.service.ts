@@ -56,10 +56,11 @@ export class GuestService extends DataService {
   /**
    * Returns the available accessibility profiles.
    */
-  getAccessibilities() {
+  getAccessibilities(): object[] {
     return [
-      'TBD1',
-      'TBD2'
+      { value: 'none', name: 'Aucun' },
+      { value: 'tbd1', name: 'TBD1' },
+      { value: 'tbd2', name: 'TBD2' }
     ];
   }
 

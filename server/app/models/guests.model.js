@@ -24,7 +24,7 @@ module.exports = (sequelize, DataTypes) => {
     },
     accessibility: {
       type: DataTypes.STRING,
-      allowNull: true
+      allowNull: false
     }
   },
   {

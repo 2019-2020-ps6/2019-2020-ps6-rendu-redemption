@@ -1,8 +1,8 @@
 <section class="guest-header">
   <div class="row">
     <div class="col">
-      <h1 class="title">Accueillis</h1>
-      <button type="button" class="btn btn-primary create" (click)="createGuest()">Ajouter un accueilli</button>
+      <h1 class="guest-title">Accueillis</h1>
+      <button type="button" class="btn btn-primary guest-create" (click)="createGuest()">Ajouter un accueilli</button>
     </div>
   </div>
 </section>
@@ -25,7 +25,7 @@
           <td class="col-4">{{ guest.firstName }}</td>
           <td class="col-4">{{ guest.lastName }}</td>
           <td class="col-3">
-            <button type="button" class="btn btn-success">Editer</button>
+            <button type="button" class="btn btn-success" (click)="editGuest(guest)">Modifier</button>
             <button type="button" class="btn btn-danger" (click)="deleteGuest(guest)">Supprimer</button>
           </td>
         </tr>

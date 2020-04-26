@@ -53,7 +53,6 @@ export class GuestListComponent implements OnInit {
     this.guestService
       .getGuests()
       .subscribe((guests) => {
-        console.log(guests);
         this.guests = guests;
         this.collectionSize = guests.length;
       });
@@ -78,12 +77,22 @@ export class GuestListComponent implements OnInit {
   }
 
   /**
+   * Edits a guest.
+   */
+  editGuest(guest: Guest) {
+    this.router.navigate(['/admin/guests/', guest.id]);
+  }
+
+  /**
    * Deletes a guest.
    * @param guest The guest to be deleted.
    */
   deleteGuest(guest: Guest) {
     // Confirm the deletion.
-    const modal = this.modalService.open(GuestModalComponent);
+    const modal = this.modalService.open(
+      GuestModalComponent,
+      { centered: true }
+    );
     modal.componentInstance.guest = guest;
     modal.result.then(
       (result) => this.guestService.deleteGuest(guest.id),

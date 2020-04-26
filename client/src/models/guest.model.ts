@@ -5,7 +5,7 @@ export interface Guest {
   firstName: string;
   lastName: string;
   accessibility: string;
-  quizzes: number[];
+  quizzes?: number[];
   createdAt?: Date;
   updatedAt?: Date;
 }
