@@ -9,6 +9,7 @@ import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { Image} from '../../../../models/image.model';
 import { ImageService} from '../../../../services/image.service';
 import { ImageModalComponent } from '../image-modal/image-modal.component';
+import { faPlus } from '@fortawesome/free-solid-svg-icons';
 
 @Component({
   selector: 'app-image-list',
@@ -28,6 +29,11 @@ export class ImageListComponent implements OnInit {
   public pageSize;
   public collectionSize;
 
+  /**
+   * The button icons.
+   */
+  public createIcon = faPlus;
+
   constructor(
     private router: Router,
     private route: ActivatedRoute,
@@ -35,7 +41,7 @@ export class ImageListComponent implements OnInit {
     private imageService: ImageService
   ) {
     this.page = 1;
-    this.pageSize = 6;
+    this.pageSize = 8;
     this.collectionSize = 0;
   }
 

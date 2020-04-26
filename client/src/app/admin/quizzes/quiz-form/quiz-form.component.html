@@ -10,7 +10,7 @@
       class="form-control"
       id="name"
       placeholder="Nom"
-      formControlName="name"
+      [formControlName]="'name'"
     />
   </div>
   <app-image-select [parentFormGroup]="quizForm"></app-image-select>

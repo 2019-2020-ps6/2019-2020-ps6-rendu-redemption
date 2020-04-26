@@ -1,8 +1,12 @@
 // App.
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 
+// Styles.
+import { faTrash } from '@fortawesome/free-solid-svg-icons';
+
 // Models.
 import { Image } from '../../../../models/image.model';
+import { faPen } from '@fortawesome/free-solid-svg-icons';
 
 @Component({
   selector: 'app-image',
@@ -27,6 +31,12 @@ export class ImageComponent implements OnInit {
    */
   @Output()
   deleteImage: EventEmitter<Image> = new EventEmitter<Image>();
+
+  /**
+   * The button icons.
+   */
+  public editIcon = faPen;
+  public deleteIcon = faTrash;
 
   constructor() {}
 
