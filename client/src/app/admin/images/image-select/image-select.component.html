@@ -1,0 +1,11 @@
+<div class="form-group" [formGroup]="parentFormGroup">
+  <label for="selectedImage">Sélection d'image (optionnel)</label>
+  <ng-select
+    [items]="images"
+    [loading]="imageLoading"
+    bindLabel="name"
+    placeholder="Image"
+    id="selectedImage"
+    formControlName="selectedImage">
+  </ng-select>
+</div>

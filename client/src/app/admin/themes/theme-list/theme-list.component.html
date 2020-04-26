@@ -1,0 +1,41 @@
+<section class="theme-header">
+  <div class="row">
+    <div class="col">
+      <h1 class="theme-title">Thèmes</h1>
+      <button type="button" class="btn btn-primary theme-create" (click)="createTheme()">Ajouter un thème</button>
+    </div>
+  </div>
+</section>
+
+<section class="theme-list">
+  <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3">
+    <div *ngFor="let theme of getThemes()" class="col">
+      <app-theme
+        [theme]="theme"
+        (selectTheme)="selectTheme($event)"
+        (editTheme)="editTheme($event)"
+        (deleteTheme)="deleteTheme($event)">
+      </app-theme>
+    </div>
+  </div>
+</section>
+
+<section class="theme-pagination">
+  <div class="row justify-content-between">
+    <div class="col">
+      <ngb-pagination
+        [collectionSize]="collectionSize"
+        [(page)]="page"
+        [pageSize]="pageSize">
+      </ngb-pagination>
+    </div>
+    <div class="col-3">
+      <select class="custom-select" [(ngModel)]="pageSize">
+        <option [ngValue]="6">6 thèmes par page</option>
+        <option [ngValue]="9">9 thèmes par page</option>
+        <option [ngValue]="12">12 thèmes par page</option>
+        <option [ngValue]="18">18 thèmes par page</option>
+      </select>
+    </div>
+  </div>
+</section>

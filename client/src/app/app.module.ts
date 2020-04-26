@@ -5,24 +5,16 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { HttpClientModule } from '@angular/common/http';
 import { AppRoutingModule } from './app-routing.module';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { Ng2SearchPipeModule } from 'ng2-search-filter';
-import { NgxPaginationModule } from 'ngx-pagination';
 
 // Styles.
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { NgSelectModule } from '@ng-select/ng-select';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 
 // App components.
 import { AppComponent } from './app.component';
 import { HeaderComponent } from './header/header.component';
 import { MainComponent} from './main/main.component';
-
-// // Play components.
-// import { GuestSelectionComponent } from './play/guest-selection/guest-selection.component';
-// import { ThemesSelectionComponent} from './play/themes-selection/themes-selection.component';
-// import { QuizSelectionComponent} from './play/quiz-selection/quiz-selection.component';
-// import { QuestionsComponent } from './play/questions/questions.component';
-// import { PlayQuizComponent } from './play/play-quiz/play-quiz.component';
 
 // Guest components.
 import { GuestListComponent } from './admin/guests/guest-list/guest-list.component';
@@ -43,10 +35,16 @@ import { ImageEditComponent } from './admin/images/image-edit/image-edit.compone
 import { ImageNewComponent } from './admin/images/image-new/image-new.component';
 import { ImageModalComponent } from './admin/images/image-modal/image-modal.component';
 
-//
-// // Quiz components.
-// import { ThemesListComponent } from './admin/quizzes/themes/themes-list/themes-list.component';
-// import { ThemesCreationComponent } from './admin/quizzes/themes/themes-creation/themes-creation.component';
+// Quiz components.
+import { ThemeListComponent } from './admin/themes/theme-list/theme-list.component';
+import { ThemeEditComponent } from './admin/themes/theme-edit/theme-edit.component';
+import { ThemeModalComponent } from './admin/themes/theme-modal/theme-modal.component';
+import { ThemeNewComponent } from './admin/themes/theme-new/theme-new.component';
+import { ThemeComponent } from './admin/themes/theme/theme.component';
+import { ThemeFormComponent } from './admin/themes/theme-form/theme-form.component';
+import { ImageSelectComponent } from './admin/images/image-select/image-select.component';
+
+
 // import { QuizzesListComponent } from './admin/quizzes/quiz/quizzes-list/quizzes-list.component';
 // import { QuizCreationComponent } from './admin/quizzes/quiz/quiz-creation/quiz-creation.component';
 // import { QuestionsListComponent } from './admin/quizzes/quiz/questions/questions-list/questions-list.component';
@@ -55,6 +53,12 @@ import { ImageModalComponent } from './admin/images/image-modal/image-modal.comp
 // import { ModalConfirmAnswerDeletion } from './admin/quizzes/quiz/questions/question-edit/modal-confirm-answer-deletion';
 // import { AnswerEditComponent } from './admin/quizzes/quiz/questions/answers-edit/answer-edit.component';
 
+// // Play components.
+// import { GuestSelectionComponent } from './play/guest-selection/guest-selection.component';
+// import { ThemesSelectionComponent} from './play/themes-selection/themes-selection.component';
+// import { QuizSelectionComponent} from './play/quiz-selection/quiz-selection.component';
+// import { QuestionsComponent } from './play/questions/questions.component';
+// import { PlayQuizComponent } from './play/play-quiz/play-quiz.component';
 
 @NgModule({
   declarations: [
@@ -75,14 +79,20 @@ import { ImageModalComponent } from './admin/images/image-modal/image-modal.comp
     ImageNewComponent,
     ImageModalComponent,
 
+    ThemeListComponent,
+    ThemeEditComponent,
+    ThemeModalComponent,
+    ThemeNewComponent,
+    ThemeComponent,
+    ThemeFormComponent,
+    ImageSelectComponent,
+
     // QuestionsComponent,
     // PlayQuizComponent,
     // QuizSelectionComponent,
     // ThemesSelectionComponent,
     // GuestSelectionComponent,
-    //
-    // ThemesListComponent,
-    // ThemesCreationComponent,
+
     // QuizzesListComponent,
     // QuizCreationComponent,
     // QuestionsListComponent,
@@ -98,12 +108,11 @@ import { ImageModalComponent } from './admin/images/image-modal/image-modal.comp
     HttpClientModule,
     AppRoutingModule,
     BrowserAnimationsModule,
-    Ng2SearchPipeModule,
-    NgxPaginationModule,
     FontAwesomeModule,
     NgbModule,
     ReactiveFormsModule,
-    FormsModule,
+    NgSelectModule,
+    FormsModule
   ],
   providers: [],
   bootstrap: [AppComponent]

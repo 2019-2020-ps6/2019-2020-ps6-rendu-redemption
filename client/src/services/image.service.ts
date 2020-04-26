@@ -43,6 +43,27 @@ export class ImageService extends DataService {
   }
 
   /**
+   * Returns the sorted observable list of images.
+   * The images are sorted alphabetically.
+   */
+  getSortedImages(): Observable<Image[]> {
+    return this.getImages()
+      .pipe(
+        map((images) => images.sort((firstImage, secondImage) => {
+          const firstName = firstImage.name.toUpperCase();
+          const secondName = secondImage.name.toUpperCase();
+          if (firstName < secondName) {
+            return -1;
+          }
+          if (firstName > secondName) {
+            return 1;
+          }
+          return 0;
+        }))
+      );
+  }
+
+  /**
    * Returns an observable image by id.
    * @param id The id of the image.
    */
