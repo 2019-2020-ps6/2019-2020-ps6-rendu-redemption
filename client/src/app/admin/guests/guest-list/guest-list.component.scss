@@ -1,25 +1,47 @@
-.table {
-  font-size: 1rem;
+.guest-header {
+  margin-bottom: 20px;
+
+  .title {
+    display: inline-block;
+    margin: 0 30px 0 0;
+  }
+
+  .create {
+    position: absolute;
+    top: 5px;
+  }
+}
+
+.guest-list {
   margin-bottom: 30px;
 
-  thead {
-    .table-primary {
-      th {
-        height: 60px;
-        font-weight: 700;
-        border-bottom: none;
+  .table {
+    font-size: 1rem;
+    margin-bottom: 0;
+
+    thead {
+      .table-primary {
+        th {
+          height: 60px;
+          font-weight: 700;
+          border-bottom: none;
+        }
       }
     }
-  }
-  tbody {
-    tr {
-      td, th {
-        height: 60px;
+    tbody {
+      tr {
+        td, th {
+          height: 60px;
 
-        button {
-          margin-right: 15px;
+          button {
+            margin-right: 15px;
+          }
         }
       }
     }
   }
+}
+
+.guest-pagination {
+  margin-bottom: 30px;
 }

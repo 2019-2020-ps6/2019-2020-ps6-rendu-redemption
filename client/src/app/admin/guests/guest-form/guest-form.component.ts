@@ -3,6 +3,7 @@ import { FormBuilder, FormGroup } from '@angular/forms';
 
 import { GuestService } from '../../../../services/guest.service';
 import { Guest } from '../../../../models/guest.model';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-guest-form',
@@ -21,6 +22,7 @@ export class GuestFormComponent implements OnInit {
   public accessibilities: string[];
 
   constructor(
+    private router: Router,
     private formBuilder: FormBuilder,
     private guestService: GuestService
   ) {
@@ -40,6 +42,11 @@ export class GuestFormComponent implements OnInit {
 
   createGuest() {
     const guest = this.guestForm.getRawValue();
-    console.log(guest.firstName, guest.lastName, guest.accessibility);
+    this.guestService.createGuest(
+      guest.firstName,
+      guest.lastName,
+      guest.accessibility
+    );
+    this.router.navigate(['/admin/guests/']);
   }
 }

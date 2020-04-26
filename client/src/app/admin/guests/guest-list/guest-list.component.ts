@@ -71,11 +71,10 @@ export class GuestListComponent implements OnInit {
   }
 
   /**
-   * Edits the guest.
-   * @param guest The guest to be deleted.
+   * Creates a guest.
    */
-  editGuest(guest: Guest) {
-    this.router.navigate(['/admin/guests/', guest.id]);
+  createGuest() {
+    this.router.navigate(['/admin/guests/new']);
   }
 
   /**

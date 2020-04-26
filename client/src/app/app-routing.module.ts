@@ -44,7 +44,7 @@ const routes: Routes = [
 
   // Guest routes.
   { path: 'admin/guests', component: GuestListComponent},
-  { path: 'admin/guests/:guestId', component: GuestFormComponent},
+  { path: 'admin/guests/new', component: GuestFormComponent},
 
   // // Result routes.
   // { path: 'admin/guests/results', component: GuestSelectionComponent},
