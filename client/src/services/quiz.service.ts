@@ -38,6 +38,13 @@ export class QuizService extends DataService {
   }
 
   /**
+   * Returns the observable list of quizzes.
+   */
+  getQuizzes(): Observable<Quiz[]> {
+    return this.quizzes$.asObservable();
+  }
+
+  /**
    * Finds all the quizzes.
    */
   findAllQuizzes() {

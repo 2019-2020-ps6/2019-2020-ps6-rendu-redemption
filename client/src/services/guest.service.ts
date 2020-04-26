@@ -54,6 +54,16 @@ export class GuestService extends DataService {
   }
 
   /**
+   * Returns the available accessibility profiles.
+   */
+  getAccessibilities() {
+    return [
+      'TBD1',
+      'TBD2'
+    ];
+  }
+
+  /**
    * Finds all the guests.
    */
   findAllGuests() {
