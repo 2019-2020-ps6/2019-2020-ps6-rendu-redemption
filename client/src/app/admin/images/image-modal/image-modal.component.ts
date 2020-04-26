@@ -4,6 +4,9 @@ import { Component, Input, OnInit} from '@angular/core';
 // Styles.
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 
+// Models.
+import { Image } from '../../../../models/image.model';
+
 @Component({
   selector: 'app-image-modal',
   templateUrl: './image-modal.component.html',
@@ -14,7 +17,7 @@ export class ImageModalComponent implements OnInit {
    * The image to be deleted.
    */
   @Input()
-  public image;
+  public image: Image;
 
   constructor(public modal: NgbActiveModal) {}
 
