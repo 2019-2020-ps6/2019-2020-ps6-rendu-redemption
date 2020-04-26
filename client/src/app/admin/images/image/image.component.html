@@ -1,0 +1,8 @@
+<div class="card image-card">
+  <img src="{{ image.path }}" class="card-img-top" alt="{{ image.name }}">
+  <div class="card-body">
+    <h5 class="card-title">{{ image.name }}</h5>
+    <button type="button" class="btn btn-success image-button" (click)="edit()">Modifier</button>
+    <button type="button" class="btn btn-danger image-button" (click)="delete()">Supprimer</button>
+  </div>
+</div>

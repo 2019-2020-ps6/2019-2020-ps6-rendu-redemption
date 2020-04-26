@@ -6,10 +6,14 @@
   </div>
 </section>
 
-<section *ngIf="guest" class="guest-edit">
+<section class="guest-edit">
   <div class="row">
     <div class="col">
-      <app-guest-form [guest]="guest" (submitGuest)="editGuest($event)"></app-guest-form>
+      <app-guest-form
+        *ngIf="guest"
+        [guest]="guest"
+        (submitGuest)="editGuest($event)">
+      </app-guest-form>
     </div>
   </div>
 </section>

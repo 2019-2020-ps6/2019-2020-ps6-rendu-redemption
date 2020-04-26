@@ -1,0 +1,21 @@
+.image-header {
+  margin-bottom: 20px;
+
+  .image-title {
+    display: inline-block;
+    margin: 0 30px 0 0;
+  }
+
+  .image-create {
+    position: absolute;
+    top: 5px;
+  }
+}
+
+.image-list {
+  margin-bottom: 0;
+}
+
+.image-pagination {
+  margin-bottom: 30px;
+}

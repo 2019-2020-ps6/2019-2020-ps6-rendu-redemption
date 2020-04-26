@@ -34,11 +34,15 @@ import { GuestNewComponent } from './admin/guests/guest-new/guest-new.component'
 // // Result components.
 // import { ResultsListComponent } from './admin/results/results-list/results-list.component';
 // import { QuestionResultsListComponent } from './admin/results/question-results-list/question-results-list.component';
-//
-// // Image components.
-// import { ImageListComponent } from './admin/images/image-list/image-list.component';
-// import { ImageEditComponent } from './admin/images/image-edit/image-edit.component';
-// import { ImageAddComponent } from './admin/images/image-add/image-add.component';
+
+// Image components.
+import { ImageListComponent } from './admin/images/image-list/image-list.component';
+import { ImageComponent } from './admin/images/image/image.component';
+import { ImageFormComponent } from './admin/images/image-form/image-form.component';
+import { ImageEditComponent } from './admin/images/image-edit/image-edit.component';
+import { ImageNewComponent } from './admin/images/image-new/image-new.component';
+import { ImageModalComponent } from './admin/images/image-modal/image-modal.component';
+
 //
 // // Quiz components.
 // import { ThemesListComponent } from './admin/quizzes/themes/themes-list/themes-list.component';
@@ -57,11 +61,20 @@ import { GuestNewComponent } from './admin/guests/guest-new/guest-new.component'
     AppComponent,
     HeaderComponent,
     MainComponent,
+
     GuestListComponent,
     GuestFormComponent,
     GuestModalComponent,
     GuestEditComponent,
     GuestNewComponent,
+
+    ImageListComponent,
+    ImageComponent,
+    ImageFormComponent,
+    ImageEditComponent,
+    ImageNewComponent,
+    ImageModalComponent,
+
     // QuestionsComponent,
     // PlayQuizComponent,
     // QuizSelectionComponent,
@@ -77,9 +90,6 @@ import { GuestNewComponent } from './admin/guests/guest-new/guest-new.component'
     // QuestionEditComponent,
     // ModalConfirmAnswerDeletion,
     // AnswerEditComponent,
-    // ImageListComponent,
-    // ImageEditComponent,
-    // ImageAddComponent,
     // ResultsListComponent,
     // QuestionResultsListComponent,
   ],

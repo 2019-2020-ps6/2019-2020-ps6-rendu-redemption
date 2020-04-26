@@ -20,12 +20,12 @@ import { GuestEditComponent } from './admin/guests/guest-edit/guest-edit.compone
 // // Result components.
 // import { ResultsListComponent } from './admin/results/results-list/results-list.component';
 // import { QuestionResultsListComponent } from './admin/results/question-results-list/question-results-list.component';
-//
-// // Image components.
-// import { ImageListComponent } from './admin/images/image-list/image-list.component';
-// import { ImageEditComponent } from './admin/images/image-edit/image-edit.component';
-// import { ImageAddComponent } from './admin/images/image-add/image-add.component';
-//
+
+// Image components.
+import { ImageListComponent } from './admin/images/image-list/image-list.component';
+import { ImageEditComponent } from './admin/images/image-edit/image-edit.component';
+import { ImageNewComponent } from './admin/images/image-new/image-new.component';
+
 // // Quiz components.
 // import { ThemesListComponent } from './admin/quizzes/themes/themes-list/themes-list.component';
 // import { ThemesCreationComponent } from './admin/quizzes/themes/themes-creation/themes-creation.component';
@@ -53,12 +53,12 @@ const routes: Routes = [
   // { path: 'admin/guests/results', component: GuestSelectionComponent},
   // { path: 'admin/guests/:guestId/results', component: ResultsListComponent},
   // { path: 'admin/guests/:guestId/results/:resultId', component: QuestionResultsListComponent},
-  //
-  // // Image routes.
-  // { path: 'admin/images', component: ImageListComponent},
-  // { path: 'admin/images/new', component: ImageAddComponent},
-  // { path: 'admin/images/:imageId', component: ImageEditComponent},
-  //
+
+  // Image routes.
+  { path: 'admin/images', component: ImageListComponent},
+  { path: 'admin/images/new', component: ImageNewComponent},
+  { path: 'admin/images/:imageId', component: ImageEditComponent},
+
   // // Quiz routes.
   // { path: 'admin/themes', component: ThemesListComponent},
   // { path: 'admin/themes/new', component: ThemesCreationComponent},

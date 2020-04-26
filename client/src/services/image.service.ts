@@ -93,7 +93,7 @@ export class ImageService extends DataService {
    */
   updateImage(id: number, name: string, path: string) {
     this.http
-      .post<Image>(
+      .put<Image>(
         `${this.serverURL}/images/${id}`,
         {
           name,

@@ -10,6 +10,9 @@ import { GuestService } from '../../../../services/guest.service';
   styleUrls: ['./guest-edit.component.scss']
 })
 export class GuestEditComponent implements OnInit {
+  /**
+   * The guest to be edited.
+   */
   public guest: Guest;
 
   constructor(
@@ -21,14 +24,16 @@ export class GuestEditComponent implements OnInit {
   ngOnInit(): void {
     this.route.paramMap
       .subscribe((paramMap) => {
+        // Get the guest id from the route.
         const guestId = parseInt(paramMap.get('guestId'), 10);
+
+        // Get the guest.
         this.guestService
           .getGuest(guestId)
           .subscribe((guest) => {
             this.guest = guest;
           });
       });
-
   }
 
   /**
