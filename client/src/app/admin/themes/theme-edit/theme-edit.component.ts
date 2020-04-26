@@ -25,6 +25,7 @@ export class ThemeEditComponent implements OnInit {
       .subscribe((paramMap) => {
         // Get the theme id from the route.
         const themeId = parseInt(paramMap.get('themeId'), 10);
+
         // Get the theme.
         this.themeService
           .getTheme(themeId)

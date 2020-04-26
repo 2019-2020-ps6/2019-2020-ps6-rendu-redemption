@@ -11,6 +11,8 @@ import { Quiz } from '../models/quiz.model';
 import { Question } from '../models/question.model';
 import { Answer } from '../models/answer.model';
 import { DataService } from './data.service';
+import { Guest } from '../models/guest.model';
+import { map } from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root'
@@ -42,6 +44,27 @@ export class QuizService extends DataService {
    */
   getQuizzes(): Observable<Quiz[]> {
     return this.quizzes$.asObservable();
+  }
+
+  /**
+   * Returns the observable list of quizzes.
+   */
+  getQuizzesByTheme(themeId: number): Observable<Quiz[]> {
+    return this.getQuizzes()
+      .pipe(
+        map((quizzes) => quizzes.filter((quiz) => quiz.themeId === themeId))
+      );
+  }
+
+  /**
+   * Returns an observable quiz by id.
+   * @param id The id of the quiz.
+   */
+  getQuiz(id: number): Observable<Quiz> {
+    return this.getQuizzes()
+      .pipe(
+        map((quizzes) => quizzes.find((quiz) => quiz.id === id))
+      );
   }
 
   /**

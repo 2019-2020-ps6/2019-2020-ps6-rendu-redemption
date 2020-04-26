@@ -44,9 +44,13 @@ import { ThemeComponent } from './admin/themes/theme/theme.component';
 import { ThemeFormComponent } from './admin/themes/theme-form/theme-form.component';
 import { ImageSelectComponent } from './admin/images/image-select/image-select.component';
 
+import { QuizListComponent } from './admin/quizzes/quiz-list/quiz-list.component';
+import { QuizEditComponent } from './admin/quizzes/quiz-edit/quiz-edit.component';
+import { QuizModalComponent } from './admin/quizzes/quiz-modal/quiz-modal.component';
+import { QuizFormComponent } from './admin/quizzes/quiz-form/quiz-form.component';
+import { QuizNewComponent } from './admin/quizzes/quiz-new/quiz-new.component';
+import { QuizComponent } from './admin/quizzes/quiz/quiz.component';
 
-// import { QuizzesListComponent } from './admin/quizzes/quiz/quizzes-list/quizzes-list.component';
-// import { QuizCreationComponent } from './admin/quizzes/quiz/quiz-creation/quiz-creation.component';
 // import { QuestionsListComponent } from './admin/quizzes/quiz/questions/questions-list/questions-list.component';
 // import { ModalConfirmQuestionDeletion } from './admin/quizzes/quiz/questions/questions-list/modal-confirm-question-deletion';
 // import { QuestionEditComponent } from './admin/quizzes/quiz/questions/question-edit/question-edit.component';
@@ -78,14 +82,21 @@ import { ImageSelectComponent } from './admin/images/image-select/image-select.c
     ImageEditComponent,
     ImageNewComponent,
     ImageModalComponent,
+    ImageSelectComponent,
 
     ThemeListComponent,
+    ThemeComponent,
+    ThemeFormComponent,
     ThemeEditComponent,
     ThemeModalComponent,
     ThemeNewComponent,
-    ThemeComponent,
-    ThemeFormComponent,
-    ImageSelectComponent,
+
+    QuizListComponent,
+    QuizComponent,
+    QuizModalComponent,
+    QuizFormComponent,
+    QuizNewComponent,
+    QuizEditComponent,
 
     // QuestionsComponent,
     // PlayQuizComponent,
@@ -93,8 +104,7 @@ import { ImageSelectComponent } from './admin/images/image-select/image-select.c
     // ThemesSelectionComponent,
     // GuestSelectionComponent,
 
-    // QuizzesListComponent,
-    // QuizCreationComponent,
+
     // QuestionsListComponent,
     // ModalConfirmQuestionDeletion,
     // QuestionEditComponent,

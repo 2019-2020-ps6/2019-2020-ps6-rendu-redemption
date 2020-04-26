@@ -78,7 +78,7 @@ export class ThemeListComponent implements OnInit {
    * @param theme The selected theme.
    */
   selectTheme(theme: Theme) {
-    this.router.navigate(['/admin/themes/', theme.id, '/quizzes']);
+    this.router.navigate(['/admin/themes/', theme.id, 'quizzes']);
   }
 
   /**

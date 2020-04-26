@@ -24,9 +24,10 @@ import { ImageNewComponent } from './admin/images/image-new/image-new.component'
 import { ThemeListComponent } from './admin/themes/theme-list/theme-list.component';
 import { ThemeEditComponent } from './admin/themes/theme-edit/theme-edit.component';
 import { ThemeNewComponent } from './admin/themes/theme-new/theme-new.component';
+import { QuizListComponent } from './admin/quizzes/quiz-list/quiz-list.component';
+import { QuizEditComponent } from './admin/quizzes/quiz-edit/quiz-edit.component';
+import { QuizNewComponent } from './admin/quizzes/quiz-new/quiz-new.component';
 
-// import { QuizzesListComponent } from './admin/quizzes/quiz/quizzes-list/quizzes-list.component';
-// import { QuizCreationComponent } from './admin/quizzes/quiz/quiz-creation/quiz-creation.component';
 // import { QuestionsListComponent } from './admin/quizzes/quiz/questions/questions-list/questions-list.component';
 // import { QuestionEditComponent } from './admin/quizzes/quiz/questions/question-edit/question-edit.component';
 // import { AnswerEditComponent } from './admin/quizzes/quiz/questions/answers-edit/answer-edit.component';
@@ -61,13 +62,16 @@ const routes: Routes = [
   { path: 'admin/images/new', component: ImageNewComponent},
   { path: 'admin/images/:imageId', component: ImageEditComponent},
 
-  // // Quiz routes.
+  // Theme routes.
   { path: 'admin/themes', component: ThemeListComponent},
   { path: 'admin/themes/new', component: ThemeNewComponent},
   { path: 'admin/themes/:themeId', component: ThemeEditComponent},
 
-  // { path: 'admin/themes/:themeId/quizzes', component: QuizzesListComponent},
-  // { path: 'admin/themes/:themeId/quizzes/new', component: QuizCreationComponent},
+  // Quiz routes.
+  { path: 'admin/themes/:themeId/quizzes', component: QuizListComponent},
+  { path: 'admin/themes/:themeId/quizzes/new', component: QuizNewComponent},
+  { path: 'admin/themes/:themeId/quizzes/:quizId', component: QuizEditComponent},
+
   // { path: 'admin/quizzes/:quizId/questions', component: QuestionsListComponent},
   // { path: 'admin/quizzes/:quizId/questions/:questionId', component: QuestionEditComponent},
   // { path: 'admin/quizzes/:quizId/questions/:questionId/answers/:answerId', component: AnswerEditComponent}
