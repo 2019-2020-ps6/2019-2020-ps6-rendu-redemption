@@ -1,0 +1,43 @@
+<div class="row">
+  <div class="col">
+    <table class="table">
+      <thead>
+      <tr class="table-primary d-flex">
+        <th class="col-1">#</th>
+        <th class="col-4">Prénom</th>
+        <th class="col-4">Nom</th>
+        <th class="col-3">Actions</th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr *ngFor="let guest of getGuests()" class="table-secondary d-flex">
+        <th class="col-1">{{ guest.id }}</th>
+        <td class="col-4">{{ guest.firstName }}</td>
+        <td class="col-4">{{ guest.lastName }}</td>
+        <td class="col-3">
+          <button type="button" class="btn btn-success" (click)="editGuest(guest)">Editer</button>
+          <button type="button" class="btn btn-danger" (click)="deleteGuest(guest)">Supprimer</button>
+        </td>
+      </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<div class="row justify-content-between">
+  <div class="col">
+      <ngb-pagination
+        [collectionSize]="collectionSize"
+        [(page)]="page"
+        [pageSize]="pageSize">
+      </ngb-pagination>
+  </div>
+  <div class="col-3">
+      <select class="custom-select" [(ngModel)]="pageSize">
+        <option [ngValue]="5">5 accueillis par page</option>
+        <option [ngValue]="10">10 accueillis par page</option>
+        <option [ngValue]="15">15 accueillis par page</option>
+        <option [ngValue]="20">20 accueillis par page</option>
+      </select>
+  </div>
+</div>

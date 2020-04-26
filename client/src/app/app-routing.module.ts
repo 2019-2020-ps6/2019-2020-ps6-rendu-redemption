@@ -1,47 +1,69 @@
-import {NgModule} from '@angular/core';
-import {Routes, RouterModule} from '@angular/router';
-import {QuizSelectionComponent} from './play/quiz-selection/quiz-selection.component';
-import {PlayQuizComponent} from './play/play-quiz/play-quiz.component';
-import {ThemesSelectionComponent} from './play/themes-selection/themes-selection.component';
-import {MainComponent} from './main/main.component';
-import {GuestSelectionComponent} from './play/guest-selection/guest-selection.component';
-import {GuestListComponent} from './management/guests/guest-list/guest-list.component';
-import {GuestEditComponent} from './management/guests/guest-edit/guest-edit.component';
-import {ThemesListComponent} from './management/quizzes/themes/themes-list/themes-list.component';
-import {ThemesCreationComponent} from './management/quizzes/themes/themes-creation/themes-creation.component';
-import {QuizzesListComponent} from './management/quizzes/quiz/quizzes-list/quizzes-list.component';
-import {QuizCreationComponent} from './management/quizzes/quiz/quiz-creation/quiz-creation.component';
-import {QuestionsListComponent} from './management/quizzes/quiz/questions/questions-list/questions-list.component';
-import {QuestionEditComponent} from './management/quizzes/quiz/questions/question-edit/question-edit.component';
-import {AnswerEditComponent} from './management/quizzes/quiz/questions/answers-edit/answer-edit.component';
-import {ImageListComponent} from './management/images/image-list/image-list.component';
-import {ImageEditComponent} from './management/images/image-edit/image-edit.component';
-import {ImageAddComponent} from './management/images/image-add/image-add.component';
-import {ResultsListComponent} from './see-results/results-list/results-list.component';
-import {QuestionResultsListComponent} from './see-results/question-results-list/question-results-list.component';
+// App.
+import { NgModule } from '@angular/core';
+import { Routes, RouterModule } from '@angular/router';
+
+// Main component.
+import { MainComponent } from './main/main.component';
+
+// // Play components.
+// import { GuestSelectionComponent } from './play/guest-selection/guest-selection.component';
+// import { ThemesSelectionComponent } from './play/themes-selection/themes-selection.component';
+// import { QuizSelectionComponent } from './play/quiz-selection/quiz-selection.component';
+// import { PlayQuizComponent } from './play/play-quiz/play-quiz.component';
+
+// Guest components.
+import { GuestListComponent } from './admin/guests/guest-list/guest-list.component';
+import { GuestFormComponent } from './admin/guests/guest-form/guest-form.component';
+
+// // Result components.
+// import { ResultsListComponent } from './admin/results/results-list/results-list.component';
+// import { QuestionResultsListComponent } from './admin/results/question-results-list/question-results-list.component';
+//
+// // Image components.
+// import { ImageListComponent } from './admin/images/image-list/image-list.component';
+// import { ImageEditComponent } from './admin/images/image-edit/image-edit.component';
+// import { ImageAddComponent } from './admin/images/image-add/image-add.component';
+//
+// // Quiz components.
+// import { ThemesListComponent } from './admin/quizzes/themes/themes-list/themes-list.component';
+// import { ThemesCreationComponent } from './admin/quizzes/themes/themes-creation/themes-creation.component';
+// import { QuizzesListComponent } from './admin/quizzes/quiz/quizzes-list/quizzes-list.component';
+// import { QuizCreationComponent } from './admin/quizzes/quiz/quiz-creation/quiz-creation.component';
+// import { QuestionsListComponent } from './admin/quizzes/quiz/questions/questions-list/questions-list.component';
+// import { QuestionEditComponent } from './admin/quizzes/quiz/questions/question-edit/question-edit.component';
+// import { AnswerEditComponent } from './admin/quizzes/quiz/questions/answers-edit/answer-edit.component';
 
 const routes: Routes = [
-  {path: '', component: MainComponent},
-  {path: 'guest-selection', component: GuestSelectionComponent},
-  {path: 'themes-selection', component: ThemesSelectionComponent},
-  {path: 'quiz-selection', component: QuizSelectionComponent},
-  {path: 'play-quiz', component: PlayQuizComponent},
-  {path: 'manage-guests/guests-list', component: GuestListComponent},
-  {path: 'manage-guests/modify-guest', component: GuestEditComponent},
-  {path: 'manage-quizzes/themes-list', component: ThemesListComponent},
-  {path: 'manage-quizzes/create-theme', component: ThemesCreationComponent},
-  {path: 'manage-quizzes/quiz-list', component: QuizzesListComponent},
-  {path: 'manage-quizzes/create-quiz', component: QuizCreationComponent},
-  {path: 'manage-quizzes/questions-list', component: QuestionsListComponent},
-  {path: 'manage-quizzes/question-edit', component: QuestionEditComponent},
-  {path: 'manage-quizzes/answer-edit', component: AnswerEditComponent},
-  {path: 'manage-quizzes/questions-list', component: QuestionsListComponent},
-  {path: 'manage-images/images-list', component: ImageListComponent},
-  {path: 'manage-images/modify-image', component: ImageEditComponent},
-  {path: 'manage-images/add-image', component: ImageAddComponent},
-  {path: 'see-results/guest-selection', component: GuestSelectionComponent},
-  {path: 'see-results/results-list', component: ResultsListComponent},
-  {path: 'see-results/questions-results-list', component:QuestionResultsListComponent}
+  { path: '', component: MainComponent},
+
+  // // Play routes.
+  // { path: 'guests', component: GuestSelectionComponent},
+  // { path: 'themes', component: ThemesSelectionComponent},
+  // { path: 'quizzes', component: QuizSelectionComponent},
+  // { path: 'play', component: PlayQuizComponent},
+
+  // Guest routes.
+  { path: 'admin/guests', component: GuestListComponent},
+  { path: 'admin/guests/:guestId', component: GuestFormComponent},
+
+  // // Result routes.
+  // { path: 'admin/guests/results', component: GuestSelectionComponent},
+  // { path: 'admin/guests/:guestId/results', component: ResultsListComponent},
+  // { path: 'admin/guests/:guestId/results/:resultId', component: QuestionResultsListComponent},
+  //
+  // // Image routes.
+  // { path: 'admin/images', component: ImageListComponent},
+  // { path: 'admin/images/new', component: ImageAddComponent},
+  // { path: 'admin/images/:imageId', component: ImageEditComponent},
+  //
+  // // Quiz routes.
+  // { path: 'admin/themes', component: ThemesListComponent},
+  // { path: 'admin/themes/new', component: ThemesCreationComponent},
+  // { path: 'admin/themes/:themeId/quizzes', component: QuizzesListComponent},
+  // { path: 'admin/themes/:themeId/quizzes/new', component: QuizCreationComponent},
+  // { path: 'admin/quizzes/:quizId/questions', component: QuestionsListComponent},
+  // { path: 'admin/quizzes/:quizId/questions/:questionId', component: QuestionEditComponent},
+  // { path: 'admin/quizzes/:quizId/questions/:questionId/answers/:answerId', component: AnswerEditComponent}
 ];
 
 @NgModule({
@@ -49,5 +71,4 @@ const routes: Routes = [
   exports: [RouterModule]
 })
 
-export class AppRoutingModule {
-}
+export class AppRoutingModule {}

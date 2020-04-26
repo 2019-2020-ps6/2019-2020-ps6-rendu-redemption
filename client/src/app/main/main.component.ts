@@ -15,11 +15,7 @@ export class MainComponent implements OnInit {
   iconGuests  = faUserFriends;
   iconResults = faChartLine;
 
-  ngOnInit(): void {
-    console.log('session deletion of selected guest');
+  ngOnInit() {
     sessionStorage.removeItem('selectedGuest');
   }
-
-
-
 }

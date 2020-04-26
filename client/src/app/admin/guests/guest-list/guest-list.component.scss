@@ -1,0 +1,25 @@
+.table {
+  font-size: 1rem;
+  margin-bottom: 30px;
+
+  thead {
+    .table-primary {
+      th {
+        height: 60px;
+        font-weight: 700;
+        border-bottom: none;
+      }
+    }
+  }
+  tbody {
+    tr {
+      td, th {
+        height: 60px;
+
+        button {
+          margin-right: 15px;
+        }
+      }
+    }
+  }
+}

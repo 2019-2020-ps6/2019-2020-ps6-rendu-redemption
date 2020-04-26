@@ -1,66 +1,83 @@
-import { BrowserModule } from '@angular/platform-browser';
+// App.
 import { NgModule } from '@angular/core';
+import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { HttpClientModule } from '@angular/common/http';
 import { AppRoutingModule } from './app-routing.module';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { Ng2SearchPipeModule } from 'ng2-search-filter';
+import { NgxPaginationModule } from 'ngx-pagination';
+
+// Styles.
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
+
+// App components.
 import { AppComponent } from './app.component';
 import { HeaderComponent } from './header/header.component';
-import { QuestionsComponent } from './play/questions/questions.component';
-import { PlayQuizComponent } from './play/play-quiz/play-quiz.component';
-import {QuizSelectionComponent} from './play/quiz-selection/quiz-selection.component';
-import {ThemesSelectionComponent} from './play/themes-selection/themes-selection.component';
-import {MainComponent} from './main/main.component';
-import {GuestSelectionComponent} from './play/guest-selection/guest-selection.component';
-import {Ng2SearchPipeModule} from 'ng2-search-filter';
-import {NgxPaginationModule} from 'ngx-pagination';
-import {GuestListComponent} from './management/guests/guest-list/guest-list.component';
-import {FontAwesomeModule} from '@fortawesome/angular-fontawesome';
-import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
-import {ModalConfirmDeletion} from './management/guests/guest-list/modal-confirm-deletion';
-import {GuestEditComponent} from './management/guests/guest-edit/guest-edit.component';
-import {FormsModule, ReactiveFormsModule} from '@angular/forms';
-import {ThemesListComponent} from './management/quizzes/themes/themes-list/themes-list.component';
-import {ThemesCreationComponent} from './management/quizzes/themes/themes-creation/themes-creation.component';
-import {QuizzesListComponent} from './management/quizzes/quiz/quizzes-list/quizzes-list.component';
-import {QuizCreationComponent} from './management/quizzes/quiz/quiz-creation/quiz-creation.component';
-import {QuestionsListComponent} from './management/quizzes/quiz/questions/questions-list/questions-list.component';
-import {ModalConfirmQuestionDeletion} from './management/quizzes/quiz/questions/questions-list/modal-confirm-question-deletion';
-import {QuestionEditComponent} from './management/quizzes/quiz/questions/question-edit/question-edit.component';
-import {ModalConfirmAnswerDeletion} from './management/quizzes/quiz/questions/question-edit/modal-confirm-answer-deletion';
-import {AnswerEditComponent} from './management/quizzes/quiz/questions/answers-edit/answer-edit.component';
-import {ImageListComponent} from './management/images/image-list/image-list.component';
-import {ImageEditComponent} from './management/images/image-edit/image-edit.component';
-import {ImageAddComponent} from './management/images/image-add/image-add.component';
-import {ResultsListComponent} from './see-results/results-list/results-list.component';
-import {QuestionResultsListComponent} from './see-results/question-results-list/question-results-list.component';
+import { MainComponent} from './main/main.component';
+
+// // Play components.
+// import { GuestSelectionComponent } from './play/guest-selection/guest-selection.component';
+// import { ThemesSelectionComponent} from './play/themes-selection/themes-selection.component';
+// import { QuizSelectionComponent} from './play/quiz-selection/quiz-selection.component';
+// import { QuestionsComponent } from './play/questions/questions.component';
+// import { PlayQuizComponent } from './play/play-quiz/play-quiz.component';
+
+// Guest components.
+import { GuestListComponent } from './admin/guests/guest-list/guest-list.component';
+import { GuestFormComponent } from './admin/guests/guest-form/guest-form.component';
+import { GuestModalComponent } from './admin/guests/guest-modal/guest-modal.component';
+
+// // Result components.
+// import { ResultsListComponent } from './admin/results/results-list/results-list.component';
+// import { QuestionResultsListComponent } from './admin/results/question-results-list/question-results-list.component';
+//
+// // Image components.
+// import { ImageListComponent } from './admin/images/image-list/image-list.component';
+// import { ImageEditComponent } from './admin/images/image-edit/image-edit.component';
+// import { ImageAddComponent } from './admin/images/image-add/image-add.component';
+//
+// // Quiz components.
+// import { ThemesListComponent } from './admin/quizzes/themes/themes-list/themes-list.component';
+// import { ThemesCreationComponent } from './admin/quizzes/themes/themes-creation/themes-creation.component';
+// import { QuizzesListComponent } from './admin/quizzes/quiz/quizzes-list/quizzes-list.component';
+// import { QuizCreationComponent } from './admin/quizzes/quiz/quiz-creation/quiz-creation.component';
+// import { QuestionsListComponent } from './admin/quizzes/quiz/questions/questions-list/questions-list.component';
+// import { ModalConfirmQuestionDeletion } from './admin/quizzes/quiz/questions/questions-list/modal-confirm-question-deletion';
+// import { QuestionEditComponent } from './admin/quizzes/quiz/questions/question-edit/question-edit.component';
+// import { ModalConfirmAnswerDeletion } from './admin/quizzes/quiz/questions/question-edit/modal-confirm-answer-deletion';
+// import { AnswerEditComponent } from './admin/quizzes/quiz/questions/answers-edit/answer-edit.component';
+
 
 @NgModule({
   declarations: [
     AppComponent,
     HeaderComponent,
-    QuestionsComponent,
-    PlayQuizComponent,
-    QuizSelectionComponent,
-    ThemesSelectionComponent,
     MainComponent,
-    GuestSelectionComponent,
     GuestListComponent,
-    ModalConfirmDeletion,
-    GuestEditComponent,
-    ThemesListComponent,
-    ThemesCreationComponent,
-    QuizzesListComponent,
-    QuizCreationComponent,
-    QuestionsListComponent,
-    ModalConfirmQuestionDeletion,
-    QuestionEditComponent,
-    ModalConfirmAnswerDeletion,
-    AnswerEditComponent,
-    ImageListComponent,
-    ImageEditComponent,
-    ImageAddComponent,
-    ResultsListComponent,
-    QuestionResultsListComponent
+    GuestFormComponent,
+    GuestModalComponent,
+    // QuestionsComponent,
+    // PlayQuizComponent,
+    // QuizSelectionComponent,
+    // ThemesSelectionComponent,
+    // GuestSelectionComponent,
+    //
+    // ThemesListComponent,
+    // ThemesCreationComponent,
+    // QuizzesListComponent,
+    // QuizCreationComponent,
+    // QuestionsListComponent,
+    // ModalConfirmQuestionDeletion,
+    // QuestionEditComponent,
+    // ModalConfirmAnswerDeletion,
+    // AnswerEditComponent,
+    // ImageListComponent,
+    // ImageEditComponent,
+    // ImageAddComponent,
+    // ResultsListComponent,
+    // QuestionResultsListComponent,
   ],
   imports: [
     BrowserModule,
