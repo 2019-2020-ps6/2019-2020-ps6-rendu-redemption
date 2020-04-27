@@ -6,6 +6,6 @@ export interface Result {
   quizId: number;
   timedOut: boolean;
   questionResults?: QuestionResult[];
-  createdAt?: Date;
-  updatedAt?: Date;
+  createdAt?: string;
+  updatedAt?: string;
 }

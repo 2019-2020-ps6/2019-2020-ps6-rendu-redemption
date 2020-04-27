@@ -26,7 +26,7 @@
     margin: 30px 0;
   }
 
-  .ng-valid  {
+  .ng-valid.ng-touched {
     @extend .is-valid;
   }
 

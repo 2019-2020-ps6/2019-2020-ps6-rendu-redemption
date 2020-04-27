@@ -6,6 +6,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { Quiz } from '../../../../../models/quiz.model';
 import { QuizService } from '../../../../../services/quiz.service';
 import { Question } from '../../../../../models/question.model';
+import { Answer } from '../../../../../models/answer.model';
 
 @Component({
   selector: 'app-question-edit',
@@ -55,12 +56,45 @@ export class QuestionEditComponent implements OnInit {
    */
   editQuestion(question: Question) {
     // Update the question.
-    this.quizService.updateQuestion(
-      this.quizId,
-      question.id,
-      question.label,
-      question.imageId
-    );
+    this.quizService
+      .updateQuestion(
+        this.quizId,
+        question.id,
+        question.label,
+        question.imageId
+      )
+      .subscribe((updatedQuestion: Question) => {
+        // For each answer.
+        question.answers.forEach((answer: Answer, index: number) => {
+          // Answer does not exist.
+          if (answer.id === 0 && answer.value) {
+            // Create the answer.
+            this.quizService
+              .createAnswer(
+                this.quizId,
+                question.id,
+                answer.value,
+                answer.isCorrect,
+                answer.imageId
+              );
+          }
+
+          // Answer exists.
+          if (answer.id !== 0 && answer.value) {
+            // Update the answer.
+            this.quizService
+              .updateAnswer(
+                this.quizId,
+                question.id,
+                answer.id,
+                answer.value,
+                answer.isCorrect,
+                answer.imageId
+              );
+          }
+        });
+      });
+
 
     // Redirect to the quizzes.
     this.router.navigate(['/admin/quizzes', this.quizId, 'questions']);

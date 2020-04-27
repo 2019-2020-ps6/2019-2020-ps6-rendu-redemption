@@ -144,8 +144,8 @@ export class QuizService extends DataService {
    * @param label The label of the question.
    * @param imageId The imageId of the question.
    */
-  createQuestion(quizId: number, label: string, imageId: number) {
-    this.http
+  createQuestion(quizId: number, label: string, imageId: number): Observable<Question> {
+    return this.http
       .post<Question>(
         `${this.serverURL}/quizzes/${quizId}/questions`,
         {
@@ -154,9 +154,12 @@ export class QuizService extends DataService {
         },
         this.serverOptions
       )
-      .subscribe(() => {
-        this.findAllQuizzes();
-      });
+      .pipe(
+        map((question: Question) => {
+          this.findAllQuizzes();
+          return question;
+        })
+      );
   }
 
   /**
@@ -166,8 +169,8 @@ export class QuizService extends DataService {
    * @param label The label of the question.
    * @param imageId The imageId of the question.
    */
-  updateQuestion(quizId: number, questionId: number, label: string, imageId: number) {
-    this.http
+  updateQuestion(quizId: number, questionId: number, label: string, imageId: number): Observable<Question> {
+    return this.http
       .put<Question>(
         `${this.serverURL}/quizzes/${quizId}/questions/${questionId}`,
         {
@@ -176,9 +179,12 @@ export class QuizService extends DataService {
         },
         this.serverOptions
       )
-      .subscribe(() => {
-        this.findAllQuizzes();
-      });
+      .pipe(
+        map((question: Question) => {
+          this.findAllQuizzes();
+          return question;
+        })
+      );
   }
 
   /**

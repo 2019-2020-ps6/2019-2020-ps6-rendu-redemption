@@ -58,8 +58,11 @@ export class QuestionFormComponent implements OnInit {
 
     // Create the answer form groups.
     this.answerForms = [];
-    for (let i = 0; i < 4; i++) {
-      this.answerForms[i] = this.initAnswer();
+    for (let i = 0; i < 2; i++) {
+      this.answerForms.push(this.initAnswer(true)); // Two answers required.
+    }
+    for (let i = 0; i < 2; i++) {
+      this.answerForms.push(this.initAnswer(false)); // Two answers optional.
     }
 
     // Create the question form group.
@@ -69,10 +72,11 @@ export class QuestionFormComponent implements OnInit {
   /**
    * Initializes an answer form group.
    */
-  initAnswer(): FormGroup {
+  initAnswer(required: boolean): FormGroup {
+    const validators = required ? [Validators.required, Validators.min(1)] : [];
     return this.fb.group({
       id: [{ value: 0, disabled: true }],
-      value: ['', [Validators.required, Validators.min(1)]],
+      value: ['', validators],
       isCorrect: [false],
       imageId: [null],
       createdAt: [{ value: '', disabled: true }],
@@ -95,6 +99,7 @@ export class QuestionFormComponent implements OnInit {
   }
 
   ngOnInit() {
+    console.log(this.question);
     // Get the images.
     this.imageService
       .getImages()
@@ -104,6 +109,20 @@ export class QuestionFormComponent implements OnInit {
 
     // If the question is set.
     if (this.question) {
+      // Set default answers.
+      for (let i = 0; i < 4; i++) {
+        if (!this.question.answers[i]) {
+          this.question.answers[i] = {
+            id: 0,
+            value: '',
+            isCorrect: false,
+            imageId: null,
+            createdAt: '',
+            updatedAt: ''
+          };
+        }
+      }
+
       // Set the question.
       this.questionForm.setValue(this.question);
     }
@@ -122,17 +141,7 @@ export class QuestionFormComponent implements OnInit {
    * Submits the question.
    */
   submit() {
-    // Get the form value.
-    const value = this.questionForm.getRawValue();
-    console.log(value);
-    // // Construct the question.
-    // const question: Question = {
-    //   id: value.id,
-    //   label: value.label,
-    //   imageId: value.selectedImage ? value.selectedImage.id : null
-    // };
-    //
-    // // Submit the question.
-    // this.submitQuestion.emit(question);
+    const question: Question = this.questionForm.getRawValue() as Question;
+    this.submitQuestion.emit(question);
   }
 }

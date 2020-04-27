@@ -5,6 +5,6 @@ export interface Question {
   imageId: number;
   label: string;
   answers?: Answer[];
-  createdAt?: Date;
-  updatedAt?: Date;
+  createdAt?: string;
+  updatedAt?: string;
 }

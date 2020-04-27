@@ -6,6 +6,6 @@ export interface Answer {
   selectedImage?: Image;
   value: string;
   isCorrect: boolean;
-  createdAt?: Date;
-  updatedAt?: Date;
+  createdAt?: string;
+  updatedAt?: string;
 }

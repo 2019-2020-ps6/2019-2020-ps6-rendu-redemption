@@ -4,6 +4,6 @@ export interface Theme {
   id: number;
   imageId: number;
   name: string;
-  createdAt?: Date;
-  updatedAt?: Date;
+  createdAt?: string;
+  updatedAt?: string;
 }

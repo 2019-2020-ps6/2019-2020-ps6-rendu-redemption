@@ -8,6 +8,6 @@ export interface Quiz {
   imageId?: number;
   name: string;
   questions?: Question[];
-  createdAt?: Date;
-  updatedAt?: Date;
+  createdAt?: string;
+  updatedAt?: string;
 }

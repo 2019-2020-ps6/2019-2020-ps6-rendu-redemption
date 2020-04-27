@@ -6,6 +6,6 @@ export interface Guest {
   lastName: string;
   accessibility: string;
   quizzes?: number[];
-  createdAt?: Date;
-  updatedAt?: Date;
+  createdAt?: string;
+  updatedAt?: string;
 }

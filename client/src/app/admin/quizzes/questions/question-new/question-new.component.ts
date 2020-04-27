@@ -6,6 +6,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { Quiz } from '../../../../../models/quiz.model';
 import { QuizService } from '../../../../../services/quiz.service';
 import { Question } from '../../../../../models/question.model';
+import { Answer } from '../../../../../models/answer.model';
 
 @Component({
   selector: 'app-question-new',
@@ -37,12 +38,29 @@ export class QuestionNewComponent implements OnInit {
    * @param question The question to be created.
    */
   createQuestion(question: Question) {
-    // Update the question.
-    this.quizService.createQuestion(
-      this.quizId,
-      question.label,
-      question.imageId
-    );
+    // Create the question.
+    this.quizService
+      .createQuestion(
+        this.quizId,
+        question.label,
+        question.imageId
+      )
+      .subscribe((createdQuestion: Question) => {
+        // For each answer.
+        question.answers.forEach((answer: Answer, index: number) => {
+          if (answer.value) {
+            // Create the answer.
+            this.quizService
+              .createAnswer(
+                this.quizId,
+                createdQuestion.id,
+                answer.value,
+                answer.isCorrect,
+                answer.imageId
+              );
+          }
+        });
+      });
 
     // Redirect to the quizzes.
     this.router.navigate(['/admin/quizzes', this.quizId, 'questions']);
