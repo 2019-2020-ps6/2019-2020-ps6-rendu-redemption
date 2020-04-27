@@ -25,8 +25,11 @@
           height: 60px;
           font-weight: 700;
           border-bottom: none;
-          display: flex;
-          align-items:center;
+          vertical-align: middle;
+        }
+
+        .actions {
+          width: 20%;
         }
       }
     }
@@ -34,8 +37,7 @@
       tr {
         td, th {
           height: 60px;
-          display: flex;
-          align-items:center;
+          vertical-align: middle;
 
           button {
             margin-right: 15px;

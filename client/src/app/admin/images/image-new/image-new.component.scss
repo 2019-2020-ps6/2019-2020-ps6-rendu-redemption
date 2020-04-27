@@ -1,3 +1,12 @@
+@import '~bootswatch/dist/superhero/variables';
+
+
 .image-header {
   margin-bottom: 15px;
+}
+
+.image-new {
+  padding: 30px;
+  background: $secondary;
+  margin-bottom: 30px;
 }

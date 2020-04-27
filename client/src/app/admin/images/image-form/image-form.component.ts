@@ -38,8 +38,20 @@ export class ImageFormComponent implements OnInit {
     this.imageForm = this.formBuilder
       .group({
         id: [{ value: 0, disabled: true }],
-        name: ['', Validators.required],
-        path: ['', Validators.required]
+        name: [
+          '',
+          [
+            Validators.required,
+            Validators.min(1)
+          ]
+        ],
+        path: [
+          '',
+          [
+            Validators.required,
+            Validators.min(1)
+          ]
+        ]
       });
   }
 

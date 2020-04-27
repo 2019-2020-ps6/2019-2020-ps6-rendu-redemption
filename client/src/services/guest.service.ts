@@ -9,6 +9,7 @@ import { map } from 'rxjs/operators';
 // Models and services.
 import { Guest } from '../models/guest.model';
 import { DataService } from './data.service';
+import { Accessibility } from '../models/accessibility.model';
 
 @Injectable({
   providedIn: 'root'
@@ -56,12 +57,27 @@ export class GuestService extends DataService {
   /**
    * Returns the available accessibility profiles.
    */
-  getAccessibilities(): object[] {
+  getAccessibilities(): Accessibility[] {
     return [
       { value: 'none', name: 'Aucun' },
       { value: 'tbd1', name: 'TBD1' },
       { value: 'tbd2', name: 'TBD2' }
     ];
+  }
+
+  /**
+   * Returns the accessibility from the value.
+   */
+  getAccessibility(value: string): Accessibility {
+    return this.getAccessibilities()
+      .find((accessibility) => accessibility.value === value);
+  }
+
+  /**
+   * Returns the accessibility name from the value.
+   */
+  getAccessibilityName(value: string): string {
+    return this.getAccessibility(value).name;
   }
 
   /**

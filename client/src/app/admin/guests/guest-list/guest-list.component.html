@@ -12,32 +12,34 @@
     <div class="col">
       <table class="table">
         <thead>
-        <tr class="table-primary d-flex">
-          <th class="col-1">#</th>
-          <th class="col-4">Prénom</th>
-          <th class="col-4">Nom</th>
-          <th class="col-3">Actions</th>
+        <tr class="table-primary">
+          <th class="id" scope="col" >#</th>
+          <th class="firstName" scope="col">Prénom</th>
+          <th class="lastName" scope="col">Nom</th>
+          <th class="accessibility" scope="col">Accessibilité</th>
+          <th class="actions" scope="col">Actions</th>
         </tr>
         </thead>
         <tbody>
-        <tr *ngFor="let guest of getGuests()" class="table-secondary d-flex">
-          <th class="col-1">{{ guest.id }}</th>
-          <td class="col-4">{{ guest.firstName }}</td>
-          <td class="col-4">{{ guest.lastName }}</td>
-          <td class="col-3">
+        <tr *ngFor="let guest of getGuests()" class="table-secondary">
+          <th class="id" scope="row" >{{ guest.id }}</th>
+          <td class="firstName" scope="row">{{ guest.firstName }}</td>
+          <td class="lastName" scope="row">{{ guest.lastName }}</td>
+          <td class="accessibility" scope="row">{{ getAccessibility(guest) }}</td>
+          <td class="actions" scope="row">
             <button
               type="button"
               title="Modifier"
               class="btn btn-success"
               (click)="editGuest(guest)">
-              Modifier
+              <fa-icon [icon]="editIcon"></fa-icon>
             </button>
             <button
               type="button"
               title="Supprimer"
               class="btn btn-danger"
               (click)="deleteGuest(guest)">
-              Supprimer
+              <fa-icon [icon]="deleteIcon"></fa-icon>
             </button>
           </td>
         </tr>

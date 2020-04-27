@@ -44,15 +44,25 @@ export class ImageComponent implements OnInit {
 
   /**
    * Edits the image.
+   * @param event The mouse event.
    */
-  edit() {
+  edit(event: MouseEvent) {
     this.editImage.emit(this.image);
+
+    // Prevent other button to trigger.
+    event.preventDefault();
+    event.stopPropagation();
   }
 
   /**
    * Deletes the image.
+   * @param event The mouse event.
    */
-  delete() {
+  delete(event: MouseEvent) {
     this.deleteImage.emit(this.image);
+
+    // Prevent other button to trigger.
+    event.preventDefault();
+    event.stopPropagation();
   }
 }

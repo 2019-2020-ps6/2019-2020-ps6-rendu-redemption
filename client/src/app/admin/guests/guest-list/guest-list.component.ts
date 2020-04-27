@@ -16,7 +16,6 @@ import { GuestModalComponent } from '../guest-modal/guest-modal.component';
   templateUrl: './guest-list.component.html',
   styleUrls: ['./guest-list.component.scss'],
 })
-
 export class GuestListComponent implements OnInit {
   /**
    * The list of guests.
@@ -67,6 +66,14 @@ export class GuestListComponent implements OnInit {
         (this.page - 1) * this.pageSize,
         (this.page - 1) * this.pageSize + this.pageSize
       );
+  }
+
+  /**
+   * Returns the accessibility name of a guest.
+   * @param guest The guest.
+   */
+  getAccessibility(guest: Guest) {
+    return this.guestService.getAccessibilityName(guest.accessibility);
   }
 
   /**
