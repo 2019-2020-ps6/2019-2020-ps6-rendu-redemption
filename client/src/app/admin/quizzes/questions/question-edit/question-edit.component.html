@@ -1,48 +1,19 @@
-<div class="page">
-  <div class="line">
-    <label for="label">Question</label>
-    <br>
-    <input class="long" id="label" type="text" placeholder="Label" #label
-           [value]="questionToEdit ? questionToEdit.label : null">
-  </div>
-  <div class="line">
-    <label for="image">Image associée au quiz</label>
-    <br>
-    <input class="long" id="image" type="text" placeholder="Image associée au quiz" #image
-           [value]="questionToEdit ? questionToEdit.image.id : null">
-  </div>
-  <div class="line">
-    <label for="reponses">Réponses</label>
-    <div id="reponses"
-         *ngFor="let reponse of (questionToEdit ? questionToEdit.answers : []); let i = index; last as isLast">
-      <div class="ligne">
-        <div class="left">
-          {{reponse.value}}
-        </div>
-        <div class="cheat">
-          a
-        </div>
-        <div class="right">
-          <button (click)="createModifyAnswer(i)">
-            <fa-icon [icon]="penIcon">
-            </fa-icon>
-            Modifier
-          </button>
-          <button (click)="deleteAnswer(reponse)">
-            <fa-icon [icon]="trashIcon">
-            </fa-icon>
-            Supprimer
-          </button>
-        </div>
-      </div>
-      <div *ngIf="isLast && i < 3" (click)="createModifyAnswer(i)">
-        <fa-icon [icon]="plusIcon"></fa-icon>
-        Ajouter une réponse
-      </div>
+<section class="quiz-header">
+  <div class="row">
+    <div class="col">
+      <h1 class="title">Modifier un quiz</h1>
     </div>
   </div>
-  <button (click)="createModifyQuestion()">
-    Valider
-  </button>
+</section>
 
-</div>
+<section class="quiz-edit">
+  <div class="row">
+    <div class="col">
+      <app-question-form
+        *ngIf="question"
+        [question]="question"
+        (submitQuestion)="editQuestion($event)">
+      </app-question-form>
+    </div>
+  </div>
+</section>

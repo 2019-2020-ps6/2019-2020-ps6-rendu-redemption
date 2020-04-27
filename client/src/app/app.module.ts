@@ -54,11 +54,9 @@ import { QuizComponent } from './admin/quizzes/quiz/quiz.component';
 import { QuestionListComponent } from './admin/quizzes/questions/question-list/question-list.component';
 import { QuestionComponent } from './admin/quizzes/questions/question/question.component';
 import { QuestionModalComponent } from './admin/quizzes/questions/question-modal/question-modal.component';
-
-// import { ModalConfirmQuestionDeletion } from './admin/quizzes/quiz/questions/questions-list/modal-confirm-question-deletion';
-// import { QuestionEditComponent } from './admin/quizzes/quiz/questions/question-edit/question-edit.component';
-// import { ModalConfirmAnswerDeletion } from './admin/quizzes/quiz/questions/question-edit/modal-confirm-answer-deletion';
-// import { AnswerEditComponent } from './admin/quizzes/quiz/questions/answers-edit/answer-edit.component';
+import { QuestionFormComponent } from './admin/quizzes/questions/question-form/question-form.component';
+import { QuestionNewComponent } from './admin/quizzes/questions/question-new/question-new.component';
+import { QuestionEditComponent } from './admin/quizzes/questions/question-edit/question-edit.component';
 
 // // Play components.
 // import { GuestSelectionComponent } from './play/guest-selection/guest-selection.component';
@@ -72,11 +70,13 @@ import { QuestionModalComponent } from './admin/quizzes/questions/question-modal
     AppComponent,
     HeaderComponent,
     MainComponent,
+
     GuestListComponent,
     GuestFormComponent,
     GuestModalComponent,
     GuestEditComponent,
     GuestNewComponent,
+
     ImageListComponent,
     ImageComponent,
     ImageFormComponent,
@@ -84,25 +84,28 @@ import { QuestionModalComponent } from './admin/quizzes/questions/question-modal
     ImageNewComponent,
     ImageModalComponent,
     ImageSelectComponent,
+
     ThemeListComponent,
     ThemeComponent,
     ThemeFormComponent,
     ThemeEditComponent,
     ThemeModalComponent,
     ThemeNewComponent,
+
     QuizListComponent,
     QuizComponent,
     QuizModalComponent,
     QuizFormComponent,
     QuizNewComponent,
     QuizEditComponent,
+
     QuestionListComponent,
     QuestionComponent,
     QuestionModalComponent,
-    // ModalConfirmQuestionDeletion,
-    // QuestionEditComponent,
-    // ModalConfirmAnswerDeletion,
-    // AnswerEditComponent,
+    QuestionFormComponent,
+    QuestionNewComponent,
+    QuestionEditComponent,
+
     // ResultsListComponent,
     // QuestionResultsListComponent,
     // QuestionsComponent,

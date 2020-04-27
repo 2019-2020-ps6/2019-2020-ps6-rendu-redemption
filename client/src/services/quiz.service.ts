@@ -13,6 +13,8 @@ import { Answer } from '../models/answer.model';
 import { DataService } from './data.service';
 import { Guest } from '../models/guest.model';
 import { map } from 'rxjs/operators';
+import { flatMap } from 'rxjs/operators';
+import { from } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'

@@ -20,17 +20,20 @@ import { ImageListComponent } from './admin/images/image-list/image-list.compone
 import { ImageEditComponent } from './admin/images/image-edit/image-edit.component';
 import { ImageNewComponent } from './admin/images/image-new/image-new.component';
 
-// // Quiz components.
+// Theme components.
 import { ThemeListComponent } from './admin/themes/theme-list/theme-list.component';
 import { ThemeEditComponent } from './admin/themes/theme-edit/theme-edit.component';
 import { ThemeNewComponent } from './admin/themes/theme-new/theme-new.component';
+
+// Quiz components.
 import { QuizListComponent } from './admin/quizzes/quiz-list/quiz-list.component';
 import { QuizEditComponent } from './admin/quizzes/quiz-edit/quiz-edit.component';
 import { QuizNewComponent } from './admin/quizzes/quiz-new/quiz-new.component';
 
+// Question components.
 import { QuestionListComponent } from './admin/quizzes/questions/question-list/question-list.component';
-// import { QuestionEditComponent } from './admin/quizzes/quiz/questions/question-edit/question-edit.component';
-// import { AnswerEditComponent } from './admin/quizzes/quiz/questions/answers-edit/answer-edit.component';
+import { QuestionEditComponent } from './admin/quizzes/questions/question-edit/question-edit.component';
+import { QuestionNewComponent } from './admin/quizzes/questions/question-new/question-new.component';
 
 // // Play components.
 // import { GuestSelectionComponent } from './play/guest-selection/guest-selection.component';
@@ -74,8 +77,8 @@ const routes: Routes = [
 
   // Question routes.
   { path: 'admin/quizzes/:quizId/questions', component: QuestionListComponent},
-  // { path: 'admin/quizzes/:quizId/questions/:questionId', component: QuestionEditComponent},
-  // { path: 'admin/quizzes/:quizId/questions/:questionId/answers/:answerId', component: AnswerEditComponent}
+  { path: 'admin/quizzes/:quizId/questions/new', component: QuestionNewComponent},
+  { path: 'admin/quizzes/:quizId/questions/:questionId', component: QuestionEditComponent},
 ];
 
 @NgModule({

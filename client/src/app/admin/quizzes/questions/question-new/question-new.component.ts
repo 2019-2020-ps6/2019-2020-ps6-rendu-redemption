@@ -8,16 +8,11 @@ import { QuizService } from '../../../../../services/quiz.service';
 import { Question } from '../../../../../models/question.model';
 
 @Component({
-  selector: 'app-question-edit',
-  templateUrl: './question-edit.component.html',
-  styleUrls: ['./question-edit.component.scss'],
+  selector: 'app-question-new',
+  templateUrl: './question-new.component.html',
+  styleUrls: ['./question-new.component.scss'],
 })
-export class QuestionEditComponent implements OnInit {
-  /**
-   * The question to be edited.
-   */
-  public question: Question;
-
+export class QuestionNewComponent implements OnInit {
   /**
    * The id of the current quiz.
    */
@@ -34,30 +29,17 @@ export class QuestionEditComponent implements OnInit {
       .subscribe((paramMap) => {
         // Get the quiz id from the route.
         this.quizId = parseInt(paramMap.get('quizId'), 10);
-
-        // Get the quiz id from the route.
-        const questionId = parseInt(paramMap.get('questionId'), 10);
-
-        // Get the question.
-        this.quizService
-          .getQuiz(this.quizId)
-          .subscribe((quiz: Quiz) => {
-            if (quiz) {
-              this.question = quiz.questions.find((question) => question.id === questionId);
-            }
-          });
       });
   }
 
   /**
-   * Edits the question.
-   * @param question The question to be edited.
+   * Creates the question.
+   * @param question The question to be created.
    */
-  editQuestion(question: Question) {
+  createQuestion(question: Question) {
     // Update the question.
-    this.quizService.updateQuestion(
+    this.quizService.createQuestion(
       this.quizId,
-      question.id,
       question.label,
       question.imageId
     );

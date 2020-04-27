@@ -66,7 +66,7 @@ export class QuestionListComponent implements OnInit {
     );
     modal.componentInstance.question = question;
     modal.result.then(
-      (result) => this.quizService.deleteQuiz(question.id),
+      (result) => this.quizService.deleteQuestion(this.quiz.id, question.id),
       () => {}
     );
   }

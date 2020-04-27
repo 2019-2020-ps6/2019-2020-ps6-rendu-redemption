@@ -12,8 +12,8 @@
   </div>
 </section>
 
-<section class="question-list">
-  <div class="row row-cols-1">
+<section *ngIf="quiz" class="question-list">
+  <div class="row row-cols-1" >
     <div *ngFor="let question of quiz.questions; let index = index" class="col">
       <app-question
         [question]="question"

@@ -4,12 +4,14 @@
     <h5 class="card-title">Question {{ index + 1 }} : {{ question.label }}</h5>
     <button
       type="button"
+      title="Modifier"
       (click)="edit($event)"
       class="btn btn-success question-button">
       <fa-icon [icon]="editIcon"></fa-icon>
     </button>
     <button
       type="button"
+      title="Supprimer"
       class="btn btn-danger question-button"
       (click)="delete($event)">
       <fa-icon [icon]="deleteIcon"></fa-icon>
