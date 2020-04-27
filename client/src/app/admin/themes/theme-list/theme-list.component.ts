@@ -8,6 +8,7 @@ import { Image } from '../../../../models/image.model';
 import { ImageModalComponent } from '../../images/image-modal/image-modal.component';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { ThemeModalComponent } from '../theme-modal/theme-modal.component';
+import { faPlus } from '@fortawesome/free-solid-svg-icons';
 
 
 @Component({
@@ -27,6 +28,11 @@ export class ThemeListComponent implements OnInit {
   public page ;
   public pageSize;
   public collectionSize;
+
+  /**
+   * The button icons.
+   */
+  public createIcon = faPlus;
 
   constructor(
     private router: Router,
