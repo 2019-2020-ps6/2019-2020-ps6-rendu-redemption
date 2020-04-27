@@ -73,10 +73,4 @@ export class QuestionComponent implements OnInit {
     event.preventDefault();
     event.stopPropagation();
   }
-
-  select(event: MouseEvent) {
-    // Prevent other button to trigger.
-    event.preventDefault();
-    event.stopPropagation();
-  }
 }

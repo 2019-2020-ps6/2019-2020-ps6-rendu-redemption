@@ -5,6 +5,7 @@ import {ActivatedRoute, Router} from '@angular/router';
 // Styles.
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { QuestionModalComponent } from '../question-modal/question-modal.component';
+import { faPlus } from '@fortawesome/free-solid-svg-icons';
 
 // Models and services.
 import { Quiz } from '../../../../../models/quiz.model';
@@ -21,6 +22,11 @@ export class QuestionListComponent implements OnInit {
    * The quiz to be displayed.
    */
   public quiz: Quiz;
+
+  /**
+   * The button icons.
+   */
+  public createIcon = faPlus;
 
   constructor(
     private router: Router,

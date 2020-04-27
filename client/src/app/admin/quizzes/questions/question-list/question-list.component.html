@@ -1,11 +1,15 @@
 <section class="question-header">
   <div class="row">
     <div class="col">
-      <h1 class="question-title">Questions</h1>
+      <h1 class="question-title">
+        Questions du quiz
+        <span class="text-primary">{{ quiz.name }}</span>
+      </h1>
       <button
         type="button"
         (click)="createQuestion()"
         class="btn btn-primary question-create">
+        <fa-icon [icon]="createIcon"></fa-icon>
         Ajouter une question
       </button>
     </div>

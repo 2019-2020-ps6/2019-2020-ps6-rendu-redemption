@@ -1,4 +1,4 @@
-<div class="card question-card" (click)="select($event)">
+<div (click)="edit($event)" title="Modifier" class="card question-card">
   <img *ngIf="image" src="{{ image.path }}" class="card-img-top" alt="{{ image.name }}">
   <div class="card-body">
     <h5 class="card-title">Question {{ index + 1 }} : {{ question.label }}</h5>
