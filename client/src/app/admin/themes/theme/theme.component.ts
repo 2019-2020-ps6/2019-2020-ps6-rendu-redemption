@@ -1,10 +1,15 @@
 // App.
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 
-// Models.
+// Styles.
+import { faPen } from '@fortawesome/free-solid-svg-icons';
+import { faTrash } from '@fortawesome/free-solid-svg-icons';
+
+// Models and services.
 import { Theme } from '../../../../models/theme.model';
 import { Image } from '../../../../models/image.model';
 import { ImageService } from '../../../../services/image.service';
+
 
 @Component({
   selector: 'app-theme',
@@ -40,6 +45,12 @@ export class ThemeComponent implements OnInit {
    */
   @Output()
   public deleteTheme: EventEmitter<Theme> = new EventEmitter<Theme>();
+
+  /**
+   * The button icons.
+   */
+  public editIcon = faPen;
+  public deleteIcon = faTrash;
 
   constructor(private imageService: ImageService) {}
 

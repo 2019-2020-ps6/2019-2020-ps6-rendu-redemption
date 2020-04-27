@@ -54,14 +54,12 @@ export class ThemeFormComponent implements OnInit {
       this.imageService
         .getImage(this.theme.imageId)
         .subscribe((image) => {
-          if (image) {
-            // Set the selected image of the theme.
-            this.themeForm.setValue({
-              id: this.theme.id,
-              name: this.theme.name,
-              selectedImage: image
-            });
-          }
+          // Set the selected image of the theme.
+          this.themeForm.setValue({
+            id: this.theme.id,
+            name: this.theme.name,
+            selectedImage: image ? image : null
+          });
         });
     }
   }

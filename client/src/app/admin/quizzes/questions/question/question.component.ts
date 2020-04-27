@@ -4,6 +4,8 @@ import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 // Models.
 import { Question } from '../../../../../models/question.model';
 import { Image } from '../../../../../models/image.model';
+import { faPen } from '@fortawesome/free-solid-svg-icons';
+import { faTrash } from '@fortawesome/free-solid-svg-icons';
 
 @Component({
   selector: 'app-question',
@@ -39,6 +41,12 @@ export class QuestionComponent implements OnInit {
    */
   @Output()
   public deleteQuestion: EventEmitter<Question> = new EventEmitter<Question>();
+
+  /**
+   * The button icons.
+   */
+  public editIcon = faPen;
+  public deleteIcon = faTrash;
 
   constructor() {}
 

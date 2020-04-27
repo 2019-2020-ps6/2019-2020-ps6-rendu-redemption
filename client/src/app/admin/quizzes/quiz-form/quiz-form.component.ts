@@ -58,14 +58,12 @@ export class QuizFormComponent implements OnInit {
       this.imageService
         .getImage(this.quiz.imageId)
         .subscribe((image) => {
-          if (image) {
-            // Set the selected image of the quiz.
-            this.quizForm.setValue({
-              id: this.quiz.id,
-              name: this.quiz.name,
-              selectedImage: image
-            });
-          }
+          // Set the selected image of the quiz.
+          this.quizForm.setValue({
+            id: this.quiz.id,
+            name: this.quiz.name,
+            selectedImage: image ? image : null
+          });
         });
     }
   }

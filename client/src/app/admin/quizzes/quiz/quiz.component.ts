@@ -1,7 +1,11 @@
 // App.
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 
-// Models.
+// Styles.
+import { faPen } from '@fortawesome/free-solid-svg-icons';
+import { faTrash } from '@fortawesome/free-solid-svg-icons';
+
+// Models and services.
 import { Quiz } from '../../../../models/quiz.model';
 import { Image } from '../../../../models/image.model';
 import { ImageService } from '../../../../services/image.service';
@@ -40,6 +44,12 @@ export class QuizComponent implements OnInit {
    */
   @Output()
   public deleteQuiz: EventEmitter<Quiz> = new EventEmitter<Quiz>();
+
+  /**
+   * The button icons.
+   */
+  public editIcon = faPen;
+  public deleteIcon = faTrash;
 
   constructor(private imageService: ImageService) {}
 

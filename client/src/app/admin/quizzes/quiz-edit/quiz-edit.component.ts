@@ -41,7 +41,10 @@ export class QuizEditComponent implements OnInit {
         this.quizService
           .getQuiz(quizId)
           .subscribe((quiz) => {
-            this.quiz = quiz;
+            if (quiz) {
+              this.quiz = quiz;
+              console.log(quiz);
+            }
           });
       });
   }
