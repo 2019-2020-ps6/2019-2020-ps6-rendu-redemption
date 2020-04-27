@@ -55,20 +55,20 @@ export class ThemeComponent implements OnInit {
   constructor(private imageService: ImageService) {}
 
   ngOnInit(): void {
-    // Set the default image.
-    this.image = {
-      id: 0,
-      name: this.theme.name,
-      path: 'https://via.placeholder.com/640x360?text=' + this.theme.name
-    };
-
     // Get the image of the theme.
     this.imageService
       .getImage(this.theme.imageId)
       .subscribe((image) => {
-        // If image exists.
         if (image) {
+          // Set the image.
           this.image = image;
+        } else {
+          // Set the default image.
+          this.image = {
+            id: 0,
+            name: this.theme.name,
+            path: 'https://via.placeholder.com/640x360?text=' + this.theme.name
+          };
         }
       });
   }

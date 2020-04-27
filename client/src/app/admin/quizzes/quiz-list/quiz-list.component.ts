@@ -1,13 +1,17 @@
-import {Component, OnInit} from '@angular/core';
-import {ActivatedRoute, Router} from '@angular/router';
+// App.
+import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute, Router } from '@angular/router';
+
+// Styles.
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { QuizModalComponent } from '../quiz-modal/quiz-modal.component';
-import { Quiz } from '../../../../models/quiz.model';
-import { QuizService } from '../../../../services/quiz.service';
 import { faPlus } from '@fortawesome/free-solid-svg-icons';
+
+// Models and services.
 import { Theme } from '../../../../models/theme.model';
 import { ThemeService } from '../../../../services/theme.service';
-
+import { Quiz } from '../../../../models/quiz.model';
+import { QuizService } from '../../../../services/quiz.service';
 
 @Component({
   selector: 'app-quiz-list',
@@ -23,7 +27,7 @@ export class QuizListComponent implements OnInit {
   /**
    * The id of the current theme.
    */
-  private theme: Theme;
+  public theme: Theme;
 
   /**
    * The variables of the pagination.
@@ -47,6 +51,7 @@ export class QuizListComponent implements OnInit {
     this.page = 1;
     this.pageSize = 6;
     this.collectionSize = 0;
+    this.quizzes = [];
   }
 
   ngOnInit() {

@@ -1,7 +1,7 @@
 <form [formGroup]="themeForm" (ngSubmit)="submit()" class="theme-form">
-  <div *ngIf="getSelectedImage()" class="form-group" >
+  <div *ngIf="getSelectedImage(themeForm)" class="form-group" >
     <label>Prévisualisation</label>
-    <img src="{{ getSelectedImage().path }}" class="image-preview"/>
+    <img src="{{ getSelectedImage(themeForm).path }}" class="image-preview"/>
   </div>
   <div class="form-group" >
     <label for="name">Nom</label>

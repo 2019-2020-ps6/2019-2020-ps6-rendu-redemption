@@ -45,7 +45,9 @@ export class QuestionListComponent implements OnInit {
         this.quizService
           .getQuiz(quizId)
           .subscribe((quiz) => {
-            this.quiz = quiz;
+            if (quiz) {
+              this.quiz = quiz;
+            }
           });
       });
   }

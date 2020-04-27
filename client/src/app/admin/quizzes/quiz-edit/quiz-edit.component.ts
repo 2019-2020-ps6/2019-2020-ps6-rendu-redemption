@@ -43,7 +43,6 @@ export class QuizEditComponent implements OnInit {
           .subscribe((quiz) => {
             if (quiz) {
               this.quiz = quiz;
-              console.log(quiz);
             }
           });
       });

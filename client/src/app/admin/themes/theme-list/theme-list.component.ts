@@ -43,9 +43,11 @@ export class ThemeListComponent implements OnInit {
     this.page = 1;
     this.pageSize = 6;
     this.collectionSize = 0;
+    this.themes = [];
   }
 
   ngOnInit() {
+    // Get the themes.
     this.themeService
       .getThemes()
       .subscribe((themes) => {

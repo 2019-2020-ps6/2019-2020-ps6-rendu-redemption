@@ -20,6 +20,11 @@ export class QuizFormComponent implements OnInit {
   public quizForm: FormGroup;
 
   /**
+   * The list of images.
+   */
+  public images: Image[];
+
+  /**
    * The quiz to be displayed.
    */
   @Input()
@@ -36,60 +41,50 @@ export class QuizFormComponent implements OnInit {
     private formBuilder: FormBuilder,
     private imageService: ImageService
   ) {
+    // Initialize the images.
+    this.images = [];
+
     // Create the form group.
     this.quizForm = this.formBuilder
       .group({
-        id: [{ value: 0, disabled: true }], // Disabled.
-        name: [
-          '',
-          [
-            Validators.required,
-            Validators.min(1)
-          ]
-        ],
-        selectedImage: [null]
+        id: [{ value: 0, disabled: true }],
+        name: ['', [Validators.required, Validators.min(1)]],
+        imageId: [null],
+        themeId: [{ value: 0, disabled: true }],
+        questions: [{ value: [], disabled: true }],
+        createdAt: [{ value: '', disabled: true }],
+        updatedAt: [{ value: '', disabled: true }]
       });
   }
 
   ngOnInit() {
+    // Get the images.
+    this.imageService
+      .getImages()
+      .subscribe((images) => {
+        this.images = images;
+      });
+
     // The input quiz is set.
     if (this.quiz) {
-      // Load the image of the quiz.
-      this.imageService
-        .getImage(this.quiz.imageId)
-        .subscribe((image) => {
-          // Set the selected image of the quiz.
-          this.quizForm.setValue({
-            id: this.quiz.id,
-            name: this.quiz.name,
-            selectedImage: image ? image : null
-          });
-        });
+      this.quizForm.setValue(this.quiz);
     }
   }
 
   /**
-   * Returns the selected image.
+   * Returns the selected image of a form group.
+   * @param formGroup The form group to be checked.
    */
-  getSelectedImage(): Image {
-    return this.quizForm.getRawValue().selectedImage;
+  getSelectedImage(formGroup: FormGroup): Image {
+    const imageId = formGroup.getRawValue().imageId;
+    return this.images.find((image) => image.id === imageId);
   }
 
   /**
    * Submits the quiz.
    */
   submit() {
-    // Get the form value.
-    const value = this.quizForm.getRawValue();
-
-    // Construct the quiz.
-    const quiz: Quiz = {
-      id: value.id,
-      name: value.name,
-      imageId: value.selectedImage ? value.selectedImage.id : null
-    };
-
-    // Submit the quiz.
+    const quiz: Quiz = this.quizForm.getRawValue() as Quiz;
     this.submitQuiz.emit(quiz);
   }
 }

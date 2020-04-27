@@ -2,7 +2,8 @@ import { Image } from './image.model';
 
 export interface Answer {
   id: number;
-  imageId: number;
+  imageId?: number;
+  selectedImage?: Image;
   value: string;
   isCorrect: boolean;
   createdAt?: Date;

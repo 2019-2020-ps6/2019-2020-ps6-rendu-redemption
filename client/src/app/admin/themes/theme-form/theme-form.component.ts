@@ -20,6 +20,11 @@ export class ThemeFormComponent implements OnInit {
   public themeForm: FormGroup;
 
   /**
+   * The list of images.
+   */
+  public images: Image[];
+
+  /**
    * The theme to be displayed.
    */
   @Input()
@@ -38,54 +43,43 @@ export class ThemeFormComponent implements OnInit {
     // Create the form group.
     this.themeForm = this.formBuilder
       .group({
-        id: [{ value: 0, disabled: true }], // Disabled.
-        name: ['', [
-          Validators.required,
-          Validators.min(1)
-        ]], // Required.
-        selectedImage: [null]
+        id: [{ value: 0, disabled: true }],
+        name: ['', [Validators.required, Validators.min(1)]],
+        imageId: [null],
+        createdAt: [{ value: '', disabled: true }],
+        updatedAt: [{ value: '', disabled: true }]
       });
   }
 
   ngOnInit() {
+    // Get the images.
+    this.imageService
+      .getImages()
+      .subscribe((images) => {
+        this.images = images;
+      });
+
     // The input theme is set.
     if (this.theme) {
-      // Load the image of the theme.
-      this.imageService
-        .getImage(this.theme.imageId)
-        .subscribe((image) => {
-          // Set the selected image of the theme.
-          this.themeForm.setValue({
-            id: this.theme.id,
-            name: this.theme.name,
-            selectedImage: image ? image : null
-          });
-        });
+      // Set the selected image of the theme.
+      this.themeForm.setValue(this.theme);
     }
   }
 
   /**
-   * Returns the selected image.
+   * Returns the selected image of a form group.
+   * @param formGroup The form group to be checked.
    */
-  getSelectedImage(): Image {
-    return this.themeForm.getRawValue().selectedImage;
+  getSelectedImage(formGroup: FormGroup): Image {
+    const imageId = formGroup.getRawValue().imageId;
+    return this.images.find((image) => image.id === imageId);
   }
 
   /**
    * Submits the theme.
    */
   submit() {
-    // Get the form value.
-    const value = this.themeForm.getRawValue();
-
-    // Construct the theme.
-    const theme: Theme = {
-      id: value.id,
-      name: value.name,
-      imageId: value.selectedImage ? value.selectedImage.id : null
-    };
-
-    // Submit the theme.
+    const theme: Theme = this.themeForm.getRawValue() as Theme;
     this.submitTheme.emit(theme);
   }
 }

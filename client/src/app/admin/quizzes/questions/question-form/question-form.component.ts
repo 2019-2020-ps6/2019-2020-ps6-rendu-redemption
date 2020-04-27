@@ -8,6 +8,12 @@ import { Quiz } from '../../../../../models/quiz.model';
 import { ImageService } from '../../../../../services/image.service';
 import { ActivatedRoute } from '@angular/router';
 import { Question } from '../../../../../models/question.model';
+import { Answer } from '../../../../../models/answer.model';
+import { FormControl } from '@angular/forms';
+import { FormArray } from '@angular/forms';
+import { Observable } from 'rxjs';
+import { forkJoin } from 'rxjs';
+import { map } from 'rxjs/operators';
 
 @Component({
   selector: 'app-question-form',
@@ -19,6 +25,16 @@ export class QuestionFormComponent implements OnInit {
    * The form of the question.
    */
   public questionForm: FormGroup;
+
+  /**
+   * The forms of the answers.
+   */
+  public answerForms: FormGroup[];
+
+  /**
+   * The list of images.
+   */
+  public images: Image[];
 
   /**
    * The question to be displayed.
@@ -34,46 +50,72 @@ export class QuestionFormComponent implements OnInit {
 
   constructor(
     private route: ActivatedRoute,
-    private formBuilder: FormBuilder,
+    private fb: FormBuilder,
     private imageService: ImageService
   ) {
-    // Create the form group.
-    this.questionForm = this.formBuilder
-      .group({
-        id: [{ value: 0, disabled: true }],
-        label: [
-          '',
-          [
-            Validators.required,
-            Validators.min(1)
-          ]
-        ],
-        selectedImage: [null]
-      });
+    // Initialize the images.
+    this.images = [];
+
+    // Create the answer form groups.
+    this.answerForms = [];
+    for (let i = 0; i < 4; i++) {
+      this.answerForms[i] = this.initAnswer();
+    }
+
+    // Create the question form group.
+    this.questionForm = this.initQuestion(this.answerForms);
+  }
+
+  /**
+   * Initializes an answer form group.
+   */
+  initAnswer(): FormGroup {
+    return this.fb.group({
+      id: [{ value: 0, disabled: true }],
+      value: ['', [Validators.required, Validators.min(1)]],
+      isCorrect: [false],
+      imageId: [null],
+      createdAt: [{ value: '', disabled: true }],
+      updatedAt: [{ value: '', disabled: true }]
+    });
+  }
+
+  /**
+   * Initializes a question form group.
+   */
+  initQuestion(answerForms: FormGroup[]): FormGroup {
+    return this.fb.group({
+      id: [{ value: 0, disabled: true }],
+      label: ['', [Validators.required, Validators.min(1)]],
+      imageId: [null],
+      answers: this.fb.array(answerForms),
+      createdAt: [{ value: '', disabled: true }],
+      updatedAt: [{ value: '', disabled: true }]
+    });
   }
 
   ngOnInit() {
-    // The input question is set.
+    // Get the images.
+    this.imageService
+      .getImages()
+      .subscribe((images) => {
+        this.images = images;
+      });
+
+    // If the question is set.
     if (this.question) {
-      // Load the image of the question.
-      this.imageService
-        .getImage(this.question.imageId)
-        .subscribe((image) => {
-          // Set the selected image of the question.
-          this.questionForm.setValue({
-            id: this.question.id,
-            label: this.question.label,
-            selectedImage: image ? image : null
-          });
-        });
+      // Set the question.
+      this.questionForm.setValue(this.question);
     }
   }
 
   /**
-   * Returns the selected image.
+   * Returns the selected image of a form group.
+   * @param formGroup The form group to be checked.
    */
-  getSelectedImage(): Image {
-    return this.questionForm.getRawValue().selectedImage;
+  getSelectedImage(formGroup: FormGroup): Image {
+    const imageId = formGroup.getRawValue().imageId;
+    return this.images.find((image) => image.id === imageId);
   }
 
   /**
@@ -82,15 +124,15 @@ export class QuestionFormComponent implements OnInit {
   submit() {
     // Get the form value.
     const value = this.questionForm.getRawValue();
-
-    // Construct the question.
-    const question: Question = {
-      id: value.id,
-      label: value.label,
-      imageId: value.selectedImage ? value.selectedImage.id : null
-    };
-
-    // Submit the question.
-    this.submitQuestion.emit(question);
+    console.log(value);
+    // // Construct the question.
+    // const question: Question = {
+    //   id: value.id,
+    //   label: value.label,
+    //   imageId: value.selectedImage ? value.selectedImage.id : null
+    // };
+    //
+    // // Submit the question.
+    // this.submitQuestion.emit(question);
   }
 }

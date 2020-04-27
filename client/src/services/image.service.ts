@@ -9,6 +9,7 @@ import { map } from 'rxjs/operators';
 // Models and services.
 import { Image } from '../models/image.model';
 import { DataService } from './data.service';
+import { Answer } from '../models/answer.model';
 
 @Injectable({
   providedIn: 'root'

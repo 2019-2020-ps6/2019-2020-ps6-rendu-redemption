@@ -57,7 +57,6 @@ import { QuestionModalComponent } from './admin/quizzes/questions/question-modal
 import { QuestionFormComponent } from './admin/quizzes/questions/question-form/question-form.component';
 import { QuestionNewComponent } from './admin/quizzes/questions/question-new/question-new.component';
 import { QuestionEditComponent } from './admin/quizzes/questions/question-edit/question-edit.component';
-import { AnswerFormComponent } from './admin/quizzes/questions/answer-form/answer-form.component';
 
 // // Play components.
 // import { GuestSelectionComponent } from './play/guest-selection/guest-selection.component';
@@ -105,8 +104,7 @@ import { AnswerFormComponent } from './admin/quizzes/questions/answer-form/answe
     QuestionModalComponent,
     QuestionFormComponent,
     QuestionNewComponent,
-    QuestionEditComponent,
-    AnswerFormComponent,
+    QuestionEditComponent
 
     // ResultsListComponent,
     // QuestionResultsListComponent,
@@ -123,9 +121,9 @@ import { AnswerFormComponent } from './admin/quizzes/questions/answer-form/answe
     BrowserAnimationsModule,
     FontAwesomeModule,
     NgbModule,
-    ReactiveFormsModule,
     NgSelectModule,
-    FormsModule
+    FormsModule,
+    ReactiveFormsModule
   ],
   providers: [],
   bootstrap: [AppComponent]
