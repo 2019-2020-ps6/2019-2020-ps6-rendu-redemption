@@ -25,8 +25,20 @@
           <td class="col-4">{{ guest.firstName }}</td>
           <td class="col-4">{{ guest.lastName }}</td>
           <td class="col-3">
-            <button type="button" class="btn btn-success" (click)="editGuest(guest)">Modifier</button>
-            <button type="button" class="btn btn-danger" (click)="deleteGuest(guest)">Supprimer</button>
+            <button
+              type="button"
+              title="Modifier"
+              class="btn btn-success"
+              (click)="editGuest(guest)">
+              Modifier
+            </button>
+            <button
+              type="button"
+              title="Supprimer"
+              class="btn btn-danger"
+              (click)="deleteGuest(guest)">
+              Supprimer
+            </button>
           </td>
         </tr>
         </tbody>
@@ -42,6 +54,10 @@
           [collectionSize]="collectionSize"
           [(page)]="page"
           [pageSize]="pageSize">
+          <ng-template ngbPaginationFirst>Première</ng-template>
+          <ng-template ngbPaginationLast>Dernière</ng-template>
+          <ng-template ngbPaginationPrevious>Précédente</ng-template>
+          <ng-template ngbPaginationNext>Suivante</ng-template>
         </ngb-pagination>
     </div>
     <div class="col-3">

@@ -2,10 +2,18 @@
   <img src="{{ image.path }}" class="card-img-top" alt="{{ image.name }}">
   <div class="card-body">
     <h5 class="card-title">{{ image.name }}</h5>
-    <button (click)="edit()" type="button" title="Modifier" class="btn btn-success image-button">
+    <button
+      type="button"
+      title="Modifier"
+      (click)="edit()"
+      class="btn btn-success image-button">
       <fa-icon [icon]="editIcon"></fa-icon>
     </button>
-    <button (click)="delete()" type="button" title="Supprimer" class="btn btn-danger image-button">
+    <button
+      type="button"
+      title="Supprimer"
+      (click)="delete()"
+      class="btn btn-danger image-button">
       <fa-icon [icon]="deleteIcon"></fa-icon>
     </button>
   </div>

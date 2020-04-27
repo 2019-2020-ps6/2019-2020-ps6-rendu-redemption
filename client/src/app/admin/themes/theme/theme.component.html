@@ -1,8 +1,20 @@
-<div class="card theme-card" (click)="select($event)">
+<div (click)="select($event)" title="Sélectionner" class="card theme-card">
   <img *ngIf="image" src="{{ image.path }}" class="card-img-top" alt="{{ image.name }}">
   <div class="card-body">
     <h5 class="card-title">{{ theme.name }}</h5>
-    <button type="button" class="btn btn-success theme-button" (click)="edit($event)">Modifier</button>
-    <button type="button" class="btn btn-danger theme-button" (click)="delete($event)">Supprimer</button>
+    <button
+      type="button"
+      title="Modifier"
+      (click)="edit($event)"
+      class="btn btn-success theme-button">
+      Modifier
+    </button>
+    <button
+      type="button"
+      title="Supprimer"
+      (click)="delete($event)"
+      class="btn btn-danger theme-button">
+      Supprimer
+    </button>
   </div>
 </div>
