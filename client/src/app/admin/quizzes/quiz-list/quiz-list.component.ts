@@ -72,11 +72,11 @@ export class QuizListComponent implements OnInit {
    * @param quiz The selected quiz.
    */
   selectQuiz(quiz: Quiz) {
-
+    this.router.navigate(['/admin/quizzes', quiz.id, 'questions']);
   }
 
   /**
-   * Creates a theme.
+   * Creates a quiz.
    */
   createQuiz() {
     this.router.navigate(['/admin/themes/', this.themeId, 'quizzes', 'new']);

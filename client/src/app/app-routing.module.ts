@@ -28,7 +28,7 @@ import { QuizListComponent } from './admin/quizzes/quiz-list/quiz-list.component
 import { QuizEditComponent } from './admin/quizzes/quiz-edit/quiz-edit.component';
 import { QuizNewComponent } from './admin/quizzes/quiz-new/quiz-new.component';
 
-// import { QuestionsListComponent } from './admin/quizzes/quiz/questions/questions-list/questions-list.component';
+import { QuestionListComponent } from './admin/quizzes/questions/question-list/question-list.component';
 // import { QuestionEditComponent } from './admin/quizzes/quiz/questions/question-edit/question-edit.component';
 // import { AnswerEditComponent } from './admin/quizzes/quiz/questions/answers-edit/answer-edit.component';
 
@@ -72,7 +72,8 @@ const routes: Routes = [
   { path: 'admin/themes/:themeId/quizzes/new', component: QuizNewComponent},
   { path: 'admin/themes/:themeId/quizzes/:quizId', component: QuizEditComponent},
 
-  // { path: 'admin/quizzes/:quizId/questions', component: QuestionsListComponent},
+  // Question routes.
+  { path: 'admin/quizzes/:quizId/questions', component: QuestionListComponent},
   // { path: 'admin/quizzes/:quizId/questions/:questionId', component: QuestionEditComponent},
   // { path: 'admin/quizzes/:quizId/questions/:questionId/answers/:answerId', component: AnswerEditComponent}
 ];
