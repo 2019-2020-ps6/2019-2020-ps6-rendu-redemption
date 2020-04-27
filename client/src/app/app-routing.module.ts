@@ -11,10 +11,6 @@ import { GuestFormComponent } from './admin/guests/guest-form/guest-form.compone
 import { GuestNewComponent } from './admin/guests/guest-new/guest-new.component';
 import { GuestEditComponent } from './admin/guests/guest-edit/guest-edit.component';
 
-// // Result components.
-// import { ResultsListComponent } from './admin/results/results-list/results-list.component';
-// import { QuestionResultsListComponent } from './admin/results/question-results-list/question-results-list.component';
-
 // Image components.
 import { ImageListComponent } from './admin/images/image-list/image-list.component';
 import { ImageEditComponent } from './admin/images/image-edit/image-edit.component';
@@ -35,6 +31,10 @@ import { QuestionListComponent } from './admin/quizzes/questions/question-list/q
 import { QuestionEditComponent } from './admin/quizzes/questions/question-edit/question-edit.component';
 import { QuestionNewComponent } from './admin/quizzes/questions/question-new/question-new.component';
 
+// // Result components.
+// import { ResultsListComponent } from './admin/results/results-list/results-list.component';
+// import { QuestionResultsListComponent } from './admin/results/question-results-list/question-results-list.component';
+
 // // Play components.
 // import { GuestSelectionComponent } from './play/guest-selection/guest-selection.component';
 // import { ThemesSelectionComponent } from './play/themes-selection/themes-selection.component';
@@ -44,21 +44,10 @@ import { QuestionNewComponent } from './admin/quizzes/questions/question-new/que
 const routes: Routes = [
   { path: '', component: MainComponent},
 
-  // // Play routes.
-  // { path: 'guests', component: GuestSelectionComponent},
-  // { path: 'themes', component: ThemesSelectionComponent},
-  // { path: 'quizzes', component: QuizSelectionComponent},
-  // { path: 'play', component: PlayQuizComponent},
-
   // Guest routes.
   { path: 'admin/guests', component: GuestListComponent},
   { path: 'admin/guests/new', component: GuestNewComponent},
   { path: 'admin/guests/:guestId', component: GuestEditComponent},
-
-  // // Result routes.
-  // { path: 'admin/guests/results', component: GuestSelectionComponent},
-  // { path: 'admin/guests/:guestId/results', component: ResultsListComponent},
-  // { path: 'admin/guests/:guestId/results/:resultId', component: QuestionResultsListComponent},
 
   // Image routes.
   { path: 'admin/images', component: ImageListComponent},
@@ -79,6 +68,17 @@ const routes: Routes = [
   { path: 'admin/quizzes/:quizId/questions', component: QuestionListComponent},
   { path: 'admin/quizzes/:quizId/questions/new', component: QuestionNewComponent},
   { path: 'admin/quizzes/:quizId/questions/:questionId', component: QuestionEditComponent},
+
+  // // Result routes.
+  // { path: 'admin/guests/results', component: GuestSelectionComponent},
+  // { path: 'admin/guests/:guestId/results', component: ResultsListComponent},
+  // { path: 'admin/guests/:guestId/results/:resultId', component: QuestionResultsListComponent},
+
+  // // Play routes.
+  // { path: 'guests', component: GuestSelectionComponent},
+  // { path: 'themes', component: ThemesSelectionComponent},
+  // { path: 'quizzes', component: QuizSelectionComponent},
+  // { path: 'play', component: PlayQuizComponent},
 ];
 
 @NgModule({
