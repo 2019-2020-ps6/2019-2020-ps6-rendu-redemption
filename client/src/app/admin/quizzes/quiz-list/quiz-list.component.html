@@ -1,8 +1,17 @@
 <section class="quiz-header">
   <div class="row">
     <div class="col">
-      <h1 class="quiz-title">Quiz</h1>
-      <button type="button" class="btn btn-primary quiz-create" (click)="createQuiz()">Ajouter un quiz</button>
+      <h1 class="quiz-title">
+        Quiz du thème
+        <span class="text-primary">{{ theme.name }}</span>
+      </h1>
+      <button
+        type="button"
+        class="btn btn-primary quiz-create"
+        (click)="createQuiz()">
+        <fa-icon [icon]="createIcon"></fa-icon>
+        Ajouter un quiz
+      </button>
     </div>
   </div>
 </section>

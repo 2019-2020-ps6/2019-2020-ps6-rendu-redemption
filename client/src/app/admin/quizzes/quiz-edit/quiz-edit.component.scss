@@ -1,3 +1,11 @@
+@import '~bootswatch/dist/superhero/variables';
+
 .quiz-header {
   margin-bottom: 15px;
+}
+
+.quiz-edit {
+  padding: 30px;
+  background: $secondary;
+  margin-bottom: 30px;
 }

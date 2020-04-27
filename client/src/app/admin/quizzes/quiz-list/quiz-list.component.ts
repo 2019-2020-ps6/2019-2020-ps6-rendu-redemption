@@ -4,6 +4,9 @@ import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { QuizModalComponent } from '../quiz-modal/quiz-modal.component';
 import { Quiz } from '../../../../models/quiz.model';
 import { QuizService } from '../../../../services/quiz.service';
+import { faPlus } from '@fortawesome/free-solid-svg-icons';
+import { Theme } from '../../../../models/theme.model';
+import { ThemeService } from '../../../../services/theme.service';
 
 
 @Component({
@@ -20,7 +23,7 @@ export class QuizListComponent implements OnInit {
   /**
    * The id of the current theme.
    */
-  private themeId: number;
+  private theme: Theme;
 
   /**
    * The variables of the pagination.
@@ -29,11 +32,17 @@ export class QuizListComponent implements OnInit {
   public pageSize;
   public collectionSize;
 
+  /**
+   * The button icons.
+   */
+  public createIcon = faPlus;
+
   constructor(
     private router: Router,
     private route: ActivatedRoute,
     private modalService: NgbModal,
     private quizService: QuizService,
+    private themeService: ThemeService
   ) {
     this.page = 1;
     this.pageSize = 6;
@@ -44,11 +53,18 @@ export class QuizListComponent implements OnInit {
     this.route.paramMap
       .subscribe((paramMap) => {
         // Get the theme id from the route.
-        this.themeId = parseInt(paramMap.get('themeId'), 10);
+        const themeId = parseInt(paramMap.get('themeId'), 10);
+
+        // Get the theme.
+        this.themeService
+          .getTheme(themeId)
+          .subscribe((theme) => {
+            this.theme = theme;
+          });
 
         // Get the quizzes of the theme.
         this.quizService
-          .getQuizzesByTheme(this.themeId)
+          .getQuizzesByTheme(themeId)
           .subscribe((quizzes) => {
             this.quizzes = quizzes;
             this.collectionSize = quizzes.length;
@@ -79,14 +95,14 @@ export class QuizListComponent implements OnInit {
    * Creates a quiz.
    */
   createQuiz() {
-    this.router.navigate(['/admin/themes/', this.themeId, 'quizzes', 'new']);
+    this.router.navigate(['/admin/themes/', this.theme.id, 'quizzes', 'new']);
   }
 
   /**
    * Edits a quiz.
    */
   editQuiz(quiz: Quiz) {
-    this.router.navigate(['/admin/themes', this.themeId, 'quizzes', quiz.id]);
+    this.router.navigate(['/admin/themes', this.theme.id, 'quizzes', quiz.id]);
   }
 
   /**
