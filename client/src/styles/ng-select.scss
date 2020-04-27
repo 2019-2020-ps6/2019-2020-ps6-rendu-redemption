@@ -1,0 +1,28 @@
+@import '~bootswatch/dist/superhero/variables';
+
+.ng-select .ng-select-container {
+  border-radius: 0;
+  border: 1px solid transparent;
+  height: calc(1.5em + 0.75rem + 2px);
+  font-size: 1rem;
+  font-weight: 400;
+  line-height: 1.5;
+  color: #495057;
+  background-color: #fff;
+}
+
+.ng-dropdown-panel .ng-dropdown-panel-items .ng-option {
+  color: #495057;
+}
+
+.ng-dropdown-panel .ng-dropdown-panel-items .ng-option.ng-option-marked {
+  color: #ffffff;
+  background-color: $warning;
+}
+
+.ng-dropdown-panel .ng-dropdown-panel-items .ng-option.ng-option-selected,
+.ng-dropdown-panel .ng-dropdown-panel-items .ng-option.ng-option-selected.ng-option-marked {
+  color: #ffffff;
+  background-color: $primary;
+}
+
