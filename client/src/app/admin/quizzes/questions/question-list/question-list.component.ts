@@ -1,11 +1,15 @@
+// App.
 import {Component, OnInit} from '@angular/core';
 import {ActivatedRoute, Router} from '@angular/router';
+
+// Styles.
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { QuestionModalComponent } from '../question-modal/question-modal.component';
-import { Quiz } from '../../../../../models/quiz.model';
-import { QuizService } from '../../../../../services/quiz.service';
-import { Question } from '../../../../../models/question.model';
 
+// Models and services.
+import { Quiz } from '../../../../../models/quiz.model';
+import { Question } from '../../../../../models/question.model';
+import { QuizService } from '../../../../../services/quiz.service';
 
 @Component({
   selector: 'app-question-list',
