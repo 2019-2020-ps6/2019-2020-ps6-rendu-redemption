@@ -50,7 +50,7 @@ export class ImageService extends DataService {
   getSortedImages(): Observable<Image[]> {
     return this.getImages()
       .pipe(
-        map((images) => images.sort((firstImage, secondImage) => {
+        map((images) => images.slice().sort((firstImage, secondImage) => {
           const firstName = firstImage.name.toUpperCase();
           const secondName = secondImage.name.toUpperCase();
           if (firstName < secondName) {
