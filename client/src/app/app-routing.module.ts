@@ -32,8 +32,8 @@ import { QuestionEditComponent } from './admin/quizzes/questions/question-edit/q
 import { QuestionNewComponent } from './admin/quizzes/questions/question-new/question-new.component';
 
 // // Result components.
-// import { ResultsListComponent } from './admin/results/results-list/results-list.component';
-// import { QuestionResultsListComponent } from './admin/results/question-results-list/question-results-list.component';
+import { ResultsListComponent } from './see-results/results-list/results-list.component';
+import { QuestionResultsListComponent } from './see-results/question-results-list/question-results-list.component';
 
 // Play components.
 import { GuestSelectionComponent } from './play/guest-selection/guest-selection.component';
@@ -69,16 +69,16 @@ const routes: Routes = [
   { path: 'admin/quizzes/:quizId/questions/new', component: QuestionNewComponent},
   { path: 'admin/quizzes/:quizId/questions/:questionId', component: QuestionEditComponent},
 
-  // // Result routes.
-  // { path: 'admin/guests/results', component: GuestSelectionComponent},
-  // { path: 'admin/guests/:guestId/results', component: ResultsListComponent},
-  // { path: 'admin/guests/:guestId/results/:resultId', component: QuestionResultsListComponent},
+  // Result routes.
+  { path: 'see-results/guest-selection', component: GuestSelectionComponent },
+  { path: 'see-results/results-list', component: ResultsListComponent },
+  { path: 'see-results/questions-results-list', component: QuestionResultsListComponent },
 
-  // // Play routes.
-  {path: 'guest-selection', component: GuestSelectionComponent},
-  {path: 'themes-selection', component: ThemesSelectionComponent},
-  {path: 'quiz-selection', component: QuizSelectionComponent},
-  {path: 'play-quiz', component: PlayQuizComponent},
+  // Play routes.
+  { path: 'guest-selection', component: GuestSelectionComponent },
+  { path: 'themes-selection', component: ThemesSelectionComponent },
+  { path: 'quiz-selection', component: QuizSelectionComponent },
+  { path: 'play-quiz', component: PlayQuizComponent },
 ];
 
 @NgModule({

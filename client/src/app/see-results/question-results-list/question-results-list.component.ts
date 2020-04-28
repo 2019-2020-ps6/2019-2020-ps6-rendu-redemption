@@ -23,14 +23,14 @@ export class QuestionResultsListComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    let quizId = this.transitionService.quizIdForResults;
+    const quizId = this.transitionService.quizIdForResults;
     this.questionResults = this.transitionService.questionResults;
     if (quizId === undefined || this.questionResults === undefined) {
       this.router.navigate(['../guest-selection'], {relativeTo: this.route});
     } else {
-      console.log("questions results", this.questionResults);
+      console.log('questions results', this.questionResults);
       this.quizService.getQuizzes().subscribe((quizzes) => {
-        for (let quiz of quizzes) {
+        for (const quiz of quizzes) {
           if (quiz.id === quizId) {
             this.selectedQuiz = quiz;
           }
@@ -39,20 +39,21 @@ export class QuestionResultsListComponent implements OnInit {
     }
   }
 
-  getQuestionNameById(questionId: number): String {
-    for (let question of this.selectedQuiz.questions) {
+  getQuestionNameById(questionId: number): string {
+    for (const question of this.selectedQuiz.questions) {
       if (question.id === questionId) {
         return question.label;
       }
     }
   }
 
-  getAnswerValueById(questionId: number, res: number): String {
-    for (let question of this.selectedQuiz.questions) {
+  getAnswerValueById(questionId: number, res: number): string {
+    for (const question of this.selectedQuiz.questions) {
       if (question.id === questionId) {
-        for(let answer of question.answers){
-          if(answer.id === res)
+        for (const answer of question.answers) {
+          if (answer.id === res) {
             return answer.value;
+          }
         }
       }
     }

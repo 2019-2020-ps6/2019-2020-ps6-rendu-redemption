@@ -25,9 +25,9 @@ import { GuestModalComponent } from './admin/guests/guest-modal/guest-modal.comp
 import { GuestEditComponent } from './admin/guests/guest-edit/guest-edit.component';
 import { GuestNewComponent } from './admin/guests/guest-new/guest-new.component';
 
-// // Result components.
-// import { ResultsListComponent } from './admin/results/results-list/results-list.component';
-// import { QuestionResultsListComponent } from './admin/results/question-results-list/question-results-list.component';
+// Result components.
+import { ResultsListComponent } from './see-results/results-list/results-list.component';
+import { QuestionResultsListComponent } from './see-results/question-results-list/question-results-list.component';
 
 // Image components.
 import { ImageListComponent } from './admin/images/image-list/image-list.component';
@@ -114,7 +114,10 @@ import { PlayQuizComponent } from './play/play-quiz/play-quiz.component';
     ThemesSelectionComponent,
     QuizSelectionComponent,
     PlayQuizComponent,
-    QuestionsComponent
+    QuestionsComponent,
+
+    ResultsListComponent,
+    QuestionResultsListComponent
   ],
   imports: [
     BrowserModule,

@@ -16,7 +16,7 @@ import {TransitionService} from '../../../services/transition.service';
 export class ResultsListComponent implements OnInit {
   guest: Guest;
   results: Result[] = [];
-  quizNames: String[] = [];
+  quizNames: string[] = [];
 
   constructor(private resultsService: ResultService,
               private quizService: QuizService,
@@ -25,26 +25,26 @@ export class ResultsListComponent implements OnInit {
               private route: ActivatedRoute) {
   }
 
-  //TODO vérifier avec du lag que ça fonctionne bien
+  // TODO vérifier avec du lag que ça fonctionne bien
   ngOnInit(): void {
-    let session = sessionStorage.getItem('selectedGuest');
-    if (session == null || session == undefined) {
+    const session = sessionStorage.getItem('selectedGuest');
+    if (session === null || session === undefined) {
       this.router.navigate(['../guest-selection'], {relativeTo: this.route});
     } else {
       this.results = [];
       this.guest = JSON.parse(sessionStorage.getItem('selectedGuest'));
       this.resultsService.getResults().subscribe((results) => {
         console.log(results);
-        for (let r of results) {
+        for (const r of results) {
           if (r.guestId === this.guest.id) {
             this.results.push(r);
           }
         }
       });
       this.quizService.getQuizzes().subscribe((quizzes) => {
-        for (let r of this.results) {
-          for (let q of quizzes) {
-            if (q.id == r.quizId) {
+        for (const r of this.results) {
+          for (const q of quizzes) {
+            if (q.id === r.quizId) {
               this.quizNames[this.results.indexOf(r)] = q.name;
             }
           }
