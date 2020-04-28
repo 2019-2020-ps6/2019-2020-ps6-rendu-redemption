@@ -1,7 +1,7 @@
 <h1>Cliquez sur un résultat pour en voir les détails</h1>
 <div *ngFor="let result of results; let i = index">
   <div class="row" (click)="goToQuestionResults(result.quizId, result.questionResults)">Quiz {{quizNames[i]}} :
-    joué le {{result.createdAt | date:'d/M/yy à H:mm'}} <span
-      style="position:absolute; right:1rem"> Il {{result.timedOut ? " n'a pas été " : "a été "}} complété</span>
+    joué le {{result.createdAt | date:'d/M/yy à H:mm'}}<br/>
+    Il {{result.timedOut ? " n'a pas été " : "a été "}} complété
   </div>
 </div>
