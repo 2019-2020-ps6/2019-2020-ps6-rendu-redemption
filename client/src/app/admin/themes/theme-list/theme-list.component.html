@@ -18,6 +18,7 @@
     <div *ngFor="let theme of getThemes()" class="col">
       <app-theme
         [theme]="theme"
+        [editable]="true"
         (selectTheme)="selectTheme($event)"
         (editTheme)="editTheme($event)"
         (deleteTheme)="deleteTheme($event)">

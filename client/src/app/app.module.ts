@@ -15,6 +15,8 @@ import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { AppComponent } from './app.component';
 import { HeaderComponent } from './header/header.component';
 import { MainComponent} from './main/main.component';
+import { NgxPaginationModule } from 'ngx-pagination';
+import { Ng2SearchPipeModule } from 'ng2-search-filter';
 
 // Guest components.
 import { GuestListComponent } from './admin/guests/guest-list/guest-list.component';
@@ -35,7 +37,7 @@ import { ImageEditComponent } from './admin/images/image-edit/image-edit.compone
 import { ImageNewComponent } from './admin/images/image-new/image-new.component';
 import { ImageModalComponent } from './admin/images/image-modal/image-modal.component';
 
-// Quiz components.
+// Theme components.
 import { ThemeListComponent } from './admin/themes/theme-list/theme-list.component';
 import { ThemeEditComponent } from './admin/themes/theme-edit/theme-edit.component';
 import { ThemeModalComponent } from './admin/themes/theme-modal/theme-modal.component';
@@ -44,6 +46,7 @@ import { ThemeComponent } from './admin/themes/theme/theme.component';
 import { ThemeFormComponent } from './admin/themes/theme-form/theme-form.component';
 import { ImageSelectComponent } from './admin/images/image-select/image-select.component';
 
+// Quiz components.
 import { QuizListComponent } from './admin/quizzes/quiz-list/quiz-list.component';
 import { QuizEditComponent } from './admin/quizzes/quiz-edit/quiz-edit.component';
 import { QuizModalComponent } from './admin/quizzes/quiz-modal/quiz-modal.component';
@@ -51,6 +54,7 @@ import { QuizFormComponent } from './admin/quizzes/quiz-form/quiz-form.component
 import { QuizNewComponent } from './admin/quizzes/quiz-new/quiz-new.component';
 import { QuizComponent } from './admin/quizzes/quiz/quiz.component';
 
+// Question components.
 import { QuestionListComponent } from './admin/quizzes/questions/question-list/question-list.component';
 import { QuestionComponent } from './admin/quizzes/questions/question/question.component';
 import { QuestionModalComponent } from './admin/quizzes/questions/question-modal/question-modal.component';
@@ -58,12 +62,12 @@ import { QuestionFormComponent } from './admin/quizzes/questions/question-form/q
 import { QuestionNewComponent } from './admin/quizzes/questions/question-new/question-new.component';
 import { QuestionEditComponent } from './admin/quizzes/questions/question-edit/question-edit.component';
 
-// // Play components.
-// import { GuestSelectionComponent } from './play/guest-selection/guest-selection.component';
-// import { ThemesSelectionComponent} from './play/themes-selection/themes-selection.component';
-// import { QuizSelectionComponent} from './play/quiz-selection/quiz-selection.component';
-// import { QuestionsComponent } from './play/questions/questions.component';
-// import { PlayQuizComponent } from './play/play-quiz/play-quiz.component';
+// Play components.
+import { GuestSelectionComponent } from './play/guest-selection/guest-selection.component';
+import { ThemesSelectionComponent} from './play/themes-selection/themes-selection.component';
+import { QuizSelectionComponent} from './play/quiz-selection/quiz-selection.component';
+import { QuestionsComponent } from './play/questions/questions.component';
+import { PlayQuizComponent } from './play/play-quiz/play-quiz.component';
 
 @NgModule({
   declarations: [
@@ -104,15 +108,13 @@ import { QuestionEditComponent } from './admin/quizzes/questions/question-edit/q
     QuestionModalComponent,
     QuestionFormComponent,
     QuestionNewComponent,
-    QuestionEditComponent
+    QuestionEditComponent,
 
-    // ResultsListComponent,
-    // QuestionResultsListComponent,
-    // QuestionsComponent,
-    // PlayQuizComponent,
-    // QuizSelectionComponent,
-    // ThemesSelectionComponent,
-    // GuestSelectionComponent,
+    GuestSelectionComponent,
+    ThemesSelectionComponent,
+    QuizSelectionComponent,
+    PlayQuizComponent,
+    QuestionsComponent
   ],
   imports: [
     BrowserModule,
@@ -123,7 +125,9 @@ import { QuestionEditComponent } from './admin/quizzes/questions/question-edit/q
     NgbModule,
     NgSelectModule,
     FormsModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    Ng2SearchPipeModule,
+    NgxPaginationModule
   ],
   providers: [],
   bootstrap: [AppComponent]

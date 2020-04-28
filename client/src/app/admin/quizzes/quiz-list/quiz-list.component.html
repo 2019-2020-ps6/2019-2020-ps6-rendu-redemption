@@ -21,6 +21,7 @@
     <div *ngFor="let quiz of getQuizzes()" class="col">
       <app-quiz
         [quiz]="quiz"
+        [editable]="true"
         (selectQuiz)="selectQuiz($event)"
         (editQuiz)="editQuiz($event)"
         (deleteQuiz)="deleteQuiz($event)">

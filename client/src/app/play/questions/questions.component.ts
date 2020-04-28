@@ -2,11 +2,16 @@ import {Component, DoCheck, EventEmitter, Input, OnChanges, OnInit, Output, Simp
 import {Question} from '../../../models/question.model';
 import {Answer} from '../../../models/answer.model';
 import {animate, state, style, transition, trigger} from '@angular/animations';
+import {Guest} from '../../../models/guest.model';
+import {QuestionResult} from '../../../models/question-result.model';
 
 @Component({
-  selector: 'app-questionToAnswer',
+  selector: 'app-question-to-answer',
   templateUrl: './questions.component.html',
   styleUrls: ['./questions.component.scss'],
+  styles: [`
+    .contrast { font-size: 200%; font-weight: bold}
+  `],
   animations: [
     trigger('isAnswerCorrect', [
       state('null', style({
@@ -32,21 +37,26 @@ import {animate, state, style, transition, trigger} from '@angular/animations';
 
 export class QuestionsComponent implements OnInit, OnChanges {
 
-  @Output() goToNextQuestion: EventEmitter<answerFirstTry> = new EventEmitter<answerFirstTry>();
+  @Output() goToNextQuestion: EventEmitter<questionResultPlusAnswer> = new EventEmitter<questionResultPlusAnswer>();
   @Input() question: Question;
   forAnimation: string[];
-  numberOfErrors: number;
-  skiped: boolean;
+  answersClicked: number[];
+  skipped: boolean;
   enableSkip: boolean;
+  profile: string;
 
   constructor() {
   }
 
 
   async ngOnInit() {
+    let guest: Guest;
+    guest = JSON.parse(sessionStorage.getItem('selectedGuest'));
+    this.profile = guest.accessibility;
+
     this.enableSkip = false;
-    this.numberOfErrors = 0;
-    this.skiped = false;
+    this.answersClicked = [];
+    this.skipped = false;
     this.forAnimation = [];
     for (let i = 0; i < this.question.answers.length; i++) {
       this.forAnimation[i] = null;
@@ -55,22 +65,33 @@ export class QuestionsComponent implements OnInit, OnChanges {
     this.enableSkip = true;
   }
 
+  setStyle() {
+    let style = {
+      contrast: this.profile === 'tbd1',
+    };
+    return style;
+  }
+
   verifyAnswer(answer: Answer) {
     if (answer.isCorrect) {
       this.forAnimation[this.question.answers.indexOf(answer)] = 'correct';
     } else {
       this.forAnimation[this.question.answers.indexOf(answer)] = 'incorrect';
-      this.numberOfErrors++;
+      this.answersClicked.push(answer.id);
     }
   }
 
   goToNext(i: number, event: AnimationEvent) {
     if (i === -2 || this.forAnimation[i] === 'correct') {
-      const res: answerFirstTry = {
-        answer: this.question.answers[i],
-        numberOfErrors: this.numberOfErrors,
-        skiped: this.skiped
-      };
+      const res: questionResultPlusAnswer = {
+          answer: this.question.answers[i],
+          questionResult: {
+            questionId: this.question.id,
+            skipped: this.skipped,
+            answers: this.answersClicked
+          }
+        }
+      ;
       this.goToNextQuestion.emit(res);
     }
   }
@@ -82,14 +103,34 @@ export class QuestionsComponent implements OnInit, OnChanges {
     }
   }
 
+  skip(): void {
+    this.skipped = true;
+    let correctAnswer: Answer;
+    for (const answer of this.question.answers) {
+      if (answer.isCorrect) {
+        correctAnswer = answer;
+      }
+    }
+    const res: questionResultPlusAnswer = {
+        answer: correctAnswer,
+        questionResult: {
+          questionId: this.question.id,
+          skipped: this.skipped,
+          answers: this.answersClicked
+        }
+      }
+    ;
+    this.goToNextQuestion.emit(res);
+  }
+
   async delay(ms: number) {
     return new Promise(resolve => setTimeout(resolve, ms));
   }
 
 }
-export interface answerFirstTry {
+
+export interface questionResultPlusAnswer {
   answer: Answer;
-  numberOfErrors: number;
-  skiped: boolean;
+  questionResult: QuestionResult;
 }
 

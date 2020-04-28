@@ -35,11 +35,11 @@ import { QuestionNewComponent } from './admin/quizzes/questions/question-new/que
 // import { ResultsListComponent } from './admin/results/results-list/results-list.component';
 // import { QuestionResultsListComponent } from './admin/results/question-results-list/question-results-list.component';
 
-// // Play components.
-// import { GuestSelectionComponent } from './play/guest-selection/guest-selection.component';
-// import { ThemesSelectionComponent } from './play/themes-selection/themes-selection.component';
-// import { QuizSelectionComponent } from './play/quiz-selection/quiz-selection.component';
-// import { PlayQuizComponent } from './play/play-quiz/play-quiz.component';
+// Play components.
+import { GuestSelectionComponent } from './play/guest-selection/guest-selection.component';
+import { ThemesSelectionComponent} from './play/themes-selection/themes-selection.component';
+import { QuizSelectionComponent} from './play/quiz-selection/quiz-selection.component';
+import { PlayQuizComponent } from './play/play-quiz/play-quiz.component';
 
 const routes: Routes = [
   { path: '', component: MainComponent},
@@ -75,10 +75,10 @@ const routes: Routes = [
   // { path: 'admin/guests/:guestId/results/:resultId', component: QuestionResultsListComponent},
 
   // // Play routes.
-  // { path: 'guests', component: GuestSelectionComponent},
-  // { path: 'themes', component: ThemesSelectionComponent},
-  // { path: 'quizzes', component: QuizSelectionComponent},
-  // { path: 'play', component: PlayQuizComponent},
+  {path: 'guest-selection', component: GuestSelectionComponent},
+  {path: 'themes-selection', component: ThemesSelectionComponent},
+  {path: 'quiz-selection', component: QuizSelectionComponent},
+  {path: 'play-quiz', component: PlayQuizComponent},
 ];
 
 @NgModule({

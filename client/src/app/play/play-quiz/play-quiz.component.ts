@@ -2,13 +2,21 @@ import {Component, OnInit} from '@angular/core';
 import {Question} from '../../../models/question.model';
 import {QuizService} from '../../../services/quiz.service';
 import {animate, state, style, transition, trigger} from '@angular/animations';
-import {ActivatedRoute, Router} from '@angular/router';
-import {answerFirstTry} from '../questions/questions.component';
+import {Router} from '@angular/router';
+import {questionResultPlusAnswer} from '../questions/questions.component';
+import {Quiz} from '../../../models/quiz.model';
+import {TransitionService} from '../../../services/transition.service';
+import {Guest} from '../../../models/guest.model';
+import {ResultService} from '../../../services/result.service';
+import {QuestionResult} from '../../../models/question-result.model';
 
 @Component({
-  selector: 'app-quizToAnswer',
+  selector: 'app-quiz-to-answer',
   templateUrl: './play-quiz.component.html',
   styleUrls: ['./play-quiz.component.scss'],
+  styles: [`
+    .contrast { font-size: 300%; font-weight: bold }
+  `],
   animations: [
     trigger('inAndOut', [
       state('true', style({
@@ -28,39 +36,71 @@ import {answerFirstTry} from '../questions/questions.component';
 })
 
 export class PlayQuizComponent implements OnInit {
+  // Needed to function
+  questionIndex: number;
+  actualQuiz: Quiz;
+  ongoingQuestion: Question;
+  guest: Guest;
+  // For the animations and a good flow
   isAnswerVisible = false;
   isQuestionVisible = true;
   hasEnded = false;
+  // Yes
   rightAnswer: string;
-  ongoingQuestion: Question;
+  profile: string;
   guestName: string;
+  questionResults: QuestionResult[];
 
-  constructor(public quizService: QuizService, private router: Router, private route: ActivatedRoute) {
+
+  constructor(private quizService: QuizService,
+              private resultService: ResultService,
+              private transitionService: TransitionService,
+              private router: Router) {
   }
 
   ngOnInit() {
-    this.guestName = sessionStorage.getItem('selectedGuest');
-    console.log('ahhh', this.guestName);
-    if (this.guestName === undefined || this.guestName == null) {
+    let guest: Guest;
+    guest = JSON.parse(sessionStorage.getItem('selectedGuest'));
+    this.guest = guest;
+    this.guestName = guest.firstName + ' ' + guest.lastName;
+    this.profile = guest.accessibility;
+
+    this.actualQuiz = this.transitionService.quizToPlay;
+    if (this.guest === undefined || this.guest == null || this.actualQuiz === undefined) {
       this.router.navigate(['/']);
+    } else {
+      this.questionIndex = 0;
+      this.ongoingQuestion = this.actualQuiz.questions[this.questionIndex];
+      this.questionResults = [];
     }
-    this.ongoingQuestion = this.quizService.getQuestion();
+
   }
 
-  goToNextQuestion(answerFT: answerFirstTry) {
-    this.rightAnswer = answerFT.answer.value;
+  setStyle() {
+    // tslint:disable-next-line:no-shadowed-variable
+    let style = {
+      contrast: this.profile === 'tbd1',
+    };
+    return style;
+  }
+
+  goToNextQuestion(qRPA: questionResultPlusAnswer) {
+    this.rightAnswer = qRPA.answer.value;
+    this.questionResults.push(qRPA.questionResult);
     this.isQuestionVisible = false;
     // triggers "makeAnswerAppear()"
   }
 
   async makeAnswerAppear() {
     if (!this.isQuestionVisible) {
+      this.questionIndex++;
       this.isAnswerVisible = true;
-      const q = await this.quizService.getNextQuestion();
-      if (q == null) {
+      if (this.questionIndex === this.actualQuiz.questions.length) {
         this.hasEnded = true;
+        this.resultService.createResult(this.guest.id, this.actualQuiz.id, false);
+        // TODO here use questionResults
       } else {
-        this.ongoingQuestion = q;
+        this.ongoingQuestion = this.actualQuiz.questions[this.questionIndex];
         console.log('Le père a changé ongoingQuestion', this.ongoingQuestion);
         await this.delay(2000);
       }

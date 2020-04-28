@@ -1,5 +1,16 @@
-@import '../../../styles/card';
+.theme-header {
+  margin-bottom: 20px;
 
-.card {
-  padding: 1%;
+  .theme-title {
+    display: inline-block;
+    margin: 0 30px 0 0;
+  }
+}
+
+.theme-list {
+  margin-bottom: 0;
+}
+
+.theme-pagination {
+  margin-bottom: 30px;
 }

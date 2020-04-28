@@ -23,6 +23,12 @@ export class QuizComponent implements OnInit {
   public quiz: Quiz;
 
   /**
+   * Whether the theme is editable or not.
+   */
+  @Input()
+  public editable: boolean;
+
+  /**
    * The image of the quiz.
    */
   public image: Image;

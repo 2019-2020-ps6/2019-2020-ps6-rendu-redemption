@@ -4,6 +4,8 @@ import {QuizService} from '../../../services/quiz.service';
 import {ActivatedRoute, Router} from '@angular/router';
 import {Image} from '../../../models/image.model';
 import {ImageService} from '../../../services/image.service';
+import {TransitionService} from '../../../services/transition.service';
+
 @Component({
   selector: 'app-quiz-selection',
   templateUrl: './quiz-selection.component.html',
@@ -11,40 +13,67 @@ import {ImageService} from '../../../services/image.service';
 })
 
 export class QuizSelectionComponent implements OnInit {
+  /**
+   * The list of quizzes.
+   */
+  quizzes: Quiz[];
 
-    quizzes: Quiz[];
-    images: Image[];
 
-    constructor(private quizService: QuizService, private router: Router, private route: ActivatedRoute) {
-    }
+  themeId: number;
 
-    ngOnInit() {
-      this.quizService
-        .getQuizzes()
-        .subscribe((quizzes) => {
-          this.quizzes = quizzes;
-        });
-    }
+  /**
+   * The variables of the pagination.
+   */
+  public page ;
+  public pageSize;
+  public collectionSize;
 
-    getRelatedQuizzes(): Quiz[] {
-        const theme = this.route.snapshot.queryParams.theme;
-        if (theme != null) {
-            return this.getQuizzesByThemeID(theme);
-        } else {
-            return this.quizzes;
-        }
-    }
+  constructor(
+    private router: Router,
+    private route: ActivatedRoute,
+    private quizService: QuizService,
+    private transitionService: TransitionService
+  ) {
+    this.page = 1;
+    this.pageSize = 6;
+    this.collectionSize = 0;
+    this.quizzes = [];
+  }
 
-    getQuizzesByThemeID(theme: number): Quiz[] {
-      return this.quizzes.filter(quiz => quiz.theme.id === theme);
-    }
+  ngOnInit() {
+    // Get the selected theme.
+    const theme = this.transitionService.themeToPlay;
 
-    getImageById(id: number): Image {
-        return this.images.find(image => image.id === id);
-    }
+    // Get the quizzes of the theme.
+    this.quizService
+      .getQuizzesByTheme(theme.id)
+      .subscribe((quizzes) => {
+        this.quizzes = quizzes;
+        this.collectionSize = quizzes.length;
+      });
+  }
 
-    goToRelatedQuizz(quizz: number) {
-        this.router.navigate(['../play-quiz'], {queryParams: {quizz}});
-    }
+  /**
+   * Returns a slice of the quizzes.
+   */
+  getQuizzes(): Quiz[] {
+    return this.quizzes
+      .slice(
+        (this.page - 1) * this.pageSize,
+        (this.page - 1) * this.pageSize + this.pageSize
+      );
+  }
+
+  /**
+   * Selects a quiz.
+   * @param quiz The selected quiz.
+   */
+  selectQuiz(quiz: Quiz) {
+    // Save the quiz.
+    this.transitionService.quizToPlay = quiz;
+
+    // Redirect the user.
+    this.router.navigate(['../play-quiz']);
+  }
 }
 

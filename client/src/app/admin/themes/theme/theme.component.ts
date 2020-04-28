@@ -24,6 +24,12 @@ export class ThemeComponent implements OnInit {
   public theme: Theme;
 
   /**
+   * Whether the theme is editable or not.
+   */
+  @Input()
+  public editable: boolean;
+
+  /**
    * The image of the theme.
    */
   public image: Image;

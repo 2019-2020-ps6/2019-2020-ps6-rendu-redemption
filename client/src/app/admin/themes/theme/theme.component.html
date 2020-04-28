@@ -3,6 +3,7 @@
   <div class="card-body">
     <h5 class="card-title">{{ theme.name }}</h5>
     <button
+      *ngIf="editable"
       type="button"
       title="Modifier"
       (click)="edit($event)"
@@ -11,6 +12,7 @@
       Modifier
     </button>
     <button
+      *ngIf="editable"
       type="button"
       title="Supprimer"
       (click)="delete($event)"
