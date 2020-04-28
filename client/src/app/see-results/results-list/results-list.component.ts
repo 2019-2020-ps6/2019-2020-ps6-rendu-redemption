@@ -1,8 +1,11 @@
 import {Component, OnInit} from '@angular/core';
-import {QuestionResults, Results} from '../../../models/results.model';
-import {ResultsService} from '../../../services/results.service';
+import {Result} from '../../../models/result.model';
+import {ResultService} from '../../../services/result.service';
 import {QuizService} from '../../../services/quiz.service';
 import {ActivatedRoute, Router} from '@angular/router';
+import {QuestionResult} from '../../../models/question-result.model';
+import {Guest} from '../../../models/guest.model';
+import {TransitionService} from '../../../services/transition.service';
 
 @Component({
   selector: 'app-resultsList',
@@ -11,27 +14,49 @@ import {ActivatedRoute, Router} from '@angular/router';
 })
 
 export class ResultsListComponent implements OnInit {
-  results: Results[] = [];
+  guest: Guest;
+  results: Result[] = [];
   quizNames: String[] = [];
 
-  constructor(private resultsService: ResultsService, private quizService: QuizService, private router: Router, private route: ActivatedRoute) {
+  constructor(private resultsService: ResultService,
+              private quizService: QuizService,
+              private transitionService: TransitionService,
+              private router: Router,
+              private route: ActivatedRoute) {
   }
 
   //TODO vérifier avec du lag que ça fonctionne bien
   ngOnInit(): void {
-    this.results = this.resultsService.getResults();
-    this.quizService.getQuizzes().subscribe((quizzes) => {
-      for (let r of this.results) {
-        for (let q of quizzes) {
-          if (q.id == r.quizId) {
-            this.quizNames[this.results.indexOf(r)] = q.name;
+    let session = sessionStorage.getItem('selectedGuest');
+    if (session == null || session == undefined) {
+      this.router.navigate(['../guest-selection'], {relativeTo: this.route});
+    } else {
+      this.results = [];
+      this.guest = JSON.parse(sessionStorage.getItem('selectedGuest'));
+      this.resultsService.getResults().subscribe((results) => {
+        console.log(results);
+        for (let r of results) {
+          if (r.guestId === this.guest.id) {
+            this.results.push(r);
           }
         }
-      }
-    });
+      });
+      this.quizService.getQuizzes().subscribe((quizzes) => {
+        for (let r of this.results) {
+          for (let q of quizzes) {
+            if (q.id == r.quizId) {
+              this.quizNames[this.results.indexOf(r)] = q.name;
+            }
+          }
+        }
+      });
+    }
   }
 
-  goToQuestionResults(questionResults: QuestionResults[]) {
+  goToQuestionResults(quizId: number, questionResults: QuestionResult[]) {
+    this.transitionService.questionResults = questionResults;
+    this.transitionService.quizForResults = quizId;
     this.router.navigate(['../questions-results-list'], {relativeTo: this.route});
   }
+
 }

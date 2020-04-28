@@ -1,15 +1,23 @@
 <div class="card">
   <div class="question" [ngClass]="setStyle()">
-    <h2 [ngClass]="setStyle()">
-      {{question.label}}
+    <h2 class="question-label" [ngClass]="setStyle()">
+      {{ question.label }}
     </h2>
-    <div class="answers" *ngFor="let answer of question.answers; let i = index">
-      <button style="visibility: hidden;opacity: 0;" [@isAnswerCorrect]="forAnimation[i]"
-              (@isAnswerCorrect.done)="goToNext(i, $event)" class="button-card"
-              (click)="verifyAnswer(answer)" [ngClass]="setStyle()"> {{answer.value}} </button>
+    <div class="answers">
+      <button
+        *ngFor="let answer of question.answers; let i = index"
+        class="answer-button"
+        style="visibility: hidden; opacity: 0;"
+        [@isAnswerCorrect]="forAnimation[i]"
+        (@isAnswerCorrect.done)="validateAnswer(i, $event)"
+        (click)="checkAnswer(answer)"
+        [ngClass]="setStyle()">
+        {{answer.value}}
+      </button>
     </div>
-    <button (click)="skip()" *ngIf="enableSkip" class="bottom" [ngClass]="setStyle()">
+    <button (click)="skipQuestion()" *ngIf="enableSkip" class="skip-button" [ngClass]="setStyle()">
       Passer à la question suivante
     </button>
   </div>
 </div>
+

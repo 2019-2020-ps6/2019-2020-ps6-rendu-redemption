@@ -1,1 +1,11 @@
-Il n'y a rien (pour le moment) ici
+<div *ngFor="let questionResult of questionResults">
+  <div>La question {{getQuestionNameById(questionResult.questionId)}}
+    {{questionResult.skipped ? " a été sautée " : "n'a pas été sautée"}}.
+    <div>
+      Les réponses
+      <span *ngFor="let res of questionResult.answers">
+        {{getAnswerValueById(questionResult.questionId, res)}}
+      </span>
+    </div>
+  </div>
+</div>

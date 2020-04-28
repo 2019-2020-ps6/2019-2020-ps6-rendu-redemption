@@ -4,6 +4,8 @@ import {Answer} from '../../../models/answer.model';
 import {animate, state, style, transition, trigger} from '@angular/animations';
 import {Guest} from '../../../models/guest.model';
 import {QuestionResult} from '../../../models/question-result.model';
+import { Image } from '../../../models/image.model';
+import { ImageService } from '../../../services/image.service';
 
 @Component({
   selector: 'app-question-to-answer',
@@ -36,24 +38,60 @@ import {QuestionResult} from '../../../models/question-result.model';
 })
 
 export class QuestionsComponent implements OnInit, OnChanges {
+  /**
+   * The question to display.
+   */
+  @Input()
+  public question: Question;
 
-  @Output() goToNextQuestion: EventEmitter<questionResultPlusAnswer> = new EventEmitter<questionResultPlusAnswer>();
-  @Input() question: Question;
-  forAnimation: string[];
-  answersClicked: number[];
-  skipped: boolean;
-  enableSkip: boolean;
-  profile: string;
+  /**
+   * The event emitter to go to the next question.
+   */
+  @Output()
+  public goToNextQuestion: EventEmitter<questionResultPlusAnswer> = new EventEmitter<questionResultPlusAnswer>();
 
-  constructor() {
-  }
+  /**
+   * The list of clicked answers.
+   */
+  public answersClicked: number[];
 
+  /**
+   * Whether the question has been skipped, or not.
+   */
+  public skipped: boolean;
+
+  /**
+   * Whether the skip button is enabled, or not.
+   */
+  public enableSkip: boolean;
+
+  /**
+   * The accessibility profile of the guest.
+   */
+  public accessibility: string;
+
+  public forAnimation: string[];
+
+  /**
+   * The list of images.
+   */
+  public images: Image[];
+
+  constructor(private imageService: ImageService) {}
 
   async ngOnInit() {
-    let guest: Guest;
-    guest = JSON.parse(sessionStorage.getItem('selectedGuest'));
-    this.profile = guest.accessibility;
+    // Get the accessibility profile of the guest.
+    const guest: Guest = JSON.parse(sessionStorage.getItem('selectedGuest'));
+    this.accessibility = guest.accessibility;
 
+    // Get the images.
+    this.imageService
+      .getImages()
+      .subscribe((images) => {
+        this.images = images;
+      });
+
+    // Initializes the question.
     this.enableSkip = false;
     this.answersClicked = [];
     this.skipped = false;
@@ -61,39 +99,80 @@ export class QuestionsComponent implements OnInit, OnChanges {
     for (let i = 0; i < this.question.answers.length; i++) {
       this.forAnimation[i] = null;
     }
-    await this.delay(10000);
-    this.enableSkip = true;
+
+    // Wait for 10 seconds before showing the skip button.
+    setTimeout(() => {
+      this.enableSkip = true;
+    }, 10000);
   }
 
-  setStyle() {
-    let style = {
-      contrast: this.profile === 'tbd1',
-    };
-    return style;
-  }
-
-  verifyAnswer(answer: Answer) {
+  /**
+   * Checks if the answer is correct.
+   * @param answer The answer to be checked.
+   */
+  checkAnswer(answer: Answer) {
     if (answer.isCorrect) {
+      // Add the correct animation.
       this.forAnimation[this.question.answers.indexOf(answer)] = 'correct';
     } else {
+      // Add the incorrect animation.
       this.forAnimation[this.question.answers.indexOf(answer)] = 'incorrect';
       this.answersClicked.push(answer.id);
     }
   }
 
-  goToNext(i: number, event: AnimationEvent) {
+  /**
+   * Validates the current question.
+   * @param i The index of the answer.
+   * @param event The animation event.
+   */
+  validateAnswer(i: number, event: AnimationEvent) {
     if (i === -2 || this.forAnimation[i] === 'correct') {
       const res: questionResultPlusAnswer = {
-          answer: this.question.answers[i],
-          questionResult: {
-            questionId: this.question.id,
-            skipped: this.skipped,
-            answers: this.answersClicked
-          }
+        answer: this.question.answers[i],
+        questionResult: {
+          questionId: this.question.id,
+          skipped: this.skipped,
+          answers: this.answersClicked
         }
-      ;
+      };
+
+      // Redirect the user to the next question.
       this.goToNextQuestion.emit(res);
     }
+  }
+
+  /**
+   * Skips the current question.
+   */
+  skipQuestion(): void {
+    this.skipped = true;
+    let correctAnswer: Answer;
+    for (const answer of this.question.answers) {
+      if (answer.isCorrect) {
+        correctAnswer = answer;
+      }
+    }
+
+    const res: questionResultPlusAnswer = {
+      answer: correctAnswer,
+      questionResult: {
+        questionId: this.question.id,
+        skipped: this.skipped,
+        answers: this.answersClicked
+      }
+    };
+
+    // Redirect the user to the next question.
+    this.goToNextQuestion.emit(res);
+  }
+
+  /**
+   * Returns an image by id.
+   * @param imageId The id of the image.
+   */
+  getImage(imageId: number): Image {
+    return this.images.find((image) => image.id === imageId);
   }
 
   ngOnChanges(changes: SimpleChanges): void {
@@ -103,30 +182,12 @@ export class QuestionsComponent implements OnInit, OnChanges {
     }
   }
 
-  skip(): void {
-    this.skipped = true;
-    let correctAnswer: Answer;
-    for (const answer of this.question.answers) {
-      if (answer.isCorrect) {
-        correctAnswer = answer;
-      }
-    }
-    const res: questionResultPlusAnswer = {
-        answer: correctAnswer,
-        questionResult: {
-          questionId: this.question.id,
-          skipped: this.skipped,
-          answers: this.answersClicked
-        }
-      }
-    ;
-    this.goToNextQuestion.emit(res);
+  setStyle() {
+    let style = {
+      contrast: this.accessibility === 'tbd1',
+    };
+    return style;
   }
-
-  async delay(ms: number) {
-    return new Promise(resolve => setTimeout(resolve, ms));
-  }
-
 }
 
 export interface questionResultPlusAnswer {
