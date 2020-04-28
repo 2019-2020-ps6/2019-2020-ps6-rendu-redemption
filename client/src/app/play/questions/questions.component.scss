@@ -1,5 +1,6 @@
 .card {
   padding: 30px;
+  font-size: 200%;
 
   .question-label {
     margin-bottom: 20px;
@@ -7,5 +8,9 @@
 
   .answer-button {
     margin-right: 15px;
+  }
+
+  .skip-button {
+    margin-top: 20%;
   }
 }

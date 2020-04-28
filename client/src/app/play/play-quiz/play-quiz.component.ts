@@ -15,7 +15,7 @@ import {QuestionResult} from '../../../models/question-result.model';
   templateUrl: './play-quiz.component.html',
   styleUrls: ['./play-quiz.component.scss'],
   styles: [`
-    .contrast { font-size: 300%; font-weight: bold }
+    .contrast { font-size: 400%; font-weight: bold }
   `],
   animations: [
     trigger('inAndOut', [

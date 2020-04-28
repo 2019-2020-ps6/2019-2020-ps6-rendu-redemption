@@ -12,7 +12,7 @@ import { ImageService } from '../../../services/image.service';
   templateUrl: './questions.component.html',
   styleUrls: ['./questions.component.scss'],
   styles: [`
-    .contrast { font-size: 200%; font-weight: bold}
+    .contrast { font-size: 150%; font-weight: bold}
   `],
   animations: [
     trigger('isAnswerCorrect', [

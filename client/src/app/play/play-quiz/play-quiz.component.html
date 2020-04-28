@@ -7,22 +7,26 @@
   (goToNextQuestion)="goToNextQuestion($event)">
 </app-question-to-answer>
 
-<div
-  *ngIf="isAnswerVisible"
-  class="rightAnswer"
-  style="opacity: 0"
-  [ngClass]="setStyle()"
-  (@inAndOut.done)="makeQuestionAppear()"
-  [@inAndOut]="isAnswerVisible">
-  La bonne réponse était : <br> {{ rightAnswer }}
+<div class="card">
+  <div
+    *ngIf="isAnswerVisible"
+    class="rightAnswer"
+    style="opacity: 0"
+    [ngClass]="setStyle()"
+    (@inAndOut.done)="makeQuestionAppear()"
+    [@inAndOut]="isAnswerVisible">
+    La bonne réponse était : <br> {{ rightAnswer }}
+  </div>
 </div>
 
-<div class="ending" *ngIf="hasEnded" [ngClass]="setStyle()">
-  Bravo {{guestName}}
-  <br>
-  Le quiz est désormais terminé!
-  <br>
-  <button class="endingButton" (click)="backToTheme()">
-    Cliquez ici pour revenir à la sélection d'un thème
-  </button>
+<div class="card">
+  <div class="ending" *ngIf="hasEnded" [ngClass]="setStyle()">
+    Bravo {{guestName}}
+    <br>
+    Le quiz est désormais terminé!
+    <br>
+    <button class="endingButton" (click)="backToTheme()">
+      Cliquez ici pour revenir à la sélection d'un thème
+    </button>
+  </div>
 </div>
