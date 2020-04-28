@@ -28,8 +28,9 @@
           vertical-align: middle;
         }
 
-        .actions {
-          width: 20%;
+        th.actions {
+          white-space: nowrap;
+          width: 1%;
         }
       }
     }
@@ -42,6 +43,11 @@
           button {
             margin-right: 15px;
           }
+        }
+
+        td.actions {
+          white-space: nowrap;
+          width: 1%;
         }
       }
     }

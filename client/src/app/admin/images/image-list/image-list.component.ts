@@ -41,7 +41,7 @@ export class ImageListComponent implements OnInit {
     private imageService: ImageService
   ) {
     this.page = 1;
-    this.pageSize = 9;
+    this.pageSize = 6;
     this.collectionSize = 0;
   }
 
