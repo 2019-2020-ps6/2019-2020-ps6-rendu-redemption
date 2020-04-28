@@ -126,4 +126,89 @@ export class ResultService extends DataService {
         this.findAllResults();
       });
   }
+
+  /**
+   * Creates a question result.
+   * @param resultId The id of the result.
+   * @param questionId The id of the question.
+   * @param skipped Whether the question has been skipped, or not.
+   */
+  createQuestionResult(resultId: number, questionId: number, skipped: boolean) {
+    this.http
+      .post<QuestionResult>(
+        `${this.serverURL}/results/${resultId}/${questionId}`,
+        {
+          skipped
+        },
+        this.serverOptions
+      )
+      .subscribe(() => {
+        this.findAllResults();
+      });
+  }
+
+  /**
+   * Updates a question result.
+   * @param resultId The id of the result.
+   * @param questionId The id of the question.
+   * @param skipped Whether the question has been skipped, or not.
+   */
+  updateQuestionResult(resultId: number, questionId: number, skipped: boolean) {
+    this.http
+      .put<QuestionResult>(
+        `${this.serverURL}/results/${resultId}/${questionId}`,
+        {
+          skipped
+        },
+        this.serverOptions
+      )
+      .subscribe(() => {
+        this.findAllResults();
+      });
+  }
+
+  /**
+   * Deletes a question result.
+   * @param resultId The id of the result.
+   * @param questionId The id of the question.
+   */
+  deleteQuestionResult(resultId: number, questionId: number) {
+    this.http
+      .delete<QuestionResult>(`${this.serverURL}/results/${resultId}/${questionId}`,)
+      .subscribe(() => {
+        this.findAllResults();
+      });
+  }
+
+  /**
+   * Creates an answer result.
+   * @param resultId The id of the result.
+   * @param questionId The id of the question.
+   * @param answerId The id of the answer.
+   */
+  createAnswerResult(resultId: number, questionId: number, answerId: number) {
+    this.http
+      .post<QuestionResult>(
+        `${this.serverURL}/results/${resultId}/${questionId}/${answerId}`, {}
+      )
+      .subscribe(() => {
+        this.findAllResults();
+      });
+  }
+
+  /**
+   * Deletes an answer result.
+   * @param resultId The id of the result.
+   * @param questionId The id of the question.
+   * @param answerId The id of the answer.
+   */
+  deleteAnswerResult(resultId: number, questionId: number, answerId: number) {
+    this.http
+      .delete<QuestionResult>(
+        `${this.serverURL}/results/${resultId}/${questionId}/${answerId}`
+      )
+      .subscribe(() => {
+        this.findAllResults();
+      });
+  }
 }
