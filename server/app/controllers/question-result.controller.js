@@ -117,12 +117,15 @@ function find(resultId, questionId) {
     })
     // Transform array of answers to array answer ids.
     .then((foundQuestionResult) => {
-      const questionResult = JSON.parse(JSON.stringify(foundQuestionResult));
-      questionResult.answers.forEach((answer, index) => {
-        // eslint-disable-next-line no-param-reassign
-        questionResult.answers[index] = answer.answerId;
-      });
-      return questionResult;
+      if (foundQuestionResult) {
+        const questionResult = JSON.parse(JSON.stringify(foundQuestionResult));
+        questionResult.answers.forEach((answer, index) => {
+          // eslint-disable-next-line no-param-reassign
+          questionResult.answers[index] = answer.answerId;
+        });
+        return questionResult;
+      }
+      return foundQuestionResult;
     });
 }
 
