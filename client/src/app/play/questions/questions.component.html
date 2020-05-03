@@ -13,6 +13,7 @@
         (click)="checkAnswer(answer)"
         [ngClass]="setStyle()">
         {{answer.value}}
+        <img src="{{getImage(answer.imageId).path}}">
       </button>
     </div>
     <button (click)="skipQuestion()" *ngIf="enableSkip" class="skip-button" [ngClass]="setStyle()">
