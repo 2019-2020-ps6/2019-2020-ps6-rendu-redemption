@@ -5,6 +5,7 @@ import {ActivatedRoute, Router} from '@angular/router';
 import {Image} from '../../../models/image.model';
 import {ImageService} from '../../../services/image.service';
 import {TransitionService} from '../../../services/transition.service';
+import { faRandom } from '@fortawesome/free-solid-svg-icons';
 
 @Component({
   selector: 'app-quiz-selection',
@@ -20,6 +21,7 @@ export class QuizSelectionComponent implements OnInit {
 
 
   themeId: number;
+  randomIcon = faRandom;
 
   /**
    * The variables of the pagination.
@@ -71,6 +73,15 @@ export class QuizSelectionComponent implements OnInit {
   selectQuiz(quiz: Quiz) {
     // Save the quiz.
     this.transitionService.quizToPlay = quiz;
+
+    // Redirect the user.
+    this.router.navigate(['../play-quiz']);
+  }
+
+  selectRandomQuiz() {
+    const randomIndex = Math.floor(Math.random() * this.quizzes.length);
+    // Save the quiz.
+    this.transitionService.quizToPlay = this.quizzes[randomIndex];
 
     // Redirect the user.
     this.router.navigate(['../play-quiz']);

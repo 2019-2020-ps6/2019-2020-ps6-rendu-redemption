@@ -5,6 +5,9 @@ import {Theme} from '../../../models/theme.model';
 import {Image} from '../../../models/image.model';
 import {Router} from '@angular/router';
 import {TransitionService} from '../../../services/transition.service';
+import {QuizService} from "../../../services/quiz.service";
+import {Quiz} from "../../../models/quiz.model";
+import { faRandom } from '@fortawesome/free-solid-svg-icons';
 
 @Component({
   selector: 'app-themes-selection',
@@ -18,14 +21,21 @@ export class ThemesSelectionComponent implements OnInit {
   themes: Theme[];
 
   /**
+   * The list of quizzes.
+   */
+  quizzes: Quiz[];
+
+  /**
    * The variables of the pagination.
    */
   public page ;
   public pageSize;
   public collectionSize;
+  public randomIcon = faRandom;
 
   constructor(
     private themeService: ThemeService,
+    private quizService: QuizService,
     private transitionService: TransitionService,
     private imageService: ImageService,
     private router: Router
@@ -42,6 +52,12 @@ export class ThemesSelectionComponent implements OnInit {
       .getThemes()
       .subscribe((themes: Theme[]) => {
         this.themes = themes;
+      });
+
+    this.quizService
+      .getQuizzes()
+      .subscribe((quizzes: Quiz[]) => {
+        this.quizzes = quizzes
       });
   }
 
@@ -66,6 +82,15 @@ export class ThemesSelectionComponent implements OnInit {
 
     // Redirect the user.
     this.router.navigate(['../quiz-selection']);
+  }
+
+  selectRandomQuiz() {
+    const randomIndex = Math.floor(Math.random() * this.quizzes.length);
+    // Save the quiz.
+    this.transitionService.quizToPlay = this.quizzes[randomIndex];
+
+    // Redirect the user.
+    this.router.navigate(['../play-quiz']);
   }
 }
 

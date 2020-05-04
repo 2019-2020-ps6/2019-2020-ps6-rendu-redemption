@@ -106,12 +106,12 @@ export class PlayQuizComponent implements OnInit {
     if (!this.isQuestionVisible) {
       this.questionIndex++;
       this.isAnswerVisible = true;
+      this.progressPercent = Math.round((this.questionIndex / this.actualQuiz.questions.length) * 100);
       if (this.questionIndex === this.actualQuiz.questions.length) {
         this.hasEnded = true;
         this.resultService.createResult(this.guest.id, this.actualQuiz.id, false);
         // TODO here use questionResults
       } else {
-        this.progressPercent = Math.round((this.questionIndex / this.actualQuiz.questions.length) * 100);
         this.ongoingQuestion = this.actualQuiz.questions[this.questionIndex];
         console.log('Le père a changé ongoingQuestion', this.ongoingQuestion);
         await this.delay(2000);
