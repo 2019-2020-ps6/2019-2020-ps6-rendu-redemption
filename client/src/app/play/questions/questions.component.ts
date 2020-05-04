@@ -12,7 +12,8 @@ import { ImageService } from '../../../services/image.service';
   templateUrl: './questions.component.html',
   styleUrls: ['./questions.component.scss'],
   styles: [`
-    .contrast { font-size: 150%; font-weight: bold}
+    .size { font-size: 140%; font-weight: bold}
+    .contrast { background: black }
   `],
   animations: [
     trigger('isAnswerCorrect', [
@@ -182,9 +183,16 @@ export class QuestionsComponent implements OnInit, OnChanges {
     }
   }
 
-  setStyle() {
+  setSize() {
     let style = {
-      contrast: this.accessibility === 'tbd1',
+      size: this.accessibility === 'tbd1' || this.accessibility === 'tbd2',
+    };
+    return style;
+  }
+
+  setContrast() {
+    let style = {
+      contrast: this.accessibility === 'tbd2',
     };
     return style;
   }

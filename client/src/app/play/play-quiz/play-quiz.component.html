@@ -7,20 +7,20 @@
   (goToNextQuestion)="goToNextQuestion($event)">
 </app-question-to-answer>
 
-<div class="card">
+<div class="card" [ngClass]="setContrast()">
   <div
     *ngIf="isAnswerVisible"
     class="rightAnswer"
     style="opacity: 0"
-    [ngClass]="setStyle()"
+    [ngClass]="setSize()"
     (@inAndOut.done)="makeQuestionAppear()"
     [@inAndOut]="isAnswerVisible">
     La bonne réponse était : <br> {{ rightAnswer }}
   </div>
 </div>
 
-<div class="card">
-  <div class="ending" *ngIf="hasEnded" [ngClass]="setStyle()">
+<div class="card" [ngClass]="setContrast()">
+  <div class="ending" *ngIf="hasEnded" [ngClass]="setSize()">
     Bravo {{guestName}}
     <br>
     Le quiz est désormais terminé!

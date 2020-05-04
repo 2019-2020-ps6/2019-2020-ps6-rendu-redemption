@@ -1,3 +1,7 @@
+body {
+  display: block;
+}
+
 .card {
   padding: 30px;
   font-size: 200%;
@@ -7,15 +11,16 @@
   }
 
   .answer-button {
-    margin-right: 15px;
+    margin: 15px;
   }
 
   .skip-button {
-    margin-top: 10%;
+    margin-top: 5%;
   }
 
   img {
-    width: 300px;
-    height: 200px;
+    width: 150px;
+    height: 100px;
+    margin: 10px;
   }
 }

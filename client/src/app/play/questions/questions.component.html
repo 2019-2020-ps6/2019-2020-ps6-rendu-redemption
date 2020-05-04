@@ -1,6 +1,6 @@
-<div class="card">
-  <div class="question" [ngClass]="setStyle()">
-    <h2 class="question-label" [ngClass]="setStyle()">
+<div class="card" [ngClass]="setContrast()">
+  <div class="question" [ngClass]="setSize()">
+    <h2 class="question-label" [ngClass]="setSize()">
       {{ question.label }}
     </h2>
     <div class="answers">
@@ -11,12 +11,12 @@
         [@isAnswerCorrect]="forAnimation[i]"
         (@isAnswerCorrect.done)="validateAnswer(i, $event)"
         (click)="checkAnswer(answer)"
-        [ngClass]="setStyle()">
-        {{answer.value}}
+        [ngClass]="setSize()">
         <img src="{{getImage(answer.imageId).path}}">
+        <br> {{answer.value}}
       </button>
     </div>
-    <button (click)="skipQuestion()" *ngIf="enableSkip" class="skip-button" [ngClass]="setStyle()">
+    <button (click)="skipQuestion()" *ngIf="enableSkip" class="skip-button" [ngClass]="setSize()">
       Passer à la question suivante
     </button>
   </div>

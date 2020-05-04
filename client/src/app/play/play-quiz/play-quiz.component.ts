@@ -15,7 +15,8 @@ import {QuestionResult} from '../../../models/question-result.model';
   templateUrl: './play-quiz.component.html',
   styleUrls: ['./play-quiz.component.scss'],
   styles: [`
-    .contrast { font-size: 400%; font-weight: bold }
+    .size { font-size: 400%; font-weight: bold }
+    .contrast { background: black }
   `],
   animations: [
     trigger('inAndOut', [
@@ -76,10 +77,16 @@ export class PlayQuizComponent implements OnInit {
 
   }
 
-  setStyle() {
-    // tslint:disable-next-line:no-shadowed-variable
+  setSize() {
     let style = {
-      contrast: this.profile === 'tbd1',
+      size: this.profile === 'tbd1' || this.profile === 'tbd2',
+    };
+    return style;
+  }
+
+  setContrast() {
+    let style = {
+      contrast: this.profile === 'tbd2',
     };
     return style;
   }
