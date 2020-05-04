@@ -51,6 +51,7 @@ export class PlayQuizComponent implements OnInit {
   profile: string;
   guestName: string;
   questionResults: QuestionResult[];
+  progressPercent: number;
 
 
   constructor(private quizService: QuizService,
@@ -71,6 +72,7 @@ export class PlayQuizComponent implements OnInit {
       this.router.navigate(['/']);
     } else {
       this.questionIndex = 0;
+      this.progressPercent = 0;
       this.ongoingQuestion = this.actualQuiz.questions[this.questionIndex];
       this.questionResults = [];
     }
@@ -107,6 +109,7 @@ export class PlayQuizComponent implements OnInit {
         this.resultService.createResult(this.guest.id, this.actualQuiz.id, false);
         // TODO here use questionResults
       } else {
+        this.progressPercent = Math.round((this.questionIndex / this.actualQuiz.questions.length) * 100);
         this.ongoingQuestion = this.actualQuiz.questions[this.questionIndex];
         console.log('Le père a changé ongoingQuestion', this.ongoingQuestion);
         await this.delay(2000);
