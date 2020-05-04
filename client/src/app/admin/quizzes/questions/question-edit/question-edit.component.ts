@@ -92,6 +92,16 @@ export class QuestionEditComponent implements OnInit {
                 answer.imageId
               );
           }
+
+          if (answer.id !== 0 && !answer.value) {
+            // Delete the answer.
+            this.quizService
+              .deleteAnswer(
+                this.quizId,
+                question.id,
+                answer.id,
+              );
+          }
         });
       });
 
