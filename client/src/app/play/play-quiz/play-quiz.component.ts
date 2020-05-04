@@ -15,8 +15,8 @@ import {QuestionResult} from '../../../models/question-result.model';
   templateUrl: './play-quiz.component.html',
   styleUrls: ['./play-quiz.component.scss'],
   styles: [`
-    .size { font-size: 400%; font-weight: bold }
-    .contrast { background: black }
+    .size { font-size: 400%; font-weight: bold;}
+    .contrast { background: black; }
   `],
   animations: [
     trigger('inAndOut', [
@@ -52,7 +52,7 @@ export class PlayQuizComponent implements OnInit {
   guestName: string;
   questionResults: QuestionResult[];
   progressPercent: number;
-
+  progressHeight: number;
 
   constructor(private quizService: QuizService,
               private resultService: ResultService,
@@ -76,13 +76,15 @@ export class PlayQuizComponent implements OnInit {
       this.ongoingQuestion = this.actualQuiz.questions[this.questionIndex];
       this.questionResults = [];
     }
-
   }
 
   setSize() {
     let style = {
       size: this.profile === 'tbd1' || this.profile === 'tbd2',
     };
+    if (this.profile === 'tbd1' || this.profile === 'tbd2') {
+      this.progressHeight = 40;
+    }
     return style;
   }
 

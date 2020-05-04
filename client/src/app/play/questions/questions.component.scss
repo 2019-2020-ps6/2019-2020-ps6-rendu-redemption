@@ -3,24 +3,30 @@ body {
 }
 
 .card {
-  padding: 30px;
+  padding: 20px;
   font-size: 200%;
 
   .question-label {
-    margin-bottom: 20px;
+    margin-bottom: 10px;
+  }
+
+  .answers {
+    display: grid;
+    grid-template-columns: repeat(2, 50%);
+    justify-content: center;
   }
 
   .answer-button {
-    margin: 15px;
+    margin: 10px;
   }
 
   .skip-button {
-    margin-top: 5%;
+    margin-top: 2%;
   }
 
   img {
-    width: 150px;
-    height: 100px;
-    margin: 10px;
+    width: 300px;
+    height: 200px;
+    margin: 5px;
   }
 }

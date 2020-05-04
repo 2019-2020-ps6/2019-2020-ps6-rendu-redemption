@@ -12,7 +12,7 @@ import { ImageService } from '../../../services/image.service';
   templateUrl: './questions.component.html',
   styleUrls: ['./questions.component.scss'],
   styles: [`
-    .size { font-size: 140%; font-weight: bold}
+    .size { font-size: 120%; font-weight: bold}
     .contrast { background: black }
   `],
   animations: [
@@ -69,7 +69,7 @@ export class QuestionsComponent implements OnInit, OnChanges {
   /**
    * The accessibility profile of the guest.
    */
-  public accessibility: string;
+  public profile: string;
 
   public forAnimation: string[];
 
@@ -83,7 +83,7 @@ export class QuestionsComponent implements OnInit, OnChanges {
   async ngOnInit() {
     // Get the accessibility profile of the guest.
     const guest: Guest = JSON.parse(sessionStorage.getItem('selectedGuest'));
-    this.accessibility = guest.accessibility;
+    this.profile = guest.accessibility;
 
     // Get the images.
     this.imageService
@@ -185,14 +185,14 @@ export class QuestionsComponent implements OnInit, OnChanges {
 
   setSize() {
     let style = {
-      size: this.accessibility === 'tbd1' || this.accessibility === 'tbd2',
+      size: this.profile === 'tbd1' || this.profile === 'tbd2',
     };
     return style;
   }
 
   setContrast() {
     let style = {
-      contrast: this.accessibility === 'tbd2',
+      contrast: this.profile === 'tbd2',
     };
     return style;
   }
