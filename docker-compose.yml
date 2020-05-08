@@ -1,0 +1,56 @@
+version: '3.8'
+
+services:
+  # Postgres database.
+  postgres:
+    # Get the latest Postgres image.
+    image: postgres
+    # Set the name of the container.
+    container_name: postgres
+    # Set the environment variables.
+    environment:
+      POSTGRES_DB: ps6_redemption
+      POSTGRES_USER: ps6_user
+      POSTGRES_PASSWORD: ps6_password
+    # Set the port of the container.
+    ports:
+      - '5432:5432'
+
+  # Node server.
+  server:
+    # Build from the dockerfile.
+    build: server
+    image: server
+    # Set the name of the container.
+    container_name: server
+    # Reflect the local changes on the container.
+    volumes:
+      - ./server:/usr/src/app
+      - /usr/src/app/node_modules
+    # Set the port of the container.
+    ports:
+    - '3000:3000'
+    # The server depends on the database.
+    depends_on:
+      - postgres
+    # Add a link to the database.
+    links:
+      - postgres
+
+  # Angular client.
+  client:
+    # Build from the dockerfile.
+    build: client
+    # Set the container name.
+    container_name: client
+    # Reflect the local changes on the container.
+    volumes:
+      - ./client:/usr/src/app
+      - /usr/src/app/node_modules
+    # Set the port of the container.
+    ports:
+      - '4200:4200'
+    # The client depends on the server and the database.
+    depends_on:
+      - postgres
+      - server
