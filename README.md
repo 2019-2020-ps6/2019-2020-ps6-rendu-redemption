@@ -1,24 +1,12 @@
 # PS6 Redemption
-## Project Structure
-- /client : The front end application (Angular).
-- /server : The backend end application (NodeJS, Express, Joi...).
+## Installation Guides
+1. [Linux](doc/linux) (Recommended)
+2. [Windows](doc/windows)
+3. [Mac OS](https://youtu.be/dQw4w9WgXcQ)
 
-## Run
-1. Install [NodeJS](https://nodejs.org/en/download/).
-2. Install [Docker Compose](https://docs.docker.com/compose/install/).
-3. Start Docker Compose.
-4. Clone the repository.
-```
-git clone https://github.com/2019-2020-ps6/2019-2020-ps6-rendu-redemption.git
-```
-5. Grant the right permissions to the script.
-```
-chmod +x start.sh
-```
-6. Run the script.
-```
-./start.sh
-```
+## Project Structure
+- [client](client) : The front end application (Angular).
+- [server](server) : The backend end application (NodeJS, Express, Joi...).
 
 ## Authors
 - Martin Bouteiller
