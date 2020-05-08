@@ -8,19 +8,18 @@ RUN mkdir -p /usr/src/app
 WORKDIR /usr/src/app
 
 # Copy the dependency definitions.
-COPY package*.json /usr/src/app/
+COPY package.json /usr/src/app/
 
 # Install the dependencies.
-RUN npm install
+RUN npm install --silent --no-progress --no-audit --no-optional --no-fund
 
 # Copy the code.
 COPY . /usr/src/app/
-RUN chmod +x entrypoint.sh
+COPY entrypoint.sh /usr/local/bin/
 
 # Expose the port that the app will use.
 EXPOSE 3000
 
-# Set the server in development mode.
-ENV NODE_ENV="development"
-
-ENTRYPOINT ["/bin/sh", "-c", "/usr/src/app/entrypoint.sh"]
+# Serve the app.
+# CMD ["npm", "run", "dev"]
+ENTRYPOINT ["./entrypoint.sh"]

@@ -1,4 +1,4 @@
-version: '3.8'
+version: '3'
 
 services:
   # Postgres database.
@@ -20,12 +20,12 @@ services:
   server:
     # Build from the dockerfile.
     build: server
-    image: server
     # Set the name of the container.
     container_name: server
     # Reflect the local changes on the container.
     volumes:
       - ./server:/usr/src/app
+      - /usr/src/app/node_modules
     # Set the port of the container.
     ports:
     - '3000:3000'
@@ -45,10 +45,13 @@ services:
     # Reflect the local changes on the container.
     volumes:
       - ./client:/usr/src/app
+      - /usr/src/app/node_modules
     # Set the port of the container.
     ports:
       - '4200:4200'
     # The client depends on the server and the database.
     depends_on:
       - postgres
+      - server
+    links:
       - server
