@@ -11,7 +11,7 @@ sudo pacman -S docker docker-compose
 ```bash
 sudo systemctl start docker
 ```
-2. Navigate to this repository on your computer.
+2. Navigate to the root of this repository on your computer.
 ```bash
 cd ~/Documents/2019-2020-ps6-rendu-redemption
 ```

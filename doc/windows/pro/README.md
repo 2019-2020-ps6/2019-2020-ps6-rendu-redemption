@@ -16,7 +16,7 @@
 [[Screenshot]](https://i.imgur.com/mX2t1LB.png)
 3. Open Windows PowerShell.
 [[Screenshot]](https://i.imgur.com/sh827FG.png)
-4. Navigate to this repository on your computer.
+4. Navigate to the root of this repository on your computer.
 ```bash
 cd .\Documents\2019-2020-ps6-rendu-redemption\
 ```

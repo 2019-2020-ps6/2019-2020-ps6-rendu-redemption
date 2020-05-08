@@ -39,7 +39,7 @@ Guest Port: 3000
 ## Run
 1. Open Docker Quickstart Terminal.
 [[Screenshot]](https://i.imgur.com/K4pOwrD.png)
-2. Navigate to this repository on your computer.
+2. Navigate to the root of this repository on your computer.
 ```bash
 cd ~/Documents/2019-2020-ps6-rendu-redemption
 ```
