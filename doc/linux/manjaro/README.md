@@ -5,6 +5,10 @@
 ```bash
 sudo pacman -S docker docker-compose
 ```
+3. Add `docker` group to your user.
+```bash
+sudo usermod -aG docker $USER
+```
 
 ## Run
 1. Start Docker Engine.
