@@ -26,7 +26,6 @@ services:
     # Reflect the local changes on the container.
     volumes:
       - ./server:/usr/src/app
-      - /usr/src/app/node_modules
     # Set the port of the container.
     ports:
     - '3000:3000'
@@ -46,7 +45,6 @@ services:
     # Reflect the local changes on the container.
     volumes:
       - ./client:/usr/src/app
-      - /usr/src/app/node_modules
     # Set the port of the container.
     ports:
       - '4200:4200'
