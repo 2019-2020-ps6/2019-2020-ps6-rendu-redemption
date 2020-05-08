@@ -43,13 +43,17 @@ Guest Port: 3000
 ```bash
 cd ~/Documents/2019-2020-ps6-rendu-redemption
 ```
-3. Build and run the project.
+3. Enable the conversion from Windows paths to Unix paths.
+```
+export COMPOSE_CONVERT_WINDOWS_PATHS=1
+```
+4. Build and run the project.
 ```bash
 docker-compose up --build
 ```
-4. Wait for Docker to do your job (~8min).
+5. Wait for Docker to do your job (~8min).
 [[Screenshot]](https://i.imgur.com/VKHqWi0.png)
-5. Enjoy the website.
+6. Enjoy the website.
 [[Screenshot]](https://i.imgur.com/k641NEk.png)
 
 ## Stop
