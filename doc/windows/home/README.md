@@ -64,6 +64,7 @@ dos2unix server/entrypoint.sh
 docker-compose up --build
 ```
 NB: If docker fails, restart the terminal and rerun the command.
+
 6. Wait for `Docker Toolbox` to do your job (~10min).
 [[Screenshot]](https://i.imgur.com/VKHqWi0.png)
 7. Enjoy the website at `localhost:4200`.
