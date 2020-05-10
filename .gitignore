@@ -19,5 +19,5 @@
 .DS_Store
 Thumbs.db
 
-#Oui
+# Environment Variables
 .env

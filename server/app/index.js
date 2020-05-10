@@ -1,4 +1,3 @@
-require('dotenv').config();
 const express = require('express');
 const cors = require('cors');
 const morgan = require('morgan');
@@ -24,4 +23,4 @@ app.use(notFoundHandler);
 app.use(errorHandler);
 
 // Start the application.
-app.listen(process.env.PORT || 3000);
+app.listen(3000);
