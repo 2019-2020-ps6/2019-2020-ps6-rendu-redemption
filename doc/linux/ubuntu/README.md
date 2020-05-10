@@ -45,7 +45,7 @@ sudo chmod +x /usr/local/bin/docker-compose
 ```
 
 ## Run
-1. Start Docker Engine.
+1. Start `Docker Engine`.
 ```bash
 sudo service docker start
 ```
@@ -57,17 +57,17 @@ sudo systemctl enable docker
 ```bash
 cd ~/Documents/2019-2020-ps6-rendu-redemption
 ```
-3. Build and run the project with Docker Compose.
+3. Build and run the project with `Docker Compose`.
 ```bash
 docker-compose up --build
 ```
-4. Wait for Docker to do your job (~5min).
-5. Enjoy the website.
+4. Wait for `Docker` to do your job (~5min).
+5. Enjoy the website at `localhost:4200`.
 [[Screenshot]](https://i.imgur.com/k641NEk.png)
 
 ## Stop
 1. Press `Control+C` to stop all containers.
-2. Wait for Docker to stop all containers.
+2. Wait for `Docker` to stop all containers.
 3. Remove all the containers.
 ```bash
 docker-compose down

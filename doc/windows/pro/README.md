@@ -28,7 +28,7 @@ docker-compose up --build
 [[Screenshot]](https://i.imgur.com/exqSOCX.png)
 7. Wait for Docker to do your job (~5min).
 [[Screenshot]](https://i.imgur.com/hWt5yL4.png)
-8. Enjoy the website.
+8. Enjoy the website at `localhost:4200`.
 [[Screenshot]](https://i.imgur.com/k641NEk.png)
 
 ## Stop
