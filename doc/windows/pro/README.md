@@ -4,7 +4,7 @@
 2. Download [this repository](https://github.com/2019-2020-ps6/2019-2020-ps6-rendu-redemption), and place it somewhere on your computer.
 
 ## Install
-1. Install Docker Desktop for Windows. 
+1. Install Docker Desktop for Windows.
 [[Screenshot]](https://i.imgur.com/0QsuodB.png)
 2. Keep the default configuration during the installation.
 [[Screenshot]](https://i.imgur.com/iNMKx2v.png)
@@ -20,15 +20,19 @@
 ```bash
 cd .\Documents\2019-2020-ps6-rendu-redemption\
 ```
-5. Build and run the project.
+5. Run this command to convert `\r\n` into `\n` for linux to work.
+```bash
+dos2unix server/entrypoint.sh
+```
+6. Build and run the project.
 ```bash
 docker-compose up --build
 ```
-6. When your are asked to share the access to the `C:\.` drive, press the `Share it` button.
+7. When your are asked to share the access to the `C:\.` drive, press the `Share it` button.
 [[Screenshot]](https://i.imgur.com/exqSOCX.png)
-7. Wait for Docker to do your job (~5min).
+8. Wait for Docker to do your job (~5min).
 [[Screenshot]](https://i.imgur.com/hWt5yL4.png)
-8. Enjoy the website at `localhost:4200`.
+9. Enjoy the website at `localhost:4200`.
 [[Screenshot]](https://i.imgur.com/k641NEk.png)
 
 ## Stop
