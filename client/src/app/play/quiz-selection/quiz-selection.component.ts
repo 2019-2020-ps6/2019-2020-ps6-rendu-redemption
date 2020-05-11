@@ -2,8 +2,6 @@ import {Component, OnInit} from '@angular/core';
 import {Quiz} from '../../../models/quiz.model';
 import {QuizService} from '../../../services/quiz.service';
 import {ActivatedRoute, Router} from '@angular/router';
-import {Image} from '../../../models/image.model';
-import {ImageService} from '../../../services/image.service';
 import {TransitionService} from '../../../services/transition.service';
 import { faRandom } from '@fortawesome/free-solid-svg-icons';
 
@@ -71,20 +69,17 @@ export class QuizSelectionComponent implements OnInit {
    * @param quiz The selected quiz.
    */
   selectQuiz(quiz: Quiz) {
-    // Save the quiz.
-    this.transitionService.quizToPlay = quiz;
-
-    // Redirect the user.
-    this.router.navigate(['../play-quiz']);
+    this.goToPlayQuiz(quiz.id);
   }
 
   selectRandomQuiz() {
     const randomIndex = Math.floor(Math.random() * this.quizzes.length);
-    // Save the quiz.
-    this.transitionService.quizToPlay = this.quizzes[randomIndex];
+    this.goToPlayQuiz(this.quizzes[randomIndex].id);
+  }
 
+  goToPlayQuiz(quizId: number){
     // Redirect the user.
-    this.router.navigate(['../play-quiz']);
+    this.router.navigate(['/play-quiz', quizId]);
   }
 }
 

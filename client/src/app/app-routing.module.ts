@@ -72,13 +72,13 @@ const routes: Routes = [
   // Result routes.
   { path: 'see-results/guest-selection', component: GuestSelectionComponent },
   { path: 'see-results/results-list', component: ResultsListComponent },
-  { path: 'see-results/questions-results-list', component: QuestionResultsListComponent },
+  { path: 'see-results/:resultId/questions-results-list', component: QuestionResultsListComponent },
 
   // Play routes.
   { path: 'guest-selection', component: GuestSelectionComponent },
   { path: 'themes-selection', component: ThemesSelectionComponent },
   { path: 'quiz-selection', component: QuizSelectionComponent },
-  { path: 'play-quiz', component: PlayQuizComponent },
+  { path: 'play-quiz/:quizId', component: PlayQuizComponent },
 ];
 
 @NgModule({

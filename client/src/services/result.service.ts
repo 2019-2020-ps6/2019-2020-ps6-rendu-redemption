@@ -1,14 +1,14 @@
-import { Injectable } from '@angular/core';
+import {Injectable} from '@angular/core';
 
 // Models and services.
-import { Result } from '../models/result.model';
-import { QuestionResult } from '../models/question-result.model';
-import { DataService } from './data.service';
-import { Image } from '../models/image.model';
-import { BehaviorSubject } from 'rxjs';
-import { HttpClient } from '@angular/common/http';
-import { Observable } from 'rxjs';
-import { map } from 'rxjs/operators';
+import {Result} from '../models/result.model';
+import {QuestionResult} from '../models/question-result.model';
+import {DataService} from './data.service';
+import {Image} from '../models/image.model';
+import {BehaviorSubject} from 'rxjs';
+import {HttpClient} from '@angular/common/http';
+import {Observable} from 'rxjs';
+import {map} from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root'
@@ -136,7 +136,7 @@ export class ResultService extends DataService {
   createQuestionResult(resultId: number, questionId: number, skipped: boolean) {
     this.http
       .post<QuestionResult>(
-        `${this.serverURL}/results/${resultId}/${questionId}`,
+        `${this.serverURL}/results/${resultId}/questions/${questionId}`,
         {
           skipped
         },
@@ -144,6 +144,21 @@ export class ResultService extends DataService {
       )
       .subscribe(() => {
         this.findAllResults();
+      });
+  }
+
+  createQuestionResultAndAnswers(resultId: number, questionId: number, skipped: boolean, answers: number[]) {
+    this.http
+      .post<QuestionResult>(
+        `${this.serverURL}/results/${resultId}/questions/${questionId}`,
+        {
+          skipped
+        },
+        this.serverOptions
+      )
+      .subscribe(() => {
+        for(let answerId of answers)
+          this.createAnswerResult(resultId, questionId, answerId);
       });
   }
 
@@ -156,7 +171,7 @@ export class ResultService extends DataService {
   updateQuestionResult(resultId: number, questionId: number, skipped: boolean) {
     this.http
       .put<QuestionResult>(
-        `${this.serverURL}/results/${resultId}/${questionId}`,
+        `${this.serverURL}/results/${resultId}/questions/${questionId}`,
         {
           skipped
         },
@@ -174,7 +189,7 @@ export class ResultService extends DataService {
    */
   deleteQuestionResult(resultId: number, questionId: number) {
     this.http
-      .delete<QuestionResult>(`${this.serverURL}/results/${resultId}/${questionId}`,)
+      .delete<QuestionResult>(`${this.serverURL}/results/${resultId}/questions/${questionId}`,)
       .subscribe(() => {
         this.findAllResults();
       });
@@ -189,7 +204,7 @@ export class ResultService extends DataService {
   createAnswerResult(resultId: number, questionId: number, answerId: number) {
     this.http
       .post<QuestionResult>(
-        `${this.serverURL}/results/${resultId}/${questionId}/${answerId}`, {}
+        `${this.serverURL}/results/${resultId}/questions/${questionId}/answers/${answerId}`, {}
       )
       .subscribe(() => {
         this.findAllResults();
@@ -205,10 +220,11 @@ export class ResultService extends DataService {
   deleteAnswerResult(resultId: number, questionId: number, answerId: number) {
     this.http
       .delete<QuestionResult>(
-        `${this.serverURL}/results/${resultId}/${questionId}/${answerId}`
+        `${this.serverURL}/results/${resultId}/questions/${questionId}/answers/${answerId}`
       )
       .subscribe(() => {
         this.findAllResults();
       });
   }
+
 }

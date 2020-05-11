@@ -20,7 +20,6 @@ export class ResultsListComponent implements OnInit {
 
   constructor(private resultsService: ResultService,
               private quizService: QuizService,
-              private transitionService: TransitionService,
               private router: Router,
               private route: ActivatedRoute) {
   }
@@ -53,10 +52,8 @@ export class ResultsListComponent implements OnInit {
     }
   }
 
-  goToQuestionResults(quizId: number, questionResults: QuestionResult[]) {
-    this.transitionService.questionResults = questionResults;
-    this.transitionService.quizForResults = quizId;
-    this.router.navigate(['../questions-results-list'], {relativeTo: this.route});
+  goToQuestionResults(resultId: number) {
+    this.router.navigate(['/see-results/', resultId, 'questions-results-list']);
   }
 
 }

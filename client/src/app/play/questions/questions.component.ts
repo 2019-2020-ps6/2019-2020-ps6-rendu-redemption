@@ -113,12 +113,13 @@ export class QuestionsComponent implements OnInit, OnChanges {
    */
   checkAnswer(answer: Answer) {
     if (answer.isCorrect) {
+      this.answersClicked.push(answer.id);
       // Add the correct animation.
       this.forAnimation[this.question.answers.indexOf(answer)] = 'correct';
     } else {
+      this.answersClicked.push(answer.id);
       // Add the incorrect animation.
       this.forAnimation[this.question.answers.indexOf(answer)] = 'incorrect';
-      this.answersClicked.push(answer.id);
     }
   }
 

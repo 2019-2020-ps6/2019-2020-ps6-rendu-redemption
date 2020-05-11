@@ -2,21 +2,27 @@ import {Component, OnInit} from '@angular/core';
 import {Question} from '../../../models/question.model';
 import {QuizService} from '../../../services/quiz.service';
 import {animate, state, style, transition, trigger} from '@angular/animations';
-import {Router} from '@angular/router';
+import {ActivatedRoute, Router} from '@angular/router';
 import {questionResultPlusAnswer} from '../questions/questions.component';
 import {Quiz} from '../../../models/quiz.model';
 import {TransitionService} from '../../../services/transition.service';
 import {Guest} from '../../../models/guest.model';
 import {ResultService} from '../../../services/result.service';
-import {QuestionResult} from '../../../models/question-result.model';
+import {Result} from '../../../models/result.model';
 
 @Component({
   selector: 'app-quiz-to-answer',
   templateUrl: './play-quiz.component.html',
   styleUrls: ['./play-quiz.component.scss'],
   styles: [`
-    .size { font-size: 400%; font-weight: bold;}
-    .contrast { background: black; }
+    .size {
+      font-size: 400%;
+      font-weight: bold;
+    }
+
+    .contrast {
+      background: black;
+    }
   `],
   animations: [
     trigger('inAndOut', [
@@ -50,14 +56,15 @@ export class PlayQuizComponent implements OnInit {
   rightAnswer: string;
   profile: string;
   guestName: string;
-  questionResults: QuestionResult[];
   progressPercent: number;
   progressHeight: number;
+  result: Result;
 
   constructor(private quizService: QuizService,
               private resultService: ResultService,
               private transitionService: TransitionService,
-              private router: Router) {
+              private router: Router,
+              private route: ActivatedRoute) {
   }
 
   ngOnInit() {
@@ -67,14 +74,40 @@ export class PlayQuizComponent implements OnInit {
     this.guestName = guest.firstName + ' ' + guest.lastName;
     this.profile = guest.accessibility;
 
-    this.actualQuiz = this.transitionService.quizToPlay;
+    //Set quiz
+    this.route.paramMap
+      .subscribe((paramMap) => {
+        // Get the quiz id from the route.
+        const quizId = parseInt(paramMap.get('quizId'), 10);
+
+        // Get the quiz.
+        this.quizService
+          .getQuiz(quizId)
+          .subscribe((quiz) => {
+            if (quiz) {
+              this.actualQuiz = quiz;
+            }
+          });
+      });
+
     if (this.guest === undefined || this.guest == null || this.actualQuiz === undefined) {
       this.router.navigate(['/']);
     } else {
       this.questionIndex = 0;
       this.progressPercent = 0;
       this.ongoingQuestion = this.actualQuiz.questions[this.questionIndex];
-      this.questionResults = [];
+      this.resultService.createResult(this.guest.id, this.actualQuiz.id, false);
+      this.resultService.getResults().subscribe((results) => {
+        for (let result of results) {
+          if (result.quizId === this.actualQuiz.id && result.guestId == this.guest.id) { //&& date
+            this.result = result;
+          }
+        }
+        this.delay(1800000).then(() => {
+            this.resultService.updateResult(this.result.id, this.guest.id, this.actualQuiz.id, true);
+          }
+        );
+      });
     }
   }
 
@@ -97,7 +130,7 @@ export class PlayQuizComponent implements OnInit {
 
   goToNextQuestion(qRPA: questionResultPlusAnswer) {
     this.rightAnswer = qRPA.answer.value;
-    this.questionResults.push(qRPA.questionResult);
+    this.resultService.createQuestionResultAndAnswers(this.result.id, qRPA.questionResult.questionId, qRPA.questionResult.skipped, qRPA.questionResult.answers);
     this.isQuestionVisible = false;
     // triggers "makeAnswerAppear()"
   }
@@ -109,11 +142,8 @@ export class PlayQuizComponent implements OnInit {
       this.progressPercent = Math.round((this.questionIndex / this.actualQuiz.questions.length) * 100);
       if (this.questionIndex === this.actualQuiz.questions.length) {
         this.hasEnded = true;
-        this.resultService.createResult(this.guest.id, this.actualQuiz.id, false);
-        // TODO here use questionResults
       } else {
         this.ongoingQuestion = this.actualQuiz.questions[this.questionIndex];
-        console.log('Le père a changé ongoingQuestion', this.ongoingQuestion);
         await this.delay(2000);
       }
       this.isAnswerVisible = false;

@@ -5,7 +5,7 @@ export interface Result {
   guestId: number;
   quizId: number;
   timedOut: boolean;
-  questionResults?: QuestionResult[];
+  questions?: QuestionResult[];
   createdAt?: string;
   updatedAt?: string;
 }
