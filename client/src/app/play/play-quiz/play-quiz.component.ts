@@ -96,18 +96,15 @@ export class PlayQuizComponent implements OnInit {
       this.questionIndex = 0;
       this.progressPercent = 0;
       this.ongoingQuestion = this.actualQuiz.questions[this.questionIndex];
-      this.resultService.createResult(this.guest.id, this.actualQuiz.id, false);
-      this.resultService.getResults().subscribe((results) => {
-        for (let result of results) {
-          if (result.quizId === this.actualQuiz.id && result.guestId == this.guest.id) { //&& date
-            this.result = result;
-          }
-        }
-        this.delay(1800000).then(() => {
-            this.resultService.updateResult(this.result.id, this.guest.id, this.actualQuiz.id, true);
-          }
-        );
-      });
+      this.resultService
+        .createResult(this.guest.id, this.actualQuiz.id, false)
+        .subscribe((result: Result) => {
+          this.result = result;
+          this.delay(1800000).then(() => {
+              this.resultService.updateResult(this.result.id, this.guest.id, this.actualQuiz.id, true);
+            }
+          );
+        });
     }
   }
 

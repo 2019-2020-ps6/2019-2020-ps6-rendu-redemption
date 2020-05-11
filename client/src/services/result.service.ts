@@ -9,6 +9,7 @@ import {BehaviorSubject} from 'rxjs';
 import {HttpClient} from '@angular/common/http';
 import {Observable} from 'rxjs';
 import {map} from 'rxjs/operators';
+import { Question } from '../models/question.model';
 
 @Injectable({
   providedIn: 'root'
@@ -71,8 +72,8 @@ export class ResultService extends DataService {
    * @param quizId The id of the quiz.
    * @param timedOut Whether the quiz has timed out, or not.
    */
-  createResult(guestId: number, quizId: number, timedOut: boolean) {
-    this.http
+  createResult(guestId: number, quizId: number, timedOut: boolean): Observable<Result> {
+    return this.http
       .post<Result>(
         `${this.serverURL}/results`,
         {
@@ -82,9 +83,12 @@ export class ResultService extends DataService {
         },
         this.serverOptions
       )
-      .subscribe(() => {
-        this.findAllResults();
-      });
+      .pipe(
+        map((result: Result) => {
+          this.findAllResults();
+          return result;
+        })
+      );
   }
 
   /**
