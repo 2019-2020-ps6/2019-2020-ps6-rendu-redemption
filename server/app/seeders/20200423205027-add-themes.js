@@ -7,22 +7,9 @@ module.exports = {
         name: 'Animaux',
         createdAt: new Date(),
         updatedAt: new Date()
-      },
-      {
-        id: 2,
-        imageId: 38,
-        name: 'Géographie',
-        createdAt: new Date(),
-        updatedAt: new Date()
-      },
-      {
-        id: 3,
-        imageId: 64,
-        name: 'Musique',
-        createdAt: new Date(),
-        updatedAt: new Date()
-      }],
+      }
+    ],
     {})
-    .then(() => queryInterface.sequelize.query('ALTER SEQUENCE "themes_id_seq" RESTART WITH 4')),
+    .then(() => queryInterface.sequelize.query('ALTER SEQUENCE "themes_id_seq" RESTART WITH 2')),
   down: (queryInterface, Sequelize) => queryInterface.bulkDelete('themes', null, {})
 };
