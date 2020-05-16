@@ -68,6 +68,8 @@ import { ThemesSelectionComponent} from './play/themes-selection/themes-selectio
 import { QuizSelectionComponent} from './play/quiz-selection/quiz-selection.component';
 import { QuestionsComponent } from './play/questions/questions.component';
 import { PlayQuizComponent } from './play/play-quiz/play-quiz.component';
+import { UngroupedResultsListComponent } from './see-results/results-list/ungrouped-results-list/ungrouped-results-list.component';
+import { GroupedResultsListComponent } from './see-results/results-list/grouped-results-list/grouped-results-list.component';
 
 @NgModule({
   declarations: [
@@ -117,7 +119,9 @@ import { PlayQuizComponent } from './play/play-quiz/play-quiz.component';
     QuestionsComponent,
 
     ResultsListComponent,
-    QuestionResultsListComponent
+    QuestionResultsListComponent,
+    UngroupedResultsListComponent,
+    GroupedResultsListComponent
   ],
   imports: [
     BrowserModule,

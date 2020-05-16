@@ -1,11 +1,9 @@
 import {Component, OnInit} from '@angular/core';
 import {Result} from '../../../models/result.model';
 import {ResultService} from '../../../services/result.service';
-import {QuizService} from '../../../services/quiz.service';
 import {ActivatedRoute, Router} from '@angular/router';
-import {QuestionResult} from '../../../models/question-result.model';
 import {Guest} from '../../../models/guest.model';
-import {TransitionService} from '../../../services/transition.service';
+import {faObjectGroup, faObjectUngroup} from '@fortawesome/free-solid-svg-icons';
 
 @Component({
   selector: 'app-resultsList',
@@ -16,10 +14,12 @@ import {TransitionService} from '../../../services/transition.service';
 export class ResultsListComponent implements OnInit {
   guest: Guest;
   results: Result[] = [];
-  quizNames: string[] = [];
+
+  grouped: boolean = false;
+  iconGroup = faObjectGroup;
+  iconUngroup = faObjectUngroup;
 
   constructor(private resultsService: ResultService,
-              private quizService: QuizService,
               private router: Router,
               private route: ActivatedRoute) {
   }
@@ -30,30 +30,24 @@ export class ResultsListComponent implements OnInit {
     if (session === null || session === undefined) {
       this.router.navigate(['../guest-selection'], {relativeTo: this.route});
     } else {
+      this.grouped = false;
       this.results = [];
       this.guest = JSON.parse(sessionStorage.getItem('selectedGuest'));
       this.resultsService.getResults().subscribe((results) => {
-        console.log(results);
         for (const r of results) {
           if (r.guestId === this.guest.id) {
             this.results.push(r);
           }
         }
       });
-      this.quizService.getQuizzes().subscribe((quizzes) => {
-        for (const r of this.results) {
-          for (const q of quizzes) {
-            if (q.id === r.quizId) {
-              this.quizNames[this.results.indexOf(r)] = q.name;
-            }
-          }
-        }
-      });
     }
   }
 
-  goToQuestionResults(resultId: number) {
-    this.router.navigate(['/see-results/', resultId, 'questions-results-list']);
+  groupByQuiz() {
+    this.grouped = true;
   }
 
+  unGroup() {
+    this.grouped = false;
+  }
 }
