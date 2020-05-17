@@ -4,17 +4,21 @@
       {{ question.label }}
     </h2>
     <div class="answers">
-      <button
-        *ngFor="let answer of question.answers; let i = index"
-        class="answer-button"
-        style="visibility: hidden; opacity: 0;"
-        [@isAnswerCorrect]="forAnimation[i]"
-        (@isAnswerCorrect.done)="validateAnswer(i, $event)"
-        (click)="checkAnswer(answer)"
-        [ngClass]="setSize()">
-        <img src="{{getImage(answer.imageId).path}}">
-        <br> {{answer.value}}
-      </button>
+      <div *ngFor="let answer of question.answers; let i = index" class="answer-button">
+        <button
+          style="visibility: hidden; opacity: 0; width: 100%"
+          [@isAnswerCorrect]="forAnimation[i]"
+          (@isAnswerCorrect.done)="validateAnswer(i, $event)"
+          (click)="checkAnswer(answer)"
+          [ngClass]="setSize()">
+          <img src="{{getImage(answer.imageId).path}}">
+          <br> {{answer.value}}
+        </button>
+        <div class="centrer">
+          <span class="textWrong" *ngIf="forAnimation2[i] === true;">Ce n'était pas la bonne réponse</span>
+        </div>
+
+      </div>
     </div>
     <button (click)="skipQuestion()" *ngIf="enableSkip" class="skip-button" [ngClass]="setSize()">
       Passer à la question suivante

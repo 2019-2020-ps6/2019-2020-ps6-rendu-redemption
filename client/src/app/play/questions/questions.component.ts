@@ -1,19 +1,25 @@
-import {Component, DoCheck, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges} from '@angular/core';
+import {Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges} from '@angular/core';
 import {Question} from '../../../models/question.model';
 import {Answer} from '../../../models/answer.model';
 import {animate, state, style, transition, trigger} from '@angular/animations';
 import {Guest} from '../../../models/guest.model';
 import {QuestionResult} from '../../../models/question-result.model';
-import { Image } from '../../../models/image.model';
-import { ImageService } from '../../../services/image.service';
+import {Image} from '../../../models/image.model';
+import {ImageService} from '../../../services/image.service';
 
 @Component({
   selector: 'app-question-to-answer',
   templateUrl: './questions.component.html',
   styleUrls: ['./questions.component.scss'],
   styles: [`
-    .size { font-size: 120%; font-weight: bold}
-    .contrast { background: black }
+    .size {
+      font-size: 120%;
+      font-weight: bold
+    }
+
+    .contrast {
+      background: black
+    }
   `],
   animations: [
     trigger('isAnswerCorrect', [
@@ -27,6 +33,7 @@ import { ImageService } from '../../../services/image.service';
       state('incorrect', style({
         opacity: 0,
         visibility: 'hidden',
+        display: 'none',
       })),
       transition('* => correct', [
         animate('0.25s')
@@ -49,7 +56,7 @@ export class QuestionsComponent implements OnInit, OnChanges {
    * The event emitter to go to the next question.
    */
   @Output()
-  public goToNextQuestion: EventEmitter<questionResultPlusAnswer> = new EventEmitter<questionResultPlusAnswer>();
+  public goToNextQuestion: EventEmitter<QuestionResultPlusAnswer> = new EventEmitter<QuestionResultPlusAnswer>();
 
   /**
    * The list of clicked answers.
@@ -72,15 +79,17 @@ export class QuestionsComponent implements OnInit, OnChanges {
   public profile: string;
 
   public forAnimation: string[];
+  public forAnimation2: Boolean[];
 
   /**
    * The list of images.
    */
   public images: Image[];
 
-  constructor(private imageService: ImageService) {}
+  constructor(private imageService: ImageService) {
+  }
 
-  async ngOnInit() {
+  ngOnInit() {
     // Get the accessibility profile of the guest.
     const guest: Guest = JSON.parse(sessionStorage.getItem('selectedGuest'));
     this.profile = guest.accessibility;
@@ -99,6 +108,10 @@ export class QuestionsComponent implements OnInit, OnChanges {
     this.forAnimation = [];
     for (let i = 0; i < this.question.answers.length; i++) {
       this.forAnimation[i] = null;
+    }
+    this.forAnimation2 = [];
+    for (let i = 0; i < this.question.answers.length; i++) {
+      this.forAnimation2[i] = null;
     }
 
     // Wait for 10 seconds before showing the skip button.
@@ -129,8 +142,9 @@ export class QuestionsComponent implements OnInit, OnChanges {
    * @param event The animation event.
    */
   validateAnswer(i: number, event: AnimationEvent) {
-    if (i === -2 || this.forAnimation[i] === 'correct') {
-      const res: questionResultPlusAnswer = {
+    if (this.forAnimation[i] === 'correct') {
+      this.resetAnimation2();
+      const res: QuestionResultPlusAnswer = {
         answer: this.question.answers[i],
         questionResult: {
           questionId: this.question.id,
@@ -140,7 +154,10 @@ export class QuestionsComponent implements OnInit, OnChanges {
       };
 
       // Redirect the user to the next question.
-      this.goToNextQuestion.emit(res);
+      this.finishQuestion(res);
+    }
+    if (this.forAnimation[i] === 'incorrect') {
+      this.forAnimation2[i] = true;
     }
   }
 
@@ -148,6 +165,7 @@ export class QuestionsComponent implements OnInit, OnChanges {
    * Skips the current question.
    */
   skipQuestion(): void {
+    this.resetAnimation2();
     this.skipped = true;
     let correctAnswer: Answer;
     for (const answer of this.question.answers) {
@@ -156,7 +174,7 @@ export class QuestionsComponent implements OnInit, OnChanges {
       }
     }
 
-    const res: questionResultPlusAnswer = {
+    const res: QuestionResultPlusAnswer = {
       answer: correctAnswer,
       questionResult: {
         questionId: this.question.id,
@@ -166,7 +184,7 @@ export class QuestionsComponent implements OnInit, OnChanges {
     };
 
     // Redirect the user to the next question.
-    this.goToNextQuestion.emit(res);
+    this.finishQuestion(res);
   }
 
   /**
@@ -177,10 +195,29 @@ export class QuestionsComponent implements OnInit, OnChanges {
     return this.images.find((image) => image.id === imageId);
   }
 
+  //TODO problem is surely here
   ngOnChanges(changes: SimpleChanges): void {
+    this.resetAnimation1();
+    this.resetAnimation2();
+  }
+
+  finishQuestion(res: QuestionResultPlusAnswer){
+    this.resetAnimation1();
+    this.resetAnimation2();
+    this.goToNextQuestion.emit(res);
+  }
+
+  resetAnimation1(){
     this.forAnimation = [];
     for (let i = 0; i < this.question.answers.length; i++) {
       this.forAnimation[i] = null;
+    }
+  }
+
+  resetAnimation2(){
+    this.forAnimation2 = [];
+    for (let i = 0; i < this.question.answers.length; i++) {
+      this.forAnimation2[i] = null;
     }
   }
 
@@ -199,7 +236,7 @@ export class QuestionsComponent implements OnInit, OnChanges {
   }
 }
 
-export interface questionResultPlusAnswer {
+export interface QuestionResultPlusAnswer {
   answer: Answer;
   questionResult: QuestionResult;
 }

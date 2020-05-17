@@ -3,7 +3,7 @@ import {Question} from '../../../models/question.model';
 import {QuizService} from '../../../services/quiz.service';
 import {animate, state, style, transition, trigger} from '@angular/animations';
 import {ActivatedRoute, Router} from '@angular/router';
-import {questionResultPlusAnswer} from '../questions/questions.component';
+import {QuestionResultPlusAnswer} from '../questions/questions.component';
 import {Quiz} from '../../../models/quiz.model';
 import {TransitionService} from '../../../services/transition.service';
 import {Guest} from '../../../models/guest.model';
@@ -125,7 +125,7 @@ export class PlayQuizComponent implements OnInit {
     return style;
   }
 
-  goToNextQuestion(qRPA: questionResultPlusAnswer) {
+  goToNextQuestion(qRPA: QuestionResultPlusAnswer) {
     this.rightAnswer = qRPA.answer.value;
     this.resultService.createQuestionResultAndAnswers(this.result.id, qRPA.questionResult.questionId, qRPA.questionResult.skipped, qRPA.questionResult.answers);
     this.isQuestionVisible = false;

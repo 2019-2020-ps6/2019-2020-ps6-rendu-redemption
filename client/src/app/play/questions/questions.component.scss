@@ -21,7 +21,20 @@ body {
   }
 
   .answer-button {
+    height: 264px;
     margin: 10px;
+  }
+
+  .centrer {
+    height: 100%;
+    line-height: 264px;
+    text-align: center;
+  }
+
+  .textWrong {
+    display: inline-block;
+    vertical-align: middle;
+    line-height: normal;
   }
 
   .skip-button {
