@@ -13,7 +13,7 @@ module.exports = {
         id: 2,
         firstName: 'Françoise',
         lastName: 'Dupont',
-        accessibility: 'tbd1',
+        accessibility: 'agrandissement',
         createdAt: new Date(),
         updatedAt: new Date()
       },
@@ -21,7 +21,7 @@ module.exports = {
         id: 3,
         firstName: 'Jean-François',
         lastName: 'Deschamps',
-        accessibility: 'none',
+        accessibility: 'contraste eleve',
         createdAt: new Date(),
         updatedAt: new Date()
       },
