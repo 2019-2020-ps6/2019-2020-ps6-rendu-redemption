@@ -1,5 +1,7 @@
 import {Component, DoCheck, OnChanges, OnInit, SimpleChanges} from '@angular/core';
 import {Guest} from "../models/guest.model";
+import {QuizSelectionComponent} from "./play/quiz-selection/quiz-selection.component";
+import {ThemesSelectionComponent} from "./play/themes-selection/themes-selection.component";
 
 @Component({
   selector: 'app-root',
@@ -18,19 +20,20 @@ export class AppComponent implements DoCheck{
   public profile: string;
 
   ngDoCheck() {
+      this.guest = JSON.parse(sessionStorage.getItem('selectedGuest'));
+      let changeContainer = sessionStorage.getItem('changeContainer');
 
-    this.guest = JSON.parse(sessionStorage.getItem('selectedGuest'));
-    if (this.guest == null) {
-      this.profile = 'none';
-    }
-    if (this.guest != null) {
-      this.profile = this.guest.accessibility;
-    }
+      if (this.guest == null) {
+        this.profile = 'none';
+      }
+      if (this.guest != null && changeContainer === 'true') {
+        this.profile = this.guest.accessibility;
+      }
   }
 
   setSize() {
     let style = {
-      size: this.profile === 'tbd1'
+      size: this.profile === 'agrandissement' || this.profile === 'contraste eleve'
     };
 
     return style;

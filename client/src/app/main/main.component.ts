@@ -18,5 +18,6 @@ export class MainComponent implements OnInit {
 
   ngOnInit() {
     sessionStorage.removeItem('selectedGuest');
+    sessionStorage.removeItem('changeContainer');
   }
 }

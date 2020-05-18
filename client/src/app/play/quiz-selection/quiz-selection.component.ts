@@ -20,6 +20,7 @@ export class QuizSelectionComponent implements OnInit {
 
   themeId: number;
   randomIcon = faRandom;
+  public selection: boolean = false;
 
   /**
    * The variables of the pagination.
@@ -51,6 +52,8 @@ export class QuizSelectionComponent implements OnInit {
         this.quizzes = quizzes;
         this.collectionSize = quizzes.length;
       });
+
+    this.selection = true;
   }
 
   /**
@@ -80,6 +83,10 @@ export class QuizSelectionComponent implements OnInit {
   goToPlayQuiz(quizId: number){
     // Redirect the user.
     this.router.navigate(['/play-quiz', quizId]);
+  }
+
+  public isSelection(): boolean {
+    return this.selection;
   }
 }
 

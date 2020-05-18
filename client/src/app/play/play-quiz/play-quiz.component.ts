@@ -68,6 +68,8 @@ export class PlayQuizComponent implements OnInit {
   }
 
   ngOnInit() {
+    sessionStorage.setItem('changeContainer', 'true');
+
     let guest: Guest;
     guest = JSON.parse(sessionStorage.getItem('selectedGuest'));
     this.guest = guest;
@@ -110,9 +112,9 @@ export class PlayQuizComponent implements OnInit {
 
   setSize() {
     let style = {
-      size: this.profile === 'tbd1' || this.profile === 'tbd2',
+      size: this.profile === 'agrandissement' || this.profile === 'contraste eleve',
     };
-    if (this.profile === 'tbd1' || this.profile === 'tbd2') {
+    if (this.profile === 'agrandissement' || this.profile === 'contraste eleve') {
       this.progressHeight = 40;
     }
     return style;
@@ -120,7 +122,7 @@ export class PlayQuizComponent implements OnInit {
 
   setContrast() {
     let style = {
-      contrast: this.profile === 'tbd2',
+      contrast: this.profile === 'contraste eleve',
     };
     return style;
   }

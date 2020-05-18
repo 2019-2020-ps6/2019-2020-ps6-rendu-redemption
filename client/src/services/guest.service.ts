@@ -60,8 +60,8 @@ export class GuestService extends DataService {
   getAccessibilities(): Accessibility[] {
     return [
       { value: 'none', name: 'Aucun' },
-      { value: 'tbd1', name: 'TBD1' },
-      { value: 'tbd2', name: 'TBD2' }
+      { value: 'agrandissement', name: 'Agrandissement' },
+      { value: 'contraste eleve', name: 'Contraste élevé' }
     ];
   }
 

@@ -32,6 +32,7 @@ export class ThemesSelectionComponent implements OnInit {
   public pageSize;
   public collectionSize;
   public randomIcon = faRandom;
+  public selection: boolean = false;
 
   constructor(
     private themeService: ThemeService,
@@ -59,6 +60,8 @@ export class ThemesSelectionComponent implements OnInit {
       .subscribe((quizzes: Quiz[]) => {
         this.quizzes = quizzes
       });
+
+    this.selection = true;
   }
 
   /**
@@ -91,6 +94,10 @@ export class ThemesSelectionComponent implements OnInit {
 
     // Redirect the user.
     this.router.navigate(['../play-quiz']);
+  }
+
+  public isSelection(): boolean {
+    return this.selection;
   }
 }
 

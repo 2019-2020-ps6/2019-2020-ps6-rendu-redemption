@@ -223,14 +223,14 @@ export class QuestionsComponent implements OnInit, OnChanges {
 
   setSize() {
     let style = {
-      size: this.profile === 'tbd1' || this.profile === 'tbd2',
+      size: this.profile === 'agrandissement' || this.profile === 'contraste eleve',
     };
     return style;
   }
 
   setContrast() {
     let style = {
-      contrast: this.profile === 'tbd2',
+      contrast: this.profile === 'contraste eleve',
     };
     return style;
   }
