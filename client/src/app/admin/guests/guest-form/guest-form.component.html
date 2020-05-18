@@ -30,5 +30,10 @@
       </option>
     </select>
   </div>
-  <button type="submit" class="btn btn-primary guest-submit">Valider</button>
+  <button
+    type="submit"
+    [disabled]="!guestForm.valid"
+    class="btn btn-primary guest-submit">
+    Valider
+  </button>
 </form>
