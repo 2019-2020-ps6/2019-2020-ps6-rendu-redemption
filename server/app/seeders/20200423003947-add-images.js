@@ -39,7 +39,7 @@ module.exports = {
       {
         id: 6,
         name: 'Branchies',
-        path: 'https://www.aquaportail.com/pictures1906/fentes-branchiales-requin-gill-slits-shark.jpg',
+        path: 'https://i.imgur.com/TzQu2mJ.jpg',
         createdAt: new Date(),
         updatedAt: new Date()
       },
