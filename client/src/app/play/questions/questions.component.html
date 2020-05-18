@@ -3,6 +3,7 @@
     <h2 class="question-label" [ngClass]="setSize()">
       {{ question.label }}
     </h2>
+    <img *ngIf="question.imageId" src="{{getImage(question.imageId).path}}">
     <div class="answers">
       <div *ngFor="let answer of question.answers; let i = index" class="answer-button">
         <button
@@ -11,7 +12,7 @@
           (@isAnswerCorrect.done)="validateAnswer(i, $event)"
           (click)="checkAnswer(answer)"
           [ngClass]="setSize()">
-          <img src="{{getImage(answer.imageId).path}}">
+          <img *ngIf="answer.imageId" src="{{getImage(answer.imageId).path}}">
           <br> {{answer.value}}
         </button>
         <div class="centrer">
