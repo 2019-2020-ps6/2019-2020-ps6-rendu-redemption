@@ -1,32 +1,23 @@
-import {Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges} from '@angular/core';
-import {Question} from '../../../models/question.model';
-import {Answer} from '../../../models/answer.model';
-import {animate, state, style, transition, trigger} from '@angular/animations';
-import {Guest} from '../../../models/guest.model';
-import {QuestionResult} from '../../../models/question-result.model';
-import {Image} from '../../../models/image.model';
-import {ImageService} from '../../../services/image.service';
+// App.
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { animate, state, style, transition, trigger } from '@angular/animations';
+
+// Models.
+import { QuestionResult } from '../../../models/question-result.model';
+import { Question } from '../../../models/question.model';
+import { Answer } from '../../../models/answer.model';
+import { Guest } from '../../../models/guest.model';
+import { Image } from '../../../models/image.model';
+
+// Services.
+import { ImageService } from '../../../services/image.service';
 
 @Component({
   selector: 'app-question-to-answer',
   templateUrl: './questions.component.html',
   styleUrls: ['./questions.component.scss'],
-  styles: [`
-    .size {
-      font-size: 120%;
-      font-weight: bold
-    }
-
-    .contrast {
-      background: black
-    }
-  `],
   animations: [
     trigger('isAnswerCorrect', [
-      state('null', style({
-        opacity: 1,
-        visibility: 'visible',
-      })),
       state('correct', style({
         backgroundColor: '#00FF00'
       })),
@@ -45,7 +36,7 @@ import {ImageService} from '../../../services/image.service';
   ]
 })
 
-export class QuestionsComponent implements OnInit, OnChanges {
+export class QuestionsComponent implements OnInit {
   /**
    * The question to display.
    */
@@ -78,16 +69,18 @@ export class QuestionsComponent implements OnInit, OnChanges {
    */
   public profile: string;
 
+  /**
+   * The animations states.
+   */
   public forAnimation: string[];
-  public forAnimation2: Boolean[];
+  public forAnimation2: boolean[];
 
   /**
    * The list of images.
    */
   public images: Image[];
 
-  constructor(private imageService: ImageService) {
-  }
+  constructor(private imageService: ImageService) {}
 
   ngOnInit() {
     // Get the accessibility profile of the guest.
@@ -104,87 +97,19 @@ export class QuestionsComponent implements OnInit, OnChanges {
     // Initializes the question.
     this.enableSkip = false;
     this.answersClicked = [];
-    this.skipped = false;
     this.forAnimation = [];
     for (let i = 0; i < this.question.answers.length; i++) {
       this.forAnimation[i] = null;
     }
     this.forAnimation2 = [];
     for (let i = 0; i < this.question.answers.length; i++) {
-      this.forAnimation2[i] = null;
+      this.forAnimation2[i] = false;
     }
 
     // Wait for 10 seconds before showing the skip button.
     setTimeout(() => {
       this.enableSkip = true;
     }, 10000);
-  }
-
-  /**
-   * Checks if the answer is correct.
-   * @param answer The answer to be checked.
-   */
-  checkAnswer(answer: Answer) {
-    if (answer.isCorrect) {
-      this.answersClicked.push(answer.id);
-      // Add the correct animation.
-      this.forAnimation[this.question.answers.indexOf(answer)] = 'correct';
-    } else {
-      this.answersClicked.push(answer.id);
-      // Add the incorrect animation.
-      this.forAnimation[this.question.answers.indexOf(answer)] = 'incorrect';
-    }
-  }
-
-  /**
-   * Validates the current question.
-   * @param i The index of the answer.
-   * @param event The animation event.
-   */
-  validateAnswer(i: number, event: AnimationEvent) {
-    if (this.forAnimation[i] === 'correct') {
-      this.resetAnimation2();
-      const res: QuestionResultPlusAnswer = {
-        answer: this.question.answers[i],
-        questionResult: {
-          questionId: this.question.id,
-          skipped: this.skipped,
-          answers: this.answersClicked
-        }
-      };
-
-      // Redirect the user to the next question.
-      this.finishQuestion(res);
-    }
-    if (this.forAnimation[i] === 'incorrect') {
-      this.forAnimation2[i] = true;
-    }
-  }
-
-  /**
-   * Skips the current question.
-   */
-  skipQuestion(): void {
-    this.resetAnimation2();
-    this.skipped = true;
-    let correctAnswer: Answer;
-    for (const answer of this.question.answers) {
-      if (answer.isCorrect) {
-        correctAnswer = answer;
-      }
-    }
-
-    const res: QuestionResultPlusAnswer = {
-      answer: correctAnswer,
-      questionResult: {
-        questionId: this.question.id,
-        skipped: this.skipped,
-        answers: this.answersClicked
-      }
-    };
-
-    // Redirect the user to the next question.
-    this.finishQuestion(res);
   }
 
   /**
@@ -195,44 +120,121 @@ export class QuestionsComponent implements OnInit, OnChanges {
     return this.images.find((image) => image.id === imageId);
   }
 
-  //TODO problem is surely here
-  ngOnChanges(changes: SimpleChanges): void {
-    this.resetAnimation1();
-    this.resetAnimation2();
-  }
+  /**
+   * Checks if the answer is correct and triggers the animations.
+   * @param answer The answer to be checked.
+   */
+  checkAnswer(answer: Answer) {
+    // Save the selected answer.
+    this.answersClicked.push(answer.id);
 
-  finishQuestion(res: QuestionResultPlusAnswer){
-    this.resetAnimation1();
-    this.resetAnimation2();
-    this.goToNextQuestion.emit(res);
-  }
-
-  resetAnimation1(){
-    this.forAnimation = [];
-    for (let i = 0; i < this.question.answers.length; i++) {
-      this.forAnimation[i] = null;
+    // Correct answer.
+    if (answer.isCorrect) {
+      // Set the animation for the correct answer.
+      this.forAnimation[this.question.answers.indexOf(answer)] = 'correct';
+    } else {
+      // Set the animation for the incorrect answer.
+      this.forAnimation[this.question.answers.indexOf(answer)] = 'incorrect';
     }
   }
 
-  resetAnimation2(){
-    this.forAnimation2 = [];
-    for (let i = 0; i < this.question.answers.length; i++) {
-      this.forAnimation2[i] = null;
+  /**
+   * Validates the current question after the animations.
+   * @param i The index of the answer.
+   * @param event The animation event.
+   */
+  validateAnswer(i: number, event: AnimationEvent) {
+    // Correct answer.
+    if (this.forAnimation[i] === 'correct') {
+      // Create the question result.
+      const result: QuestionResultPlusAnswer = {
+        answer: this.question.answers[i],
+        questionResult: {
+          questionId: this.question.id,
+          skipped: false,
+          answers: this.answersClicked
+        }
+      };
+
+      // Redirect the user to the next question.
+      this.finishQuestion(result);
+    }
+
+    // Incorrect answer.
+    if (this.forAnimation[i] === 'incorrect') {
+      // Set the animation for the incorrect answer.
+      this.forAnimation2[i] = true;
     }
   }
 
-  setSize() {
-    let style = {
+  /**
+   * Skips the current question.
+   */
+  skipQuestion(): void {
+    // Get the correct answer.
+    let correctAnswer: Answer;
+    for (const answer of this.question.answers) {
+      if (answer.isCorrect) {
+        correctAnswer = answer;
+      }
+    }
+
+    // Create the question result.
+    const result: QuestionResultPlusAnswer = {
+      answer: correctAnswer,
+      questionResult: {
+        questionId: this.question.id,
+        skipped: true,
+        answers: this.answersClicked
+      }
+    };
+
+    // Redirect the user to the next question.
+    this.finishQuestion(result);
+  }
+
+  /**
+   * Redirects the user to the next question by sending the result.
+   * @param result The question result (includes selected answers).
+   */
+  finishQuestion(result: QuestionResultPlusAnswer) {
+    this.goToNextQuestion.emit(result);
+  }
+
+  /**
+   * Adapts the size and contrast, according to the guest accessibility profile.
+   */
+  getProfileClasses() {
+    return {
+      // Increase the size.
       size: this.profile === 'agrandissement' || this.profile === 'contraste eleve',
+
+      // Increase the contrast.
+      contrast: this.profile === 'contraste eleve'
     };
-    return style;
   }
 
-  setContrast() {
-    let style = {
-      contrast: this.profile === 'contraste eleve',
+  /**
+   * Increases the size of the answers, if they have images.
+   */
+  getAnswersClasses() {
+    return {
+      // Increases the size of the answers.
+      'answers-with-images': this.answersHaveImages(),
     };
-    return style;
+  }
+
+  /**
+   * Checks if answers have images.
+   */
+  answersHaveImages(): boolean {
+    let result = false;
+    this.question.answers.forEach((answer) => {
+      if (answer.imageId != null) {
+        result = true;
+      }
+    });
+    return result;
   }
 }
 
