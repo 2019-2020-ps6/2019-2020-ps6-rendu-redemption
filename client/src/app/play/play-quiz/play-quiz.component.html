@@ -1,35 +1,44 @@
-<ngb-progressbar [showValue]="true" type="success" [value]="progressPercent" height="{{progressHeight}}px" [ngClass]="setSize()">
-</ngb-progressbar>
-
-<app-question-to-answer
-  *ngIf="isQuestionVisible"
-  class="question"
-  (@inAndOut.done)="makeAnswerAppear()"
-  [@inAndOut]="isQuestionVisible"
-  [question]="ongoingQuestion"
-  (goToNextQuestion)="goToNextQuestion($event)">
-</app-question-to-answer>
-
-<div class="card" [ngClass]="setContrast()">
+<section [ngClass]="getProfileClasses()" class="quiz">
+  <div class="progress">
+    <div
+      class="progress-bar bg-success"
+      role="progressbar"
+      [style.width]="progressPercent + '%'"
+      aria-valuemin="0"
+      aria-valuemax="100">
+      {{ progressPercent }}%
+    </div>
+  </div>
+  <app-question-to-answer
+    *ngIf="isQuestionVisible"
+    class="question"
+    [@inAndOut]="isQuestionVisible"
+    (@inAndOut.done)="makeAnswerAppear()"
+    [question]="ongoingQuestion"
+    (goToNextQuestion)="goToNextQuestion($event)">
+  </app-question-to-answer>
   <div
     *ngIf="isAnswerVisible"
-    class="rightAnswer"
-    style="opacity: 0"
-    [ngClass]="setSize()"
-    (@inAndOut.done)="makeQuestionAppear()"
-    [@inAndOut]="isAnswerVisible">
-    La bonne réponse était : <br> {{ rightAnswer }}
+    class="quiz-answer"
+    [@inAndOut]="isAnswerVisible"
+    (@inAndOut.done)="makeQuestionAppear()">
+    La bonne réponse était :
+    <br>
+    <img
+      *ngIf="correctAnswer.imageId"
+      src="{{ getImage(correctAnswer.imageId).path}}"
+      alt="{{ getImage(correctAnswer.imageId).name }}"
+      class="answer-image"/>
+    <br *ngIf="correctAnswer.imageId"/>
+    {{ correctAnswer.value }}
   </div>
-</div>
-
-<div class="card" [ngClass]="setContrast()">
-  <div class="ending" *ngIf="hasEnded" [ngClass]="setSize()">
-    Bravo {{guestName}}
-    <br>
-    Le quiz est désormais terminé!
-    <br>
-    <button class="endingButton" (click)="backToTheme()">
+  <div
+    *ngIf="hasEnded"
+    class="quiz-ending">
+    Bravo {{guestName}}<br>
+    Le quiz est désormais terminé!<br>
+    <button (click)="backToTheme()" class="btn btn-lg btn-white restart-button">
       Cliquez ici pour revenir à la sélection d'un thème
     </button>
   </div>
-</div>
+</section>
